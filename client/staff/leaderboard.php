@@ -5,112 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaderboard</title>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7fa;
-            margin: 0;
-            min-height: 100vh;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        header {
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 15px 0;
-        }
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .header-content h1 {
-            font-size: 24px;
-            color: #333;
-            margin: 0;
-        }
-        .header-content p {
-            color: #666;
-            margin: 5px 0 0;
-            font-size: 14px;
-        }
-        .profile {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .profile img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-        }
-        .profile-info p {
-            margin: 0;
-            font-size: 14px;
-        }
-        .profile-info .name {
-            font-weight: bold;
-            color: #333;
-        }
-        .profile-info .role {
-            color: #666;
-        }
-        .logout-btn {
-            color: #666;
-            cursor: pointer;
-        }
-        .logout-btn:hover {
-            color: #333;
-        }
-        nav {
-            margin: 20px 0;
-            border-bottom: 2px solid #e0e0e0;
-        }
-        nav a {
-            text-decoration: none;
-            color: #666;
-            padding: 10px 20px;
-            display: inline-block;
-            font-size: 16px;
-        }
-        nav a.active, nav a:hover {
-            color: #007bff;
-            border-bottom: 2px solid #007bff;
-        }
-        h2 {
-            font-size: 24px;
-            color: #333;
-            margin: 20px 0;
-        }
-        .leaderboard {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-            font-size: 14px;
-        }
-        th {
-            color: #666;
-            font-weight: normal;
-        }
-        td {
-            color: #333;
-        }
-        tr {
-            border-bottom: 1px solid #e0e0e0;
-        }
-    </style>
+    <link rel="stylesheet" href="../assets/css/staff/leaderboard.css">
+   
 </head>
 <body>
     <header>
@@ -139,50 +35,126 @@
             <a href="reports.php">Reports</a>
         </nav>
 
-        <h2>Leaderboard</h2>
+        <div class="leaderboard-header">
+            <div>
+                <h2><i data-lucide="trophy"></i> Computer Science Leaderboard</h2>
+                <p>Top performers in your department</p>
+            </div>
+            <div class="live-badge">
+                <i data-lucide="trending-up"></i> Updated Live
+            </div>
+        </div>
+
+        <div class="podium">
+            <!-- Top 3 Podium -->
+        </div>
+
         <div class="leaderboard">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>Student</th>
-                        <th>Quiz</th>
-                        <th>Score</th>
-                    </tr>
-                </thead>
-                <tbody id="leaderboard-table"></tbody>
-            </table>
+            <h3>Complete Rankings</h3>
+            <p>All students ranked by average test scores</p>
+            <div id="leaderboard-table"></div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stats-card">
+                <h3>Department Average</h3>
+                <div class="value">84.2%</div>
+                <p class="description">Overall performance</p>
+            </div>
+            <div class="stats-card">
+                <h3>Total Students</h3>
+                <div class="value">156</div>
+                <p class="description">Active participants</p>
+            </div>
+            <div class="stats-card">
+                <h3>Tests Completed</h3>
+                <div class="value">2,847</div>
+                <p class="description">This semester</p>
+            </div>
         </div>
     </main>
 
     <script>
-        // Mock data (replace with backend fetch)
+        // Mock data
         const leaderboardData = [
-            { rank: 1, student: "John Doe", quiz: "Data Structures & Algorithms", score: 95 },
-            { rank: 2, student: "Jane Smith", quiz: "React Fundamentals", score: 90 },
-            { rank: 3, student: "Bob Johnson", quiz: "Database Management", score: 85 }
+            { rank: 1, name: "Alice Johnson", score: 95, testsCompleted: 18, avatar: "AJ" },
+            { rank: 2, name: "Bob Smith", score: 92, testsCompleted: 16, avatar: "BS" },
+            { rank: 3, name: "Carol Davis", score: 89, testsCompleted: 20, avatar: "CD" },
+            { rank: 4, name: "David Wilson", score: 87, testsCompleted: 15, avatar: "DW" },
+            { rank: 5, name: "Emma Brown", score: 85, testsCompleted: 17, avatar: "EB" },
+            { rank: 6, name: "Frank Miller", score: 83, testsCompleted: 14, avatar: "FM" },
+            { rank: 7, name: "Grace Lee", score: 82, testsCompleted: 19, avatar: "GL" },
+            { rank: 8, name: "Henry Taylor", score: 80, testsCompleted: 13, avatar: "HT" },
+            { rank: 9, name: "Ivy Chen", score: 78, testsCompleted: 16, avatar: "IC" },
+            { rank: 10, name: "Jack Robinson", score: 76, testsCompleted: 12, avatar: "JR" }
         ];
 
         // Initialize Lucide icons
         lucide.createIcons();
 
+        // Render podium
+        function renderPodium() {
+            const podium = document.querySelector('.podium');
+            const topThree = leaderboardData.slice(0, 3);
+            topThree.forEach((student, index) => {
+                const card = document.createElement('div');
+                card.className = `podium-card rank-${student.rank}`;
+                card.innerHTML = `
+                    <div class="rank">
+                        ${student.rank === 1 ? '<i data-lucide="trophy" style="color: var(--color-gold);"></i>' : 
+                         student.rank === 2 ? '<i data-lucide="medal" style="color: var(--color-silver);"></i>' : 
+                         '<i data-lucide="award" style="color: var(--color-bronze);"></i>'}
+                        <span class="badge">#${student.rank}</span>
+                    </div>
+                    <div class="avatar">${student.avatar}</div>
+                    <h3>${student.name}</h3>
+                    <p class="tests">${student.testsCompleted} tests completed</p>
+                    <div class="score">${student.score}%</div>
+                    <p class="score-label">Average Score</p>
+                `;
+                podium.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
         // Render leaderboard
         function renderLeaderboard() {
             const leaderboardTable = document.getElementById('leaderboard-table');
             leaderboardTable.innerHTML = '';
-            leaderboardData.forEach(item => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${item.rank}</td>
-                    <td>${item.student}</td>
-                    <td>${item.quiz}</td>
-                    <td>${item.score}%</td>
+            leaderboardData.forEach(student => {
+                const item = document.createElement('div');
+                item.className = `leaderboard-item rank-${student.rank}`;
+                item.innerHTML = `
+                    <div class="left">
+                        <div class="rank">
+                            ${student.rank === 1 ? '<i data-lucide="trophy" style="color: var(--color-gold);"></i>' : 
+                             student.rank === 2 ? '<i data-lucide="medal" style="color: var(--color-silver);"></i>' : 
+                             student.rank === 3 ? '<i data-lucide="award" style="color: var(--color-bronze);"></i>' : ''}
+                            <span class="badge">#${student.rank}</span>
+                        </div>
+                        <div class="avatar">${student.avatar}</div>
+                        <div class="info">
+                            <p>${student.name}</p>
+                            <p class="tests">${student.testsCompleted} tests completed</p>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="score">${student.score}%</div>
+                        <p class="score-label">avg score</p>
+                    </div>
                 `;
-                leaderboardTable.appendChild(row);
+                leaderboardTable.appendChild(item);
             });
+            lucide.createIcons();
         }
 
+        // Back button functionality (mock)
+        document.querySelector('.back-btn')?.addEventListener('click', () => {
+            window.location.href = 'index.php';
+        });
+
         // Initial render
+        renderPodium();
         renderLeaderboard();
     </script>
 </body>
