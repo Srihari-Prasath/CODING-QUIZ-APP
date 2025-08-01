@@ -3,6 +3,15 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  width: 100%;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
 }
 
 .logo {
@@ -35,6 +44,25 @@
 
 .card {
   padding: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card button {
+  margin-bottom: 1rem;
+}
+
+.card button.mt-4 {
+  margin-top: 1rem;
+  background-color: #646cff;
+  color: white;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.card button.mt-4:hover {
+  background-color: #535bf2;
 }
 
 .read-the-docs {
