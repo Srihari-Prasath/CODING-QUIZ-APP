@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,36 +35,52 @@
         </nav>
 
         <h2>Upload Questions</h2>
-        <form id="upload-questions-form">
+        <form id="upload-questions-form" action="http://localhost/code_app/save_questions.php" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label>Select Quiz</label>
-                <select name="quizId">
-                    <option value="1">Data Structures & Algorithms</option>
-                    <option value="2">React Fundamentals</option>
-                    <option value="3">Database Management</option>
+                <select name="quizId" required>
+                    <?php
+                    // Database connection
+                    $conn = new mysqli("localhost", "root", "", "quiz_system");
+                    if (!$conn->connect_error) {
+                        $result = $conn->query("SELECT id, title FROM tests");
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<option value='{$row['id']}'>{$row['title']}</option>";
+                        }
+                        $conn->close();
+                    }
+                    ?>
                 </select>
             </div>
             <div class="form-group">
-                <label>Upload Questions File (CSV/JSON)</label>
-                <input type="file" name="questionsFile" accept=".csv,.json">
+                <label>Upload Questions File (CSV)</label>
+                <input type="file" name="questionsFile" accept=".csv" required>
             </div>
             <button type="submit">Upload Questions</button>
         </form>
     </main>
 
     <script>
-        // Initialize Lucide icons
         lucide.createIcons();
 
-        // Form submission
-        document.getElementById('upload-questions-form').addEventListener('submit', (e) => {
+        document.getElementById('upload-questions-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const formData = new FormData(e.target);
-            // Mock backend call
-            console.log(formData.get('quizId'), formData.get('questionsFile'));
-            alert('Questions uploaded successfully!');
-            // Replace with fetch to backend
-            // fetch('/api/upload-questions', { method: 'POST', body: formData })
+
+            try {
+                const response = await fetch('http://localhost/code_app/save_questions.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                alert(result.message);
+                if (result.status === 'success') {
+                    e.target.reset();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while uploading questions');
+            }
         });
     </script>
 </body>

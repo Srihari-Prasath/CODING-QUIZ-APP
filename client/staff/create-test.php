@@ -96,8 +96,8 @@
                     // window.location.href = 'dashboard.php';
                 }
             } catch (error) {
-                console.error('Error:', error);
-                alert('An error occurred while creating the test');
+                console.error(':', error);
+                
             }
         });
     </script>
