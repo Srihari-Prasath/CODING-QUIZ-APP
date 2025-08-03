@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,7 +35,7 @@
         </nav>
 
         <h2>Create New Test</h2>
-        <form id="create-test-form">
+        <form id="create-test-form" action="save_test.php" method="POST">
             <div class="form-grid">
                 <div class="form-group">
                     <label>Test Title</label>
@@ -76,17 +75,30 @@
     </main>
 
     <script>
-      
         lucide.createIcons();
 
-        
-        document.getElementById('create-test-form').addEventListener('submit', (e) => {
+        document.getElementById('create-test-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const formData = new FormData(e.target);
-          
-            console.log(Object.fromEntries(formData));
-            alert('Test created successfully!');
             
+            try {
+                const response = await fetch('http://localhost/code_app/test_create.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                alert(result.message);
+                
+                if (result.status === 'success') {
+                    // Optionally reset form or redirect
+                    e.target.reset();
+                    // window.location.href = 'dashboard.php';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while creating the test');
+            }
         });
     </script>
 </body>
