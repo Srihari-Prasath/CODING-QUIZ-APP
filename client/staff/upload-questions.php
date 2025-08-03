@@ -26,13 +26,7 @@
     </header>
 
     <main class="container">
-        <nav>
-            <a href="dashboard.php">Dashboard</a>
-            <a href="create-test.php">Create Test</a>
-            <a href="upload-questions.php" class="active">Upload Questions</a>
-            <a href="leaderboard.php">Leaderboard</a>
-            <a href="reports.php">Reports</a>
-        </nav>
+             <?php include('./nav.php') ?>
 
         <h2>Upload Questions</h2>
         <form id="upload-questions-form" action="http://localhost/code_app/save_questions.php" method="POST" enctype="multipart/form-data">

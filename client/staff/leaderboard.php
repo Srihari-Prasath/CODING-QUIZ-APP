@@ -27,13 +27,7 @@
     </header>
 
     <main class="container">
-        <nav>
-            <a href="index.php">Dashboard</a>
-            <a href="create-test.php">Create Test</a>
-            <a href="upload-questions.php">Upload Questions</a>
-            <a href="leaderboard.php" class="active">Leaderboard</a>
-            <a href="reports.php">Reports</a>
-        </nav>
+            <?php include('./nav.php') ?>
 
         <div class="leaderboard-header">
             <div>

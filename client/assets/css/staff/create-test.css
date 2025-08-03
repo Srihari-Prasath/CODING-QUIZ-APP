@@ -161,16 +161,17 @@ form:hover {
     margin-bottom: 8px;
 }
 
-.form-group input {
+.form-group input,.form-group textarea {
     padding: 12px;
     border: 1px solid #d1d5db;
     border-radius: 8px;
     font-size: 14px;
     background: #f9fafb;
+    resize: none;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.form-group input:focus {
+.form-group input:focus,.form-group textarea:focus {
     outline: none;
     border-color: var(--color-primary);
     box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
@@ -193,12 +194,15 @@ button:hover {
     background: linear-gradient(90deg, var(--color-primary-hover), #f97316);
     transform: translateY(-1px);
 }
-
+.create-btn{
+    display: flex;
+    justify-content: center;
+    
+}
 button:active {
     transform: translateY(0);
 }
 
-/* Custom properties for color palette */
 :root {
     --color-primary: #F97316;
     --color-primary-hover: #EA580C;
