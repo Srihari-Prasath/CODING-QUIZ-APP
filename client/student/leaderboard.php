@@ -40,7 +40,7 @@
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-8">
         <!-- Leaderboard -->
-        <div class="bg-white p-8 rounded-lg shadow-md">
+        <div class="p-8 rounded-lg shadow-md">
             <!-- 1st Place (Centered at Top) -->
             <div class="leaderboard-item rank-1 flex flex-col items-center mb-12 border-none">
                 <div class="container">
