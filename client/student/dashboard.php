@@ -22,7 +22,8 @@
                         </div>
                     </div>
                 </a>
-                <span id="theme-toggle" style="margin-top: 20px;" class="theme-toggle"><i data-lucide="moon"></i></span>
+                <span id="theme-toggle"  class="theme-toggle"><i data-lucide="moon"></i></span>
+                <a href="../auth/student_login.html"><span id="logout-btn" class="logout-btn"><i data-lucide="log-out"></i></span></a>
             </div>
         </div>
     </header>
