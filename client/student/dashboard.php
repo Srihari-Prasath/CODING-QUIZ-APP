@@ -79,17 +79,8 @@
         </div>
 
         <div class="filters">
-            <div class="search-container">
-                <i data-lucide="search"></i>
-                <input id="search-input" type="text" placeholder="Search quizzes...">
-            </div>
-            <select id="filter-status">
-                <option value="all">All Quizzes</option>
-                <option value="active">Active</option>
-                <option value="upcoming">Upcoming</option>
-                <option value="completed">Completed</option>
-            </select>
-            <button><i data-lucide="bar-chart-3"></i> Analytics</button>
+            
+            <a href="analytics.php" style="text-decoration: none;" ><button><i data-lucide="bar-chart-3"></i> Analytics</button></a>
         </div>
 
         <div id="quiz-grid" class="quiz-grid"></div>
