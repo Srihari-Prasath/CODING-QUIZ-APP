@@ -70,7 +70,7 @@
                 </div>
             </div>
             <div class="stats-card">
-                <i data-lucide="clock"></i>
+                <i data-lucide="clock"></i> 
                 <div>
                     <h3>More Quiz Have</h3>
                     <p>3</p>

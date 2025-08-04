@@ -6,87 +6,22 @@
     <title>MCQ Quiz App</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .sidebar {
-            transition: all 0.3s ease;
-        }
-        @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-                position: fixed;
-                top: 0;
-                left: 0;
-                height: 100vh;
-                z-index: 50;
-            }
-            .sidebar.active {
-                transform: translateX(0);
-            }
-            .overlay {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background-color: rgba(0,0,0,0.5);
-                z-index: 40;
-            }
-            .overlay.active {
-                display: block;
-            }
-        }
-        .timer {
-            animation: pulse 1s infinite alternate;
-        }
-        @keyframes pulse {
-            from {
-                transform: scale(1);
-            }
-            to {
-                transform: scale(1.05);
-            }
-        }
-        .option:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .option.selected {
-            background-color: #f97316;
-            color: white;
-            border-color: #f97316;
-        }
-        .option.correct {
-            background-color: #10b981;
-            color: white;
-            border-color: #10b981;
-        }
-        .option.incorrect {
-            background-color: #ef4444;
-            color: white;
-            border-color: #ef4444;
-        }
-        .question-number.answered {
-            background-color: #10b981; /* Green for answered */
-            color: white;
-        }
-        .question-number.not-answered {
-            background-color: #ef4444; /* Red for not answered */
-            color: white;
-        }
-        .question-number.skipped {
-            background-color: #f59e0b; /* Yellow for skipped */
-            color: white;
-        }
-        .question-number.current {
-            border: 2px solid #f97316;
-            font-weight: bold;
-            box-shadow: 0 0 0 2px white, 0 0 0 4px #f97316;
-        }
-    </style>
+    <link rel="stylesheet" href="../assets/css/student/quiz-attend.css">
 </head>
 <body class="bg-gray-100 font-sans">
-    <div class="flex h-screen overflow-hidden">
+    <!-- Landing Page -->
+    <div id="landingPage" class="flex h-screen items-center justify-center">
+        <div class="bg-white p-8 rounded-xl shadow-md text-center">
+            <h1 class="text-3xl font-bold text-gray-800 mb-4">Welcome to the General Knowledge Quiz</h1>
+            <p class="text-gray-600 mb-6">Test your knowledge with 10 exciting questions. Click below to start the quiz in full-screen mode.</p>
+            <button id="startQuiz" class="bg-blue-500 hover:bg-blue-600 text-white py-3 px-8 rounded-md transition duration-300 text-lg">
+                Start Test
+            </button>
+        </div>
+    </div>
+
+    <!-- Quiz Content -->
+    <div id="quizContent" class="hidden flex h-screen overflow-hidden">
         <!-- Sidebar -->
         <div class="sidebar bg-white w-64 border-r border-gray-200 p-4 flex flex-col md:relative">
             <div class="flex justify-between items-center mb-6">
@@ -278,6 +213,9 @@
             let quizSubmitted = false;
 
             // DOM elements
+            const landingPage = document.getElementById('landingPage');
+            const quizContent = document.getElementById('quizContent');
+            const startQuiz = document.getElementById('startQuiz');
             const questionText = document.getElementById('questionText');
             const optionsContainer = document.getElementById('optionsContainer');
             const currentQuestionNumber = document.getElementById('currentQuestionNumber');
@@ -292,6 +230,53 @@
             const closeSidebar = document.getElementById('closeSidebar');
             const sidebar = document.querySelector('.sidebar');
             const overlay = document.getElementById('overlay');
+
+            // Security: Enter fullscreen mode
+            function enterFullscreen() {
+                const elem = document.documentElement;
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen().catch(err => {
+                        console.warn(`Fullscreen request failed: ${err}`);
+                    });
+                } else if (elem.webkitRequestFullscreen) { // Safari
+                    elem.webkitRequestFullscreen();
+                } else if (elem.msRequestFullscreen) { // IE11
+                    elem.msRequestFullscreen();
+                }
+            }
+
+            // Security: Detect exit from fullscreen and auto-submit
+            document.addEventListener('fullscreenchange', () => {
+                if (!document.fullscreenElement && !quizSubmitted) {
+                    submitQuizAutomatically('Exited fullscreen mode.');
+                }
+            });
+
+            // Security: Prevent right-click context menu
+            document.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                alert('Right-click is disabled to maintain quiz integrity.');
+            });
+
+            // Security: Prevent common keyboard shortcuts for DevTools
+            document.addEventListener('keydown', (e) => {
+                if (
+                    e.key === 'F12' ||
+                    (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
+                    (e.ctrlKey && e.key === 'U')
+                ) {
+                    e.preventDefault();
+                    alert('Access to developer tools is restricted during the quiz.');
+                }
+            });
+
+            // Start quiz
+            startQuiz.addEventListener('click', () => {
+                landingPage.classList.add('hidden');
+                quizContent.classList.remove('hidden');
+                enterFullscreen();
+                initQuiz();
+            });
 
             // Initialize the quiz
             function initQuiz() {
@@ -429,8 +414,7 @@
                         timeLeft--;
                         updateTimerDisplay();
                     } else {
-                        clearInterval(timerInterval);
-                        submitQuizAutomatically();
+                        submitQuizAutomatically('Time is up.');
                     }
                 }, 1000);
             }
@@ -452,13 +436,12 @@
                 }
             }
 
-            function submitQuizAutomatically() {
+            function submitQuizAutomatically(reason) {
                 if (!quizSubmitted) {
                     quizSubmitted = true;
                     clearInterval(timerInterval);
-                    alert('Time is up! Your quiz has been submitted automatically.');
-                    // Here you would typically send the answers to a server
-                    showResults();
+                    alert(`Quiz terminated: ${reason} Your answers have been submitted.`);
+                    showResults();  
                 }
             }
 
@@ -489,6 +472,13 @@
                 prevBtn.disabled = true;
                 nextBtn.disabled = true;
                 skipBtn.disabled = true;
+                
+                // Exit fullscreen
+                if (document.fullscreenElement) {
+                    document.exitFullscreen().catch(err => {
+                        console.warn(`Error exiting fullscreen: ${err}`);
+                    });
+                }
                 
                 // Show score
                 alert(`You scored ${score} out of ${quizData.length}!`);
@@ -531,9 +521,6 @@
                 sidebar.classList.remove('active');
                 overlay.classList.remove('active');
             });
-
-            // Initialize the quiz
-            initQuiz();
         });
     </script>
 </body>
