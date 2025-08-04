@@ -88,42 +88,7 @@
     </main>
 
     <script>
-        // Mock data (replace with backend fetch)
-        const quizzes = [
-            {
-                id: "1",
-                title: "Data Structures & Algorithms",
-                subject: "Computer Science",
-                instructor: "Dr. Sarah Johnson",
-                duration: 90,
-                totalQuestions: 50,
-                enrolledStudents: 28,
-                maxStudents: 30,
-                status: "active"
-            },
-            {
-                id: "2",
-                title: "React Fundamentals",
-                subject: "Web Development",
-                instructor: "Prof. Mike Chen",
-                duration: 60,
-                totalQuestions: 30,
-                enrolledStudents: 15,
-                maxStudents: 25,
-                status: "upcoming"
-            },
-            {
-                id: "3",
-                title: "Database Management",
-                subject: "Computer Science",
-                instructor: "Dr. Emily Davis",
-                duration: 120,
-                totalQuestions: 40,
-                enrolledStudents: 22,
-                maxStudents: 30,
-                status: "completed"
-            }
-        ];
+        
 
         // Theme toggle functionality
         const themeToggle = document.getElementById('theme-toggle');
