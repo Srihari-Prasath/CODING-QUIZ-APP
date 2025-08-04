@@ -1,8 +1,14 @@
 <?php
 require_once '../../../config/db.php';
-require_once '../../../vendor/PhpSpreadsheet';
+
+$db = new Database();
+$pdo = $db->connect();
+
+require_once '../../../vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 function uploadQuestionsFromExcel($test_id, $filePath)
 {
@@ -25,7 +31,7 @@ function uploadQuestionsFromExcel($test_id, $filePath)
             $mark = (float)($row[6] ?? 0);
 
             if (!$question_text || !in_array($correct_option, ['A', 'B', 'C', 'D'])) {
-                continue; 
+                continue;
             }
 
             $stmt = $pdo->prepare("
@@ -48,9 +54,8 @@ function uploadQuestionsFromExcel($test_id, $filePath)
             ]);
         }
 
-        echo json_encode(['success' => true, 'message' => 'Questions uploaded successfully']);
+        return ['success' => true, 'message' => 'Questions uploaded successfully'];
     } catch (Exception $e) {
-        http_response_code(500);
-        echo json_encode(['error' => 'Upload failed', 'details' => $e->getMessage()]);
+        return ['success' => false, 'error' => $e->getMessage()];
     }
 }

@@ -7,188 +7,101 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            position: relative;
-            min-height: 100vh;
-            overflow-x: hidden;
-            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
-        }
-
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
         :root {
-            --color-primary: #F97316;
-            --color-primary-hover: #EA580C;
-            --color-background: #FFFFFF;
-            --color-surface: #F9FAFB;
+            --primary-orange: #FF6B35;
+            --secondary-orange: #FF9A3C;
+            --dark-orange: #E05D2E;
+            --light-orange: #FFB347;
         }
-
-        /* Wave Background */
-        section {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: -1; /* Place behind content */
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.9), rgba(247, 147, 30, 0.85), rgba(255, 140, 66, 0.9)),
+                        url('https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover fixed;
+            min-height: 100vh;
+            background-blend-mode: overlay;
+            position: relative;
+            overflow-x: hidden;
         }
-
-        section .wave {
-            position: absolute;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #4973ff;
-            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
-            transition: 0.5s;
-            opacity: 0.3; /* Lower opacity to blend with gradient */
-        }
-
-        section .wave span {
-            content: "";
-            position: absolute;
-            width: 325vh;
-            height: 325vh;
-            top: 0;
-            left: 50%;
-            transform: translate(-50%, -75%);
-            background: #000;
-        }
-
-        section .wave span:nth-child(1) {
-            border-radius: 45%;
-            background: rgba(20, 20, 20, 1);
-            animation: animate 5s linear infinite;
-        }
-
-        section .wave span:nth-child(2) {
-            border-radius: 40%;
-            background: rgba(20, 20, 20, 0.5);
-            animation: animate 10s linear infinite;
-        }
-
-        section .wave span:nth-child(3) {
-            border-radius: 42.5%;
-            background: rgba(20, 20, 20, 0.5);
-            animation: animate 15s linear infinite;
-        }
-
-        @keyframes animate {
-            0% {
-                transform: translate(-50%, -75%) rotate(0deg);
-            }
-            100% {
-                transform: translate(-50%, -75%) rotate(360deg);
-            }
-        }
-
-        /* Existing Styles */
-        #loginForm {
-            background: linear-gradient(-45deg, var(--color-surface), #fff8f0, var(--color-background), #fff1e6);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        @keyframes gradientBG {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
+        
         .form-container {
+            backdrop-filter: blur(10px);
             background: rgba(255, 255, 255, 0.95);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
-
+        
         .toggle-btn {
             background-color: transparent;
-            color: var(--color-primary);
+            color: var(--primary-orange);
         }
-
+        
         .toggle-btn.active {
-            background-color: var(--color-primary);
-            color: var(--color-background);
+            background-color: var(--primary-orange);
+            color: white;
         }
-
+        
         .btn-primary {
-            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
+            background: linear-gradient(135deg, var(--primary-orange), var(--light-orange));
             background-size: 200% auto;
             transition: all 0.3s ease;
         }
-
+        
         .btn-primary:hover {
             background-position: right center;
-            box-shadow: 0 5px 15px rgba(249, 115, 22, 0.4);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
             transform: translateY(-2px);
         }
-
+        
         .input-field {
             transition: all 0.3s ease;
             border: 1px solid #e5e7eb;
         }
-
+        
         .input-field:focus {
-            border-color: var(--color-primary);
-            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2);
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
         }
-
+        
         .grid-form {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 1.5rem;
         }
-
+        
         .avatar-container {
             width: 100px;
             height: 100px;
             border-radius: 50%;
-            background-color: var(--color-surface);
+            background-color: #f3f4f6;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
             margin: 0 auto;
-            border: 3px solid var(--color-primary);
+            border: 3px solid var(--primary-orange);
             position: relative;
             cursor: pointer;
         }
-
+        
         .avatar-preview {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-
+        
         .avatar-placeholder {
             font-size: 2.5rem;
-            color: var(--color-primary);
+            color: var(--primary-orange);
         }
-
+        
         .avatar-upload {
             position: absolute;
             bottom: 0;
             right: 0;
-            background: var(--color-primary);
-            color: var(--color-background);
+            background: var(--primary-orange);
+            color: white;
             width: 30px;
             height: 30px;
             border-radius: 50%;
@@ -197,20 +110,20 @@
             justify-content: center;
             font-size: 0.8rem;
         }
-
+        
         .animate-fade {
             animation: fadeIn 0.5s ease-in-out;
         }
-
+        
         .animate-fade-in {
             animation: fadeInUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
         }
-
+        
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
+        
         @keyframes fadeInUp {
             0% {
                 opacity: 0;
@@ -221,16 +134,16 @@
                 transform: translateY(0);
             }
         }
-
+        
         .input-field {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
+        
         .input-field:focus {
             transform: translateY(-2px);
-            box-shadow: 0 4px 6px -1px rgba(249, 115, 22, 0.2), 0 2px 4px -1px rgba(249, 115, 22, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(255, 107, 53, 0.2), 0 2px 4px -1px rgba(255, 107, 53, 0.1);
         }
-
+        
         .password-strength {
             height: 4px;
             background: #e5e7eb;
@@ -238,18 +151,18 @@
             border-radius: 2px;
             overflow: hidden;
         }
-
+        
         .strength-bar {
             height: 100%;
             width: 0%;
             transition: all 0.3s ease;
         }
-
+        
         @media (max-width: 768px) {
             .grid-form {
                 grid-template-columns: 1fr;
             }
-
+            
             .toggle-btn {
                 padding: 0.75rem 1rem;
                 font-size: 0.875rem;

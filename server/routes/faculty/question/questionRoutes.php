@@ -1,17 +1,17 @@
 <?php
+require_once '../../../controllers/faculty/questions/questionController.php';
 
-   
-require_once  '../../../controllers/faculty/questions/questionController.php';
+header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!isset($_POST['test_id']) || !isset($_FILES['file'])) {
+    if (!isset($_POST['quizId']) || !isset($_FILES['questionsFile'])) {
         http_response_code(400);
         echo json_encode(['error' => 'Missing test_id or file']);
         exit;
     }
 
-    $test_id = $_POST['test_id'];
-    $file = $_FILES['file'];
+    $test_id = $_POST['quizId'];
+    $file = $_FILES['questionsFile'];
 
     if ($file['error'] !== UPLOAD_ERR_OK) {
         http_response_code(400);
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode($result);
     } else {
         http_response_code(500);
-        echo json_encode(['error' => 'Failed to upload questions', 'details' => $result['error']]);
+        echo json_encode(['error' => 'Upload failed', 'details' => $result['error']]);
     }
 } else {
     http_response_code(405);
