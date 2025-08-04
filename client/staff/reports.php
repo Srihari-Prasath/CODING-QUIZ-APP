@@ -28,13 +28,7 @@
     </header>
 
     <main class="container">
-        <nav>
-            <a href="Dashboard.php">Dashboard</a>
-            <a href="create-test.php">Create Test</a>
-            <a href="upload-questions.php">Upload Questions</a>
-            <a href="leaderboard.php">Leaderboard</a>
-            <a href="reports.php" class="active">Reports</a>
-        </nav>
+          <?php include('./nav.php') ?>
 
         <h2><i data-lucide="bar-chart-2"></i> Reports</h2>
         <div class="reports">

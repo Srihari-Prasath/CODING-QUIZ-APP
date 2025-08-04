@@ -27,14 +27,7 @@
     </header>
 
     <main class="container">
-        <nav>
-            <a href="dashboard.php" class="active">Dashboard</a>
-            <a href="create-test.php">Create Test</a>
-            <a href="upload-questions.php">Upload Questions</a>
-            <a href="leaderboard.php">Leaderboard</a>
-            <a href="reports.php">Reports</a>
-        </nav>
-
+      <?php include('./nav.php') ?>
         <div class="welcome">
             <h2>Welcome back, Alex! 👋</h2>
             <p>Manage your quizzes and monitor student progress.</p>
