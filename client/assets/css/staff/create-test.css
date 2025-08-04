@@ -198,7 +198,6 @@ button:active {
     transform: translateY(0);
 }
 
-/* Custom properties for color palette */
 :root {
     --color-primary: #F97316;
     --color-primary-hover: #EA580C;

@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <base target="_self">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>College Profile Dashboard</title>
-    <meta name="description" content="Dynamic profile page for college students, faculty and admin">
+    <title>Student Profile Dashboard</title>
+    <meta name="description" content="Dynamic profile page for college students">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script>
@@ -212,7 +211,7 @@
                 <div class="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center animate-float">
                     <i class="fas fa-graduation-cap text-white"></i>
                 </div>
-                <span class="text-primary font-bold text-2xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">CodeCampus</span>
+                <span class="text-primary font-bold text-2xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Name</span>
             </div>
             <div class="flex items-center space-x-4 animate-fade-in">
                 <span id="userBadge" class="px-4 py-2 bg-gradient-to-r from-primary to-accent text-white rounded-full text-sm font-medium shadow-md hover-lift animate-pulse-soft">Student</span>
@@ -248,7 +247,7 @@
                             <i class="fas fa-camera"></i>
                         </button>
                     </div>
-                    <h2 id="profileName" class="text-xl font-bold text-dark mt-4 animate-fade-in">John Doe</h2>
+                    <h2 id="profileName" class="text-xl font-bold text-dark mt-4 animate-fade-in">Rahul Sharma</h2>
                     <p id="profileRole" class="text-sm text-primary font-medium mb-2 animate-fade-in">Student</p>
                     <div class="w-full border-t border-orange-200 my-4 animate-fade-in"></div>
                     
@@ -258,7 +257,9 @@
                             <p id="profileRoll" class="text-sm font-semibold text-dark">CS2023001</p>
                         </div>
                         <div class="hover:bg-orange-50 p-2 rounded-lg transition-all duration-300">
-                            <p class="text-xs text-gray-400 font-medium">Department</p>
+                            <p class
+
+="text-xs text-gray-400 font-medium">Department</p>
                             <p id="profileDept" class="text-sm font-semibold text-dark">Computer Science</p>
                         </div>
                         <div class="hover:bg-orange-50 p-2 rounded-lg transition-all duration-300">
@@ -267,7 +268,7 @@
                         </div>
                         <div class="hover:bg-orange-50 p-2 rounded-lg transition-all duration-300">
                             <p class="text-xs text-gray-400 font-medium">Email</p>
-                            <p id="profileEmail" class="text-sm font-semibold text-dark break-words">john.doe@college.edu</p>
+                            <p id="profileEmail" class="text-sm font-semibold text-dark break-words">rahul.sharma@college.edu</p>
                         </div>
                     </div>
                 </div>
@@ -279,189 +280,47 @@
                 <div class="bg-white rounded-2xl shadow-xl p-6 card-hover animate-slide-up border border-orange-100" style="animation-delay: 0.1s">
                     <div class="flex justify-between items-center mb-6">
                         <h3 class="text-lg font-bold text-dark bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent text-glow">Performance Stats</h3>
-                       
                     </div>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="grid grid-cols-milli
+2 md:grid-cols-4 gap-4">
                         <div class="bg-gradient-to-br from-orange-100 to-orange-200 p-6 rounded-xl text-center stat-card transition-all duration-500 hover:shadow-lg border border-orange-200">
-                            <p class="text-3xl font-bold text-primary animate-bounce-soft number-counter text-glow" id="problemsSolved">0</p>
+                            <p class="text-3xl font-bold text-primary animate-bounce-soft number-counter text-glow" id="problemsSolved">42</p>
                             <p class="text-xs text-gray-600 font-medium mt-2">Problems Solved</p>
                         </div>
                         <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-xl text-center stat-card transition-all duration-500 hover:shadow-lg border border-orange-200">
-                            <p class="text-3xl font-bold text-orange-600 animate-bounce-soft number-counter text-glow" id="testsTaken" style="animation-delay: 0.1s">0</p>
+                            <p class="text-3xl font-bold text-orange-600 animate-bounce-soft number-counter text-glow" id="testsTaken" style="animation-delay: 0.1s">8</p>
                             <p class="text-xs text-gray-600 font-medium mt-2">Tests Taken</p>
                         </div>
                         <div class="bg-gradient-to-br from-yellow-50 to-orange-100 p-6 rounded-xl text-center stat-card transition-all duration-500 hover:shadow-lg border border-orange-200">
-                            <p class="text-3xl font-bold text-orange-500 animate-bounce-soft number-counter text-glow" id="avgScore" style="animation-delay: 0.2s">0</p>
+                            <p class="text-3xl font-bold text-orange-500 animate-bounce-soft number-counter text-glow" id="avgScore" style="animation-delay: 0.2s">78</p>
                             <p class="text-xs text-gray-600 font-medium mt-2">Avg. Score</p>
                         </div>
                         <div class="bg-gradient-to-br from-purple-50 to-orange-100 p-6 rounded-xl text-center stat-card transition-all duration-500 hover:shadow-lg border border-orange-200">
-                            <p class="text-3xl font-bold text-purple-600 animate-bounce-soft number-counter text-glow" id="rank" style="animation-delay: 0.3s">0</p>
+                            <p class="text-3xl font-bold text-purple-600 animate-bounce-soft number-counter text-glow" id="rank" style="animation-delay: 0.3s">15</p>
                             <p class="text-xs text-gray-600 font-medium mt-2">Rank</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Dynamic Content Area -->
+                <!-- Recent Activities -->
                 <div id="dynamicContent" class="bg-white rounded-2xl shadow-xl p-6 card-hover animate-slide-up border border-orange-100" style="animation-delay: 0.2s">
-                    <!-- Content will be loaded here based on user type -->
-                    <div id="studentView">
-                        <div class="flex justify-between items-center mb-6">
-                            <h3 class="text-lg font-bold text-dark bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Recent Activities</h3>
-                            
-                        </div>
-                        <div class="space-y-4">
-                            <div class="activity-item flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-orange-50 rounded-xl transition-all duration-300 animate-fade-in border border-orange-100">
-                                <div>
-                                    <p class="text-sm font-semibold text-dark">Solved: Two Sum Problem</p>
-                                    <p class="text-xs text-gray-500 mt-1">2 days ago</p>
-                                </div>
-                                <span class="text-xs px-3 py-1 bg-gradient-to-r from-orange-100 to-orange-200 text-orange-800 rounded-full font-medium animate-pulse-soft">Easy</span>
-                            </div>
-                            <div class="activity-item flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-orange-50 rounded-xl transition-all duration-300 animate-fade-in border border-orange-100" style="animation-delay: 0.1s">
-                                <div>
-                                    <p class="text-sm font-semibold text-dark">Completed: Data Structures Test</p>
-                                    <p class="text-xs text-gray-500 mt-1">1 week ago</p>
-                                </div>
-                                <span class="text-xs px-3 py-1 bg-gradient-to-r from-orange-200 to-orange-300 text-orange-800 rounded-full font-medium animate-pulse-soft">85%</span>
-                            </div>
-                        </div>
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-lg font-bold text-dark bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Recent Activities</h3>
                     </div>
-
-                    <div id="facultyView" class="hidden">
-                        <div class="flex justify-between items-center mb-6">
-                            <h3 class="text-lg font-bold text-dark bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Teaching Dashboard</h3>
-                        
+                    <div class="space-y-4">
+                        <div class="activity-item flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-orange-50 rounded-xl transition-all duration-300 animate-fade-in border border-orange-100">
+                            <div>
+                                <p class="text-sm font-semibold text-dark">Solved: Two Sum Problem</p>
+                                <p class="text-xs text-gray-500 mt-1">2 days ago</p>
+                            </div>
+                            <span class="text-xs px-3 py-1 bg-gradient-to-r from-orange-100 to-orange-200 text-orange-800 rounded-full font-medium animate-pulse-soft">Easy</span>
                         </div>
-                        <div class="space-y-4">
-                            <div class="p-6 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl hover-lift transition-all duration-300 animate-fade-in">
-                                <div class="flex justify-between items-center">
-                                    <div>
-                                        <p class="font-bold text-dark">CS101 - Introduction to Programming</p>
-                                        <p class="text-sm text-gray-600 mt-1">45 Students | 3 Tests Scheduled</p>
-                                    </div>
-                                    <div class="flex space-x-3">
-                                      
-                                    
-                                    </div>
-                                </div>
+                        <div class="activity-item flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-orange-50 rounded-xl transition-all duration-300 animate-fade-in border border-orange-100" style="animation-delay: 0.1s">
+                            <div>
+                                <p class="text-sm font-semibold text-dark">Completed: Data Structures Test</p>
+                                <p class="text-xs text-gray-500 mt-1">1 week ago</p>
                             </div>
-                            <div class="p-6 bg-gradient-to-r from-green-50 to-green-100 rounded-xl hover-lift transition-all duration-300 animate-fade-in" style="animation-delay: 0.1s">
-                                <div class="flex justify-between items-center">
-                                    <div>
-                                        <p class="font-bold text-dark">DS202 - Data Structures</p>
-                                        <p class="text-sm text-gray-600 mt-1">32 Students | 2 Tests Scheduled</p>
-                                    </div>
-                                    <div class="flex space-x-3">
-                                        <button class="text-gray-400 hover:text-primary transition-all duration-300 p-2 rounded-full hover:bg-white">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="text-gray-400 hover:text-red-500 transition-all duration-300 p-2 rounded-full hover:bg-white">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="adminView" class="hidden">
-                        <div class="flex justify-between items-center mb-6">
-                            <h3 class="text-lg font-bold text-dark bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Admin Panel</h3>
-                            <button class="text-gray-400 hover:text-primary transition-all duration-300 p-2 rounded-full hover:bg-orange-50">
-                                <i class="fas fa-cog mr-2"></i> Settings
-                            </button>
-                        </div>
-                        <div class="space-y-6">
-                            <div class="p-6 bg-gradient-to-r from-red-50 to-pink-100 rounded-xl hover-lift transition-all duration-300 animate-fade-in">
-                                <p class="font-bold text-dark text-lg">System Overview</p>
-                                <p class="text-sm text-gray-600 mt-2">120 Students | 8 Faculty | 15 Courses</p>
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div class="p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl hover-lift transition-all duration-300 animate-scale-in">
-                                    <div class="flex justify-between items-center">
-                                        <p class="font-bold text-dark">Create New Test</p>
-                                        <button class="px-4 py-2 bg-gradient-to-r from-primary to-accent text-white rounded-full text-sm font-medium hover:shadow-lg transition-all duration-300 hover:scale-105">Create</button>
-                                    </div>
-                                </div>
-                                <div class="p-6 bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-xl hover-lift transition-all duration-300 animate-scale-in" style="animation-delay: 0.1s">
-                                    <div class="flex justify-between items-center">
-                                        <p class="font-bold text-dark">Manage Users</p>
-                                        <button class="px-4 py-2 bg-gradient-to-r from-primary to-accent text-white rounded-full text-sm font-medium hover:shadow-lg transition-all duration-300 hover:scale-105">Manage</button>
-                                    </div>
-                                </div>
-                                <div class="p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-xl hover-lift transition-all duration-300 animate-scale-in" style="animation-delay: 0.2s">
-                                    <div class="flex justify-between items-center">
-                                        <p class="font-bold text-dark">Course Management</p>
-                                        <button class="px-4 py-2 bg-gradient-to-r from-primary to-accent text-white rounded-full text-sm font-medium hover:shadow-lg transition-all duration-300 hover:scale-105">Manage</button>
-                                    </div>
-                                </div>
-                                <div class="p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl hover-lift transition-all duration-300 animate-scale-in" style="animation-delay: 0.3s">
-                                    <div class="flex justify-between items-center">
-                                        <p class="font-bold text-dark">System Reports</p>
-                                        <button class="px-4 py-2 bg-gradient-to-r from-primary to-accent text-white rounded-full text-sm font-medium hover:shadow-lg transition-all duration-300 hover:scale-105">Generate</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> bg-blue-50 rounded-lg">
-                                <div class="flex justify-between items-center">
-                                    <div>
-                                        <p class="font-medium">CS101 - Introduction to Programming</p>
-                                        <p class="text-sm text-gray-600">45 Students | 3 Tests Scheduled</p>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="p-4 bg-green-50 rounded-lg">
-                                <div class="flex justify-between items-center">
-                                    <div>
-                                        <p class="font-medium">DS202 - Data Structures</p>
-                                        <p class="text-sm text-gray-600">32 Students | 2 Tests Scheduled</p>
-                                    </div>
-                                   
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="adminView" class="hidden">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-lg font-semibold text-dark">Admin Panel</h3>
-                            <button class="text-gray-400 hover:text-primary">
-                                <i class="fas fa-cog"></i> Settings
-                            </button>
-                        </div>
-                        <div class="space-y-4">
-                            <div class="p-4 bg-red-50 rounded-lg">
-                                <p class="font-medium">System Overview</p>
-                                <p class="text-sm text-gray-600">120 Students | 8 Faculty | 15 Courses</p>
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div class="p-4 bg-purple-50 rounded-lg">
-                                    <div class="flex justify-between items-center">
-                                        <p class="font-medium">Create New Test</p>
-                                        <button class="px-3 py-1 bg-primary text-white rounded text-sm">Create</button>
-                                    </div>
-                                </div>
-                                <div class="p-4 bg-yellow-50 rounded-lg">
-                                    <div class="flex justify-between items-center">
-                                        <p class="font-medium">Manage Users</p>
-                                        <button class="px-3 py-1 bg-primary text-white rounded text-sm">Manage</button>
-                                    </div>
-                                </div>
-                                <div class="p-4 bg-green-50 rounded-lg">
-                                    <div class="flex justify-between items-center">
-                                        <p class="font-medium">Course Management</p>
-                                        <button class="px-3 py-1 bg-primary text-white rounded text-sm">Manage</button>
-                                    </div>
-                                </div>
-                                <div class="p-4 bg-blue-50 rounded-lg">
-                                    <div class="flex justify-between items-center">
-                                        <p class="font-medium">System Reports</p>
-                                        <button class="px-3 py-1 bg-primary text-white rounded text-sm">Generate</button>
-                                    </div>
-                                </div>
-                            </div>
+                            <span class="text-xs px-3 py-1 bg-gradient-to-r from-orange-200 to-orange-300 text-orange-800 rounded-full font-medium animate-pulse-soft">85%</span>
                         </div>
                     </div>
                 </div>
@@ -539,7 +398,9 @@
                             <i class="fas fa-eye text-gray-400"></i>
                         </button>
                     </div>
-                    <p class="text-xs text-gray-500 mt-2 flex items-center"><i class="fas fa-info-circle mr-1"></i>Minimum 8 characters</p>
+                    <p class="text-xs text-gray-500 mt-2 flex items-center"><
+
+i class="fas fa-info-circle mr-1"></i>Minimum 8 characters</p>
                 </div>
                 <div class="animate-fade-in" style="animation-delay: 0.2s">
                     <label class="block text-sm font-bold text-gray-700 mb-2">Confirm New Password</label>
@@ -585,6 +446,7 @@
                         <img src="https://picsum.photos/150?random=2" class="w-16 h-16 rounded-full border-3 border-gray-300 cursor-pointer hover:border-primary preset-photo transition-all duration-300 hover:scale-110 hover:shadow-lg" alt="Option 2">
                         <img src="https://picsum.photos/150?random=3" class="w-16 h-16 rounded-full border-3 border-gray-300 cursor-pointer hover:border-primary preset-photo transition-all duration-300 hover:scale-110 hover:shadow-lg" alt="Option 3">
                         <img src="https://picsum.photos/150?random=4" class="w-16 h-16 rounded-full border-3 border-gray-300 cursor-pointer hover:border-primary preset-photo transition-all duration-300 hover:scale-110 hover:shadow-lg" alt="Option 4">
+                    </ Fields: {2}
                     </div>
                 </div>
                 <div class="flex justify-end space-x-4 pt-4">
@@ -618,52 +480,20 @@
     </footer>
 
     <script>
-        // User data for different roles
+        // User data
         const userData = {
-            student: {
-                name: "Rahul Sharma",
-                role: "Student",
-                roll: "CS2023001",
-                dept: "Computer Science",
-                year: "II",
-                email: "rahul.sharma@college.edu",
-                profileImage: "https://picsum.photos/150?random=1",
-                stats: {
-                    problemsSolved: 42,
-                    testsTaken: 8,
-                    avgScore: 78,
-                    rank: 15
-                }
-            },
-            faculty: {
-                name: "Dr. Priya Patel",
-                role: "Faculty",
-                roll: "FAC2021005",
-                dept: "Computer Science",
-                year: "N/A",
-                email: "priya.patel@college.edu",
-                profileImage: "https://picsum.photos/150?random=5",
-                stats: {
-                    problemsSolved: 0,
-                    testsTaken: 0,
-                    avgScore: 0,
-                    rank: 0
-                }
-            },
-            admin: {
-                name: "Admin User",
-                role: "Administrator",
-                roll: "ADMIN001",
-                dept: "Administration",
-                year: "N/A",
-                email: "admin@college.edu",
-                profileImage: "https://picsum.photos/150?random=6",
-                stats: {
-                    problemsSolved: 0,
-                    testsTaken: 0,
-                    avgScore: 0,
-                    rank: 0
-                }
+            name: "Rahul Sharma",
+            role: "Student",
+            roll: "CS2023001",
+            dept: "Computer Science",
+            year: "II",
+            email: "rahul.sharma@college.edu",
+            profileImage: "https://picsum.photos/150?random=1",
+            stats: {
+                problemsSolved: 42,
+                testsTaken: 8,
+                avgScore: 78,
+                rank: 15
             }
         };
 
@@ -679,9 +509,6 @@
         const testsTaken = document.getElementById('testsTaken');
         const avgScore = document.getElementById('avgScore');
         const rank = document.getElementById('rank');
-        const studentView = document.getElementById('studentView');
-        const facultyView = document.getElementById('facultyView');
-        const adminView = document.getElementById('adminView');
         const userBadge = document.getElementById('userBadge');
 
         // Modal elements
@@ -719,9 +546,19 @@
         const successToast = document.getElementById('successToast');
         const toastMessage = document.getElementById('toastMessage');
 
-        // Set initial user role
-        let currentUserType = 'student';
-        let selectedPhotoSrc = '';
+        // Initialize profile data
+        profileName.textContent = userData.name;
+        profileRole.textContent = userData.role;
+        profileRoll.textContent = userData.roll;
+        profileDept.textContent = userData.dept;
+        profileYear.textContent = userData.year;
+        profileEmail.textContent = userData.email;
+        profileImage.src = userData.profileImage;
+        userBadge.textContent = userData.role;
+        problemsSolved.textContent = userData.stats.problemsSolved;
+        testsTaken.textContent = userData.stats.testsTaken;
+        avgScore.textContent = userData.stats.avgScore;
+        rank.textContent = userData.stats.rank;
 
         // Function to show toast
         function showToast(message) {
@@ -732,45 +569,12 @@
             }, 3000);
         }
 
-        // Function to update profile data
-        function updateProfileData(userType) {
-            const user = userData[userType];
-            
-            profileName.textContent = user.name;
-            profileRole.textContent = user.role;
-            profileRoll.textContent = user.roll;
-            profileDept.textContent = user.dept;
-            profileYear.textContent = user.year;
-            profileEmail.textContent = user.email;
-            profileImage.src = user.profileImage;
-            userBadge.textContent = user.role;
-            
-            problemsSolved.textContent = user.stats.problemsSolved;
-            testsTaken.textContent = user.stats.testsTaken;
-            avgScore.textContent = user.stats.avgScore;
-            rank.textContent = user.stats.rank;
-            
-            // Update view visibility
-            studentView.classList.add('hidden');
-            facultyView.classList.add('hidden');
-            adminView.classList.add('hidden');
-            
-            if (userType === 'student') {
-                studentView.classList.remove('hidden');
-            } else if (userType === 'faculty') {
-                facultyView.classList.remove('hidden');
-            } else {
-                adminView.classList.remove('hidden');
-            }
-        }
-
         // Edit Profile functionality
         editProfileBtn.addEventListener('click', () => {
-            const user = userData[currentUserType];
-            editName.value = user.name;
-            editEmail.value = user.email;
-            editDept.value = user.dept;
-            editYear.value = user.year;
+            editName.value = userData.name;
+            editEmail.value = userData.email;
+            editDept.value = userData.dept;
+            editYear.value = userData.year;
             editProfileModal.classList.remove('hidden');
         });
 
@@ -798,11 +602,8 @@
         // Save profile changes
         profileForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            
-            // Only update the year since other fields are readonly
-            profileYear.textContent = editYear.value;
-            userData[currentUserType].year = editYear.value;
-            
+            userData.year = editYear.value;
+            profileYear.textContent = userData.year;
             editProfileModal.classList.add('hidden');
             showToast('Profile updated successfully!');
         });
@@ -845,13 +646,13 @@
                 return;
             }
             
-            // In a real application, you would send this to the backend
             changePasswordModal.classList.add('hidden');
             passwordForm.reset();
             showToast('Password changed successfully!');
         });
 
         // Profile photo functionality
+        let selectedPhotoSrc = '';
         changePhotoBtn.addEventListener('click', () => {
             previewImage.src = profileImage.src;
             selectedPhotoSrc = profileImage.src;
@@ -862,7 +663,7 @@
         photoInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (file) {
-                if (file.size > 5 * 1024 * 1024) { // 5MB limit
+                if (file.size > 5 * 1024 * 1024) {
                     alert('File size must be less than 5MB');
                     return;
                 }
@@ -879,14 +680,10 @@
         // Handle preset photo selection
         presetPhotos.forEach(photo => {
             photo.addEventListener('click', () => {
-                // Remove border from all preset photos
                 presetPhotos.forEach(p => p.classList.remove('border-primary'));
                 presetPhotos.forEach(p => p.classList.add('border-gray-300'));
-                
-                // Add border to selected photo
                 photo.classList.remove('border-gray-300');
                 photo.classList.add('border-primary');
-                
                 selectedPhotoSrc = photo.src;
                 previewImage.src = selectedPhotoSrc;
             });
@@ -896,7 +693,7 @@
         savePhoto.addEventListener('click', () => {
             if (selectedPhotoSrc) {
                 profileImage.src = selectedPhotoSrc;
-                userData[currentUserType].profileImage = selectedPhotoSrc;
+                userData.profileImage = selectedPhotoSrc;
                 profilePhotoModal.classList.add('hidden');
                 showToast('Profile photo updated successfully!');
             }
@@ -921,16 +718,6 @@
                 }
             });
         });
-
-        // Initialize with current user type
-        updateProfileData(currentUserType);
-
-        // For demo purposes, you can uncomment these lines to test different user types:
-        // currentUserType = 'faculty';
-        // updateProfileData(currentUserType);
-        
-        // currentUserType = 'admin';
-        // updateProfileData(currentUserType);
     </script>
 </body>
 </html>
