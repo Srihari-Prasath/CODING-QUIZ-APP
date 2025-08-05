@@ -265,7 +265,9 @@
 
 
     <?php include('./resource/api.php') ?>
+    <?php
 
+    include('./resource/session.php') ?>
 
     <!-- login  -->
     <script>
@@ -279,23 +281,26 @@
             if (!roll_no || !password || !selectedRole) {
                 alert("Please fill in all fields including role.");
                 return;
-            } 
+            }
 
             try {
                 const response = await fetch('<?php echo $api; ?>auth/authRoutes.php?route=login', {
-                    method: 'POST', 
-                      credentials: 'include',
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify({
                         roll_no,
                         password
                     })
-                    
+
                 });
 
                 const data = await response.json();
-                  console.log(data) 
+                console.log(data)
                 if (response.ok && data.user) {
-         
+
                     if (data.user.role !== selectedRole) {
                         alert("Selected role does not match your account role.");
                         return;
@@ -306,7 +311,7 @@
                             window.location.href = './student/';
                             break;
                         case 'faculty':
-                            window.location.href = './faculty/home.html';
+                            window.location.href = './staff/';
                             break;
                         case 'hod':
                             window.location.href = './hod/panel.html';
@@ -329,6 +334,8 @@
             }
         });
     </script>
+
+
 
 
 

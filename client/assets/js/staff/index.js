@@ -1,84 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff Dashboard</title>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="../assets/css/staff/dashboard.css">
-</head>
-
-<body>
-    <?php include('./header.php') ?>
-
-    <main class="container">
-        <?php include('./nav.php') ?>
-        <div class="welcome">
-            <h2>Welcome back, Alex! 👋</h2>
-            <p>Manage your quizzes and monitor student progress.</p>
-        </div>
-
-        <div class="stats-grid">
-            <div class="stats-card">
-                <i data-lucide="book-open"></i>
-                <div>
-                    <h3>Quizzes Created</h3>
-                    <p>8</p>
-                    <p class="description">This semester</p>
-                    <p class="trend">+12% from last semester</p>
-                </div>
-            </div>
-            <div class="stats-card">
-                <i data-lucide="users"></i>
-                <div>
-                    <h3>Students Evaluated</h3>
-                    <p>156</p>
-                    <p class="description">Total this month</p>
-                    <p class="trend">+8% from last month</p>
-                </div>
-            </div>
-            <div class="stats-card">
-                <i data-lucide="trending-up"></i>
-                <div>
-                    <h3>Avg. Performance</h3>
-                    <p>78%</p>
-                    <p class="description">Class average</p>
-                    <p class="trend">+3% from last term</p>
-                </div>
-            </div>
-            <div class="stats-card">
-                <i data-lucide="clock"></i>
-                <div>
-                    <h3>Active Quizzes</h3>
-                    <p>3</p>
-                    <p class="description">Currently running</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="filters">
-            <div class="search-container">
-                <i data-lucide="search"></i>
-                <input id="search-input" type="text" placeholder="Search quizzes...">
-            </div>
-            <select id="filter-status">
-                <option value="all">All Quizzes</option>
-                <option value="active">Active</option>
-                <option value="upcoming">Upcoming</option>
-                <option value="completed">Completed</option>
-            </select>
-            <button><i data-lucide="bar-chart-3"></i> Analytics</button>
-        </div>
-
-        <div id="quiz-grid" class="quiz-grid"></div>
-    </main>
-
-    
-    <?php include('../resource/api.php') ?>
-    <script>
-        // Mock data
-        const quizzes = [{
+        const quizzes = [
+            {
                 id: "1",
                 title: "Data Structures & Algorithms",
                 subject: "Computer Science",
@@ -115,13 +36,13 @@
 
         lucide.createIcons();
 
-
+        
         function renderQuizzes(searchTerm = '', filterStatus = 'all') {
             const quizGrid = document.getElementById('quiz-grid');
             quizGrid.innerHTML = '';
             const filteredQuizzes = quizzes.filter(quiz => {
                 const matchesSearch = quiz.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    quiz.subject.toLowerCase().includes(searchTerm.toLowerCase());
+                                     quiz.subject.toLowerCase().includes(searchTerm.toLowerCase());
                 const matchesFilter = filterStatus === 'all' || quiz.status === filterStatus;
                 return matchesSearch && matchesFilter;
             });
@@ -159,7 +80,7 @@
             lucide.createIcons();
         }
 
-
+       
         document.getElementById('search-input').addEventListener('input', (e) => {
             renderQuizzes(e.target.value, document.getElementById('filter-status').value);
         });
@@ -168,21 +89,11 @@
             renderQuizzes(document.getElementById('search-input').value, e.target.value);
         });
 
-
+       
         function manageQuiz(quizId) {
             alert(`Managing quiz ID: ${quizId}`);
-
+            
         }
 
-
+        
         renderQuizzes();
-    </script>
-
-    <!-- logout  -->
-    <?php include('../resource/logout.php') ?>
-    <!-- session end  -->
-    <?php include('../resource/check_session.php') ?>
-
-</body>
-
-</html>

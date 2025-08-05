@@ -1,5 +1,5 @@
 <?php
-
+require_once '../../helpers/check-session.php';
 require_once '../../../controllers/faculty/test/testController.php';
 
 header("Access-Control-Allow-Origin: *");

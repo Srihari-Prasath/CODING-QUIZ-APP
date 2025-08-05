@@ -10,22 +10,7 @@
 </head>
 
 <body>
-    <header>
-        <div class="container header-content">
-            <div>
-                <h1>Staff Dashboard</h1>
-                <p>Manage quizzes and monitor student progress</p>
-            </div>
-            <div class="profile">
-                <img src="/placeholder-avatar.jpg" alt="Profile">
-                <div class="profile-info">
-                    <p class="name">Alex Thompson</p>
-                    <p class="role">Faculty</p>
-                </div>
-                <span id="logout-btn" class="logout-btn"><i data-lucide="log-out"></i></span>
-            </div>
-        </div>
-    </header>
+    <?php include('./header.php') ?>
 
     <main class="container">
         <?php include('./nav.php') ?>
@@ -41,7 +26,7 @@
 
             <div class="form-group">
                 <label>Upload Questions File (CSV)</label>
-               <input type="file" name="questionsFile" id="questionsFile" accept=".xlsx, .xlsm, .csv" required>
+                <input type="file" name="questionsFile" id="questionsFile" accept=".xlsx, .xlsm, .csv" required>
 
             </div>
             <button type="submit">Upload Questions</button>
@@ -77,38 +62,37 @@
                 console.error('Error fetching quiz list:', err);
             }
         });
-
-
-
-       
     </script>
 
 
     <script>
-document.getElementById('upload-questions-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const form = document.getElementById('upload-questions-form');
-    const formData = new FormData(form);
+        document.getElementById('upload-questions-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = document.getElementById('upload-questions-form');
+            const formData = new FormData(form);
 
-    try {
-        const response = await fetch('<?php echo $api; ?>faculty/question/questionRoutes.php', {
-            method: 'POST',
-            body: formData
+            try {
+                const response = await fetch('<?php echo $api; ?>faculty/question/questionRoutes.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                alert(result.message || result.error);
+
+                if (result.message) {
+                    form.reset();
+                }
+            } catch (error) {
+                console.error('Request failed:', error);
+            }
         });
+    </script>
 
-        const result = await response.json();
-        alert(result.message || result.error);
-
-        if (result.message) {
-            form.reset();
-        }
-    } catch (error) {
-        console.error('Request failed:', error);
-    }
-});
-</script>
-
-
+    <!-- logout  -->
+    <?php include('../resource/logout.php') ?>
+    <!-- session end  -->
+    <?php include('../resource/check_session.php') ?>
 </body>
 
 </html>
