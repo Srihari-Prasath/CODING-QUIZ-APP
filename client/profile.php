@@ -7,6 +7,7 @@
     <meta name="description" content="Dynamic profile page for college students">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="./assets/css/profile.css">
     <script>
         tailwind.config = {
             theme: {
@@ -68,141 +69,6 @@
             }
         }
     </script>
-    <style>
-        .shimmer-effect {
-            background: linear-gradient(90deg, transparent, rgba(255, 107, 53, 0.1), transparent);
-            background-size: 200% 100%;
-            animation: shimmer 2s linear infinite;
-        }
-        
-        .glass-effect {
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.9);
-        }
-        
-        .gradient-border {
-            position: relative;
-            background: linear-gradient(45deg, #ff6b35, #ff8c42, #ff6b35);
-            background-size: 200% 200%;
-            animation: shimmer 3s ease infinite;
-        }
-        
-        .hover-lift {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .hover-lift:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.2);
-        }
-        
-        .card-hover {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .card-hover:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.15);
-        }
-        
-        .stat-card {
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.6s;
-        }
-        
-        .stat-card:hover::before {
-            left: 100%;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-6px) scale(1.05);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-        }
-        
-        .activity-item {
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .activity-item::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 4px;
-            background: linear-gradient(to bottom, #ff6b35, #ff8c42);
-            transform: scaleY(0);
-            transition: transform 0.3s ease;
-        }
-        
-        .activity-item:hover::before {
-            transform: scaleY(1);
-        }
-        
-        .activity-item:hover {
-            transform: translateX(8px);
-            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.15);
-        }
-        
-        .modal-backdrop {
-            animation: fadeInBackdrop 0.3s ease;
-        }
-        
-        @keyframes fadeInBackdrop {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .input-focus {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .input-focus:focus {
-            transform: scale(1.02);
-            box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.1);
-        }
-        
-        .button-press {
-            transition: all 0.1s ease;
-        }
-        
-        .button-press:active {
-            transform: scale(0.98);
-        }
-        
-        .text-glow {
-            text-shadow: 0 0 10px rgba(255, 107, 53, 0.3);
-        }
-        
-        .number-counter {
-            animation: countUp 1s ease-out;
-        }
-        
-        @keyframes countUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px) scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-    </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
     <header class="bg-white shadow-lg border-b-2 border-orange-100 animate-slide-down">
@@ -222,7 +88,6 @@
 
     <main class="container mx-auto px-4 py-8">
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            <!-- Profile Card -->
             <div class="lg:col-span-1 bg-white rounded-2xl shadow-xl p-6 relative card-hover animate-slide-up border border-orange-100">
                 <div class="absolute top-4 right-4 flex space-x-2">
                     <button id="editProfileBtn" class="text-gray-400 hover:text-primary transition-all duration-300 p-2 rounded-full hover:bg-orange-50 animate-bounce-soft button-press" title="Edit Profile">
@@ -257,9 +122,7 @@
                             <p id="profileRoll" class="text-sm font-semibold text-dark">CS2023001</p>
                         </div>
                         <div class="hover:bg-orange-50 p-2 rounded-lg transition-all duration-300">
-                            <p class
-
-="text-xs text-gray-400 font-medium">Department</p>
+                            <p class="text-xs text-gray-400 font-medium">Department</p>
                             <p id="profileDept" class="text-sm font-semibold text-dark">Computer Science</p>
                         </div>
                         <div class="hover:bg-orange-50 p-2 rounded-lg transition-all duration-300">
@@ -274,15 +137,12 @@
                 </div>
             </div>
 
-            <!-- Main Content -->
             <div class="lg:col-span-3 space-y-6">
-                <!-- Stats Card -->
                 <div class="bg-white rounded-2xl shadow-xl p-6 card-hover animate-slide-up border border-orange-100" style="animation-delay: 0.1s">
                     <div class="flex justify-between items-center mb-6">
                         <h3 class="text-lg font-bold text-dark bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent text-glow">Performance Stats</h3>
                     </div>
-                    <div class="grid grid-cols-milli
-2 md:grid-cols-4 gap-4">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div class="bg-gradient-to-br from-orange-100 to-orange-200 p-6 rounded-xl text-center stat-card transition-all duration-500 hover:shadow-lg border border-orange-200">
                             <p class="text-3xl font-bold text-primary animate-bounce-soft number-counter text-glow" id="problemsSolved">42</p>
                             <p class="text-xs text-gray-600 font-medium mt-2">Problems Solved</p>
@@ -302,7 +162,6 @@
                     </div>
                 </div>
 
-                <!-- Recent Activities -->
                 <div id="dynamicContent" class="bg-white rounded-2xl shadow-xl p-6 card-hover animate-slide-up border border-orange-100" style="animation-delay: 0.2s">
                     <div class="flex justify-between items-center mb-6">
                         <h3 class="text-lg font-bold text-dark bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Recent Activities</h3>
@@ -328,7 +187,6 @@
         </div>
     </main>
 
-    <!-- Edit Profile Modal -->
     <div id="editProfileModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center hidden z-50 backdrop-blur-sm">
         <div class="bg-white rounded-2xl p-8 w-full max-w-md shadow-2xl animate-scale-in glass-effect border border-orange-200">
             <div class="flex justify-between items-center mb-6">
@@ -371,7 +229,6 @@
         </div>
     </div>
 
-    <!-- Change Password Modal -->
     <div id="changePasswordModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center hidden z-50 backdrop-blur-sm modal-backdrop">
         <div class="bg-white rounded-2xl p-8 w-full max-w-md shadow-2xl animate-scale-in glass-effect border border-orange-200 card-hover">
             <div class="flex justify-between items-center mb-6">
@@ -398,9 +255,7 @@
                             <i class="fas fa-eye text-gray-400"></i>
                         </button>
                     </div>
-                    <p class="text-xs text-gray-500 mt-2 flex items-center"><
-
-i class="fas fa-info-circle mr-1"></i>Minimum 8 characters</p>
+                    <p class="text-xs text-gray-500 mt-2 flex items-center"><i class="fas fa-info-circle mr-1"></i>Minimum 8 characters</p>
                 </div>
                 <div class="animate-fade-in" style="animation-delay: 0.2s">
                     <label class="block text-sm font-bold text-gray-700 mb-2">Confirm New Password</label>
@@ -419,7 +274,6 @@ i class="fas fa-info-circle mr-1"></i>Minimum 8 characters</p>
         </div>
     </div>
 
-    <!-- Profile Photo Modal -->
     <div id="profilePhotoModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center hidden z-50 backdrop-blur-sm">
         <div class="bg-white rounded-2xl p-8 w-full max-w-md shadow-2xl animate-scale-in glass-effect border border-orange-200">
             <div class="flex justify-between items-center mb-6">
@@ -446,7 +300,6 @@ i class="fas fa-info-circle mr-1"></i>Minimum 8 characters</p>
                         <img src="https://picsum.photos/150?random=2" class="w-16 h-16 rounded-full border-3 border-gray-300 cursor-pointer hover:border-primary preset-photo transition-all duration-300 hover:scale-110 hover:shadow-lg" alt="Option 2">
                         <img src="https://picsum.photos/150?random=3" class="w-16 h-16 rounded-full border-3 border-gray-300 cursor-pointer hover:border-primary preset-photo transition-all duration-300 hover:scale-110 hover:shadow-lg" alt="Option 3">
                         <img src="https://picsum.photos/150?random=4" class="w-16 h-16 rounded-full border-3 border-gray-300 cursor-pointer hover:border-primary preset-photo transition-all duration-300 hover:scale-110 hover:shadow-lg" alt="Option 4">
-                    </ Fields: {2}
                     </div>
                 </div>
                 <div class="flex justify-end space-x-4 pt-4">
@@ -457,7 +310,6 @@ i class="fas fa-info-circle mr-1"></i>Minimum 8 characters</p>
         </div>
     </div>
 
-    <!-- Success Toast -->
     <div id="successToast" class="fixed top-6 right-6 bg-gradient-to-r from-primary to-accent text-white px-6 py-4 rounded-2xl shadow-2xl transform translate-x-full transition-all duration-500 z-50 animate-bounce-soft">
         <div class="flex items-center">
             <div class="bg-white bg-opacity-20 rounded-full p-1 mr-3 animate-pulse-soft">
