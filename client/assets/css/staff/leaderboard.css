@@ -1,8 +1,6 @@
-  :root {
+ :root {
             --color-primary: #F97316;
             --color-primary-hover: #EA580C;
-            --color-background: #FFFFFF;
-            --color-surface: #F9FAFB;
             --color-text-primary: #111827;
             --color-text-secondary: #6B7280;
             --color-shadow: rgba(0, 0, 0, 0.08);
@@ -13,19 +11,17 @@
         }
 
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
             position: relative;
         }
-        
-        /* Ensure content stays above confetti */
+
         header, main {
             position: relative;
             z-index: 10000;
         }
-        
+
         .avatar-badge {
             width: 48px;
             height: 48px;
@@ -34,17 +30,16 @@
             justify-content: center;
             border-radius: 50%;
             font-weight: 600;
-            color: white;
         }
-        
+
         .rank-1 .avatar-badge {
-            background: linear-gradient(135deg, #fcd34d, #f59e0b);
+            background: linear-gradient(135deg, #ffc916, #f59e0b);
         }
-        
+
         .rank-2 .avatar-badge {
             background: linear-gradient(135deg, #e5e7eb, #9ca3af);
         }
-        
+
         .rank-4 .avatar-badge,
         .rank-5 .avatar-badge,
         .rank-6 .avatar-badge,
@@ -54,44 +49,40 @@
         .rank-10 .avatar-badge {
             background: linear-gradient(135deg, #93c5fd, #3b82f6);
         }
-        
+
         .leaderboard-item {
             transition: all 0.4s ease;
             position: relative;
             padding: 16px;
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.9);
-            overflow: hidden; /* Ensure confetti stays within card */
+            overflow: hidden;
+            background: transparent;
         }
-        
-        .leaderboard-item:hover {
+
+        .trophy-img:hover, .medal-img:hover, .award-img:hover {
             transform: translateY(-10px) scale(1.1);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+            filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.2));
         }
-        
+
         .live-pulse {
             animation: pulse 2s infinite;
         }
-        
+
         @keyframes pulse {
             0% { opacity: 1; }
             50% { opacity: 0.5; }
             100% { opacity: 1; }
         }
-        
-        
+
         .trophy-img {
             width: 120px;
-            height:  120px;
+            height: 120px;
             animation: bounce 1.2s infinite, glow 1.8s infinite, subtleRotate 3s infinite;
             margin-bottom: 8px;
             position: relative;
-            z-index: 10; 
-            
-            
+            z-index: 10;
         }
-        
-        /* Medal Animation for 2nd Place */
+
         .medal-img {
             width: 74px;
             height: 74px;
@@ -100,8 +91,7 @@
             position: relative;
             z-index: 10;
         }
-        
-        /* Award Animation for 3rd Place */
+
         .award-img {
             width: 74px;
             height: 74px;
@@ -109,18 +99,17 @@
             position: relative;
             z-index: 10;
         }
-        
+
         @keyframes pulseFade {
             0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.2); opacity: 0.65; }
+            50% { transform: scale(1.2); opacity: 1; }
         }
-        
+
         @keyframes colorShift {
             0%, 100% { filter: hue-rotate(0deg); }
             50% { filter: hue-rotate(30deg); }
         }
 
-        /* Name Animation Styles */
         .leaderboard-name {
             font-family: 'Inter', sans-serif;
             font-weight: 700;
@@ -130,7 +119,7 @@
             position: relative;
             display: inline-block;
             animation: nameGlow 2s ease-in-out infinite;
-            z-index: 10; /* Above confetti */
+            z-index: 10;
         }
 
         .rank-1 .leaderboard-name {
@@ -145,18 +134,18 @@
             }
             50% {
                 transform: scale(1.05);
-                opacity: 0.9;
+                opacity: 1;
             }
         }
 
-        /* Parallax Confetti Animation for Containers inside Cards */
         .leaderboard-item .container {
             position: absolute;
             width: 100%;
             height: 100%;
             top: 0;
             left: 0;
-            z-index: 1; /* Behind card content */
+            z-index: 1;
+            background: transparent;
         }
 
         .leaderboard-item .container .parallax {
@@ -178,13 +167,11 @@
             animation: confetti linear infinite;
         }
 
-        /* Animation keyframes for confetti */
         @keyframes confetti {
             0% { top: 100%; }
             100% { top: -100%; }
         }
 
-        /* Confetti layers with varying delays and durations */
         .leaderboard-item .container .parallax img:nth-child(1) {
             animation-delay: -160s;
             animation-duration: 40s;
@@ -193,19 +180,4 @@
         .leaderboard-item .container .parallax img:nth-child(2) {
             animation-delay: -120s;
             animation-duration: 80s;
-        }
-
-        .leaderboard-item .container .parallax img:nth-child(3) {
-            animation-delay: -80s;
-            animation-duration: 120s;
-        }
-
-        .leaderboard-item .container .parallax img:nth-child(4) {
-            animation-delay: -40s;
-            animation-duration: 160s;
-        }
-
-        .leaderboard-item .container .parallax img:nth-child(5) {
-            animation-delay: 0s;
-            animation-duration: 200s;
         }
