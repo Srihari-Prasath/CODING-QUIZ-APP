@@ -1,0 +1,38 @@
+/* --- Reset & Center --- */
+*{margin:0;padding:0;box-sizing:border-box;}
+body,html{height:100%;font-family:'Segoe UI',sans-serif;background:#F97316;}
+
+/* --- Canvases --- */
+canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;}
+
+/* --- Center Card --- */
+.center-card{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  background:rgba(245, 244, 244, 0.08);
+  backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:30px;
+  padding:60px 80px;
+  text-align:center;
+  color:#fff;
+  animation:zoom 2s ease both;
+}
+@keyframes zoom{
+  0%{transform:translate(-50%,-50%) scale(.4) rotate(-10deg);opacity:0}
+  100%{transform:translate(-50%,-50%) scale(1) rotate(0deg);opacity:1}
+}
+
+/* --- Typography --- */
+.title{font-size:3.5rem;font-weight:700;background:linear-gradient(45deg,#f0efee,#d7cfce);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.subtitle{font-size:1.5rem;opacity:.9;margin:.5rem 0 1rem;}
+.score{font-size:5rem;font-weight:900;color:#ffa502;}
+.score small{font-size:2rem;opacity:.7;}
+
+/* --- Buttons --- */
+.btn{display:inline-block;margin:.8rem .4rem;padding:14px 36px;border-radius:50px;font-weight:600;text-decoration:none;transition:.3s;}
+.btn-primary{background:#ff416c;color:#fff;box-shadow:0 0 20px rgba(255,65,108,.6);}
+.btn-primary:hover{transform:translateY(-3px) scale(1.05);}
+.btn-secondary{background:transparent;color:#ff416c;border:2px solid #ff416c;}
+.btn-secondary:hover{background:#ff416c;color:#fff;}
