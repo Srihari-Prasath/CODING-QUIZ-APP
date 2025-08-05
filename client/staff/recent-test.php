@@ -49,11 +49,10 @@
 "
 onmouseover="this.style.boxShadow='0 25px 50px -12px rgb(0 0 0 / 0.25)';this.style.transform='scale(1.02)'"
 onmouseout="this.style.boxShadow='0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)';this.style.transform='scale(1)'">
-  <!-- Content will be dynamically inserted here -->
 </div>
 
 <script>
-// Quiz data (in a real app, this would come from an API)
+
 const quizData = {
   title: "Data Structures Quiz",
   description: "Covers Linked Lists, Trees, and Graphs fundamentals.",
@@ -70,7 +69,7 @@ const quizData = {
   }
 };
 
-// Function to render the quiz card
+
 function renderQuizCard() {
   const quizCard = document.getElementById('quiz-card');
   
@@ -205,22 +204,7 @@ function renderQuizCard() {
                 console.error('Error fetching recent tests:', err);
             }
         });
-        // Initialize the quiz card
-document.addEventListener('DOMContentLoaded', renderQuizCard);
-
-// In a real application, you would fetch data like this:
-/*
-async function fetchQuizData() {
-  try {
-    const response = await fetch('your-api-endpoint');
-    const data = await response.json();
-    quizData = data;
-    renderQuizCard();
-  } catch (error) {
-    console.error('Error fetching quiz data:', error);
-  }
-}
-*/
+        
     </script>
 </body>
 </html>

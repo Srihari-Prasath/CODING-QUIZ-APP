@@ -89,7 +89,7 @@
     </main>
 
     <script>
-        // Mock data (replace with backend fetch)
+        // Mock data
         const quizzes = [
             {
                 id: "1",
