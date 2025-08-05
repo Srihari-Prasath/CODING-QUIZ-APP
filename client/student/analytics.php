@@ -25,12 +25,12 @@
                 <p class="text-gray-600">Visualize your performance and track progress</p>
             </div>
             <div class="flex items-center space-x-4">
-                <img src="/placeholder-avatar.jpg" alt="Profile" class="w-10 h-10 rounded-full">
+                <a href="../profile.php"><img src="../assets/images/Infinity castle desktop wallpaper.jpg" alt="Profile" class="w-10 h-10 rounded-full"></a>
                 <div>
                     <p class="text-gray-800 font-medium">Alex Thompson</p>
                     <p class="text-gray-600 text-sm">Student</p>
                 </div>
-                <a href="dashboard.php" style="text-decoration: none;" ><button id="logout-btn" class="text-gray-600 hover:text-gray-800">
+                <a href="../student/dashboard.php" style="text-decoration: none;" ><button id="logout-btn" class="text-gray-600 hover:text-gray-800">
                     <i data-lucide="log-out"></i>
                 </button></a>
             </div>

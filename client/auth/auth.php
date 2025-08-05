@@ -18,8 +18,6 @@
         
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.9), rgba(247, 147, 30, 0.85), rgba(255, 140, 66, 0.9)),
-                        url('https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover fixed;
             min-height: 100vh;
             background-blend-mode: overlay;
             position: relative;
