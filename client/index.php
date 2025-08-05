@@ -191,8 +191,8 @@
     <div class="w-full max-w-4xl mx-auto relative z-10">
         <!-- Toggle Buttons -->
         <div class="flex mb-8 mt-5 rounded-full bg-white shadow-md overflow-hidden w-fit mx-auto">
-            <button id="loginToggle" class="toggle-btn active px-6 py-2 font-medium rounded-full transition-all duration-300">Login</button>
-            <button id="registerToggle" class="toggle-btn px-6 py-2 font-medium rounded-full transition-all duration-300">Register</button>
+            <a href="./"><button id="loginToggle" class="toggle-btn active px-6 py-2 font-medium rounded-full transition-all duration-300">Login</button></a>
+            <a href="./register.php"><button id="registerToggle" class="toggle-btn px-6 py-2 font-medium rounded-full transition-all duration-300">Register</button></a>
         </div>
 
         <!-- Login Form -->
@@ -203,9 +203,9 @@
 
             <form class="space-y-6 group">
                 <div>
-                    <label for="loginEmail" class="block text-sm font-medium text-gray-700 mb-1">Student ID </label>
+                    <label for="loginEmail" class="block text-sm font-medium text-gray-700 mb-1">Roll No </label>
                     <div class="relative">
-                        <input type="text" id="loginEmail" class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="student@university.edu">
+                        <input type="text" id="loginEmail" class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="921022205011">
                         <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                             <i class="fas fa-envelope text-gray-400"></i>
                         </div>
@@ -222,9 +222,22 @@
                     </div>
                 </div>
 
+
+                <div>
+                    <label for="role" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <div class="relative">
+                        <select name="user_role" id="user_role" class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" required>
+                            <option value="" selected disabled>-- Select Role --</option>
+                            <option value="student">Student</option>
+                            <option value="faculty">Faculty</option>
+                            <option value="hod">HOD</option>
+                            <option value="vice_principal">Vice Principal</option>
+                            <option value="principal">Principal</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="flex items-center justify-between">
-
-
                     <a href="#" class="text-sm font-medium text-[var(--color-primary)] hover:text-[var(--color-primary-hover)]">Forgot password?</a>
                 </div>
 
@@ -238,105 +251,85 @@
             </form>
         </div>
 
-        <!-- Register Form  -->
-        <div id="registerForm" class="form-container rounded-2xl shadow-xl p-8 hidden animate-fade">
-            <div class="text-center mb-8">
-                <h1 class="text-3xl font-bold text-[var(--color-primary)] mb-2">Create Account</h1>
-            </div>
-
-
-            <form class="space-y-6">
-                <div class="grid-form">
-                    <div>
-                        <label for="studentId" class="block text-sm font-medium text-gray-700 mb-1">Student ID*</label>
-                        <input type="text" id="studentId" class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="921022205011" required>
-                    </div>
-                    <div>
-                        <label for="firstName" class="block text-sm font-medium text-gray-700 mb-1">First Name*</label>
-                        <input type="text" id="firstName" class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="John" required>
-                    </div>
-
-
-                    <div>
-                        <label for="registerEmail" class="block text-sm font-medium text-gray-700 mb-1">Email*</label>
-                        <input type="email" id="registerEmail" class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="student@university.edu" required>
-                    </div>
-
-                    <div>
-                        <label for="year" class="block text-sm font-medium text-gray-700 mb-1">Year*</label>
-                        <input type="text" id="year" class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="year" required>
-                    </div>
-                    <div>
-                        <label for="department" class="block text-sm font-medium text-gray-700 mb-1">Department*</label>
-                        <input type="text" id="department" class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="department" required>
-                    </div>
-
-                    <div>
-                        <label for="registerPassword" class="block text-sm font-medium text-gray-700 mb-1">Password*</label>
-                        <div class="relative">
-                            <input type="password" id="registerPassword" class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="••••••••" required oninput="checkPasswordStrength()">
-                            <button type="button" class="password-toggle absolute inset-y-0 right-0 flex items-center pr-3" onclick="togglePassword('registerPassword', 'registerEyeIcon')">
-                                <i id="registerEyeIcon" class="fas fa-eye text-gray-400 hover:text-[var(--color-primary)]"></i>
-                            </button>
-                        </div>
-                        <div class="password-strength">
-                            <div id="strengthBar" class="strength-bar"></div>
-                        </div>
-                        <p id="passwordHint" class="text-xs text-gray-500 mt-1"></p>
-                    </div>
-
-
-                </div>
 
 
 
-                <div class="flex justify-center">
-                    <button type="submit" class="btn-primary py-3 px-4 rounded-lg text-white font-semibold shadow-md transition-all duration-300">
-                        Create Account
-                    </button>
-                </div>
 
 
-            </form>
-        </div>
+
+    </div>
     </div>
 
     <script src="./assets/js/auth/script.js"></script>
 
 
-<!-- register php -->
-   <?php include('./resource/api.php') ?>
 
-<script>
-document.getElementById('studentId').addEventListener('blur', async () => {
-    const rollNo = document.getElementById('studentId').value.trim();
-    if (!rollNo) return;
+    <?php include('./resource/api.php') ?>
 
-    try {
-        const response = await fetch('<?php echo $api; ?>auth/authRoutes.php?route=get-user-by-roll', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ roll_no: rollNo })
+
+    <!-- login  -->
+    <script>
+        document.querySelector('form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const roll_no = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const selectedRole = document.getElementById('user_role').value;
+
+            if (!roll_no || !password || !selectedRole) {
+                alert("Please fill in all fields including role.");
+                return;
+            } 
+
+            try {
+                const response = await fetch('<?php echo $api; ?>auth/authRoutes.php?route=login', {
+                    method: 'POST', 
+                      credentials: 'include',
+                    body: JSON.stringify({
+                        roll_no,
+                        password
+                    })
+                    
+                });
+
+                const data = await response.json();
+                  console.log(data) 
+                if (response.ok && data.user) {
+         
+                    if (data.user.role !== selectedRole) {
+                        alert("Selected role does not match your account role.");
+                        return;
+                    }
+
+                    switch (data.user.role) {
+                        case 'student':
+                            window.location.href = './student/';
+                            break;
+                        case 'faculty':
+                            window.location.href = './faculty/home.html';
+                            break;
+                        case 'hod':
+                            window.location.href = './hod/panel.html';
+                            break;
+                        case 'vice_principal':
+                            window.location.href = './vp/review.html';
+                            break;
+                        case 'principal':
+                            window.location.href = './principal/report.html';
+                            break;
+                        default:
+                            alert("Unknown role.");
+                    }
+                } else {
+                    alert(data.error || "Login failed.");
+                }
+            } catch (error) {
+                console.error("Login error:", error);
+                alert("An unexpected error occurred.");
+            }
         });
+    </script>
 
-        const result = await response.json();
-
-        if (result && result.name) {
-            document.getElementById('firstName').value = result.name || '';
-            document.getElementById('registerEmail').value = result.email || '';
-            document.getElementById('year').value = result.year || '';
-            document.getElementById('department').value = result.department_id || ''; 
-        } else {
-            alert("No user found for this roll number.");
-        }
-    } catch (error) {
-        console.error(error);
-        alert("Error fetching user details.");
-    }
-});
-</script>
 
 
 </body>

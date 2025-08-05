@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/../../config/db.php';
+require_once '../../config/db.php';
+session_start(); 
 
 class LoginController {
     public static function login() {
@@ -7,7 +8,7 @@ class LoginController {
 
         if (!$input || !isset($input['roll_no'], $input['password'])) {
             http_response_code(400);
-            echo json_encode(["error" => "Roll number and password required"]);
+            echo json_encode(["error" => "Roll number and password are required"]);
             return;
         }
 
@@ -17,15 +18,27 @@ class LoginController {
         $db = new Database();
         $conn = $db->connect();
 
-        $stmt = $conn->prepare("SELECT user_id, role_id, roll_no, name, email, password, department, year FROM users WHERE roll_no = ?");
+        $stmt = $conn->prepare("
+            SELECT u.roll_no, u.password, r.role_name
+            FROM users u
+            JOIN roles r ON u.role_id = r.role_id
+            WHERE u.roll_no = ?
+        ");
         $stmt->execute([$roll_no]);
-        $user = $stmt->fetch();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC); 
 
         if ($user && password_verify($password, $user['password'])) {
-            unset($user['password']);
+
+            
+            $_SESSION['roll_no'] = $user['roll_no'];
+            $_SESSION['role'] = $user['role_name'];
+
             echo json_encode([
                 "message" => "Login successful",
-                "user" => $user
+                "user" => [
+                    "roll_no" => $user['roll_no'],
+                    "role" => $user['role_name']
+                ]
             ]);
         } else {
             http_response_code(401);

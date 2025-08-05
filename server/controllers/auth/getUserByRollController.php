@@ -15,7 +15,7 @@ class GetUserByRollController {
         $db = new Database();
         $conn = $db->connect();
 
-        $stmt = $conn->prepare("SELECT name, email, department_id, year FROM users WHERE roll_no = ?");
+        $stmt = $conn->prepare("SELECT name, email, department_id,user_id, year FROM users WHERE roll_no = ?");
         $stmt->execute([$roll_no]);
 
         $user = $stmt->fetch(PDO::FETCH_ASSOC);

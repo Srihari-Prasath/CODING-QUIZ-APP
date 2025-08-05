@@ -1,15 +1,12 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: Content-Type");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Content-Type: application/json");
+
 
 $route = $_GET['route'] ?? '';
 
 switch ($route) {
     case 'register':
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            require_once __DIR__ . '/../../controllers/auth/registerController.php';
+        if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+            require_once __DIR__ . '/../../controllers/auth/updatePassword.php';
             exit;
         }
         break;
@@ -20,7 +17,6 @@ switch ($route) {
             exit;
         }
         break; 
-
         
     case 'get-user-by-roll':
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
