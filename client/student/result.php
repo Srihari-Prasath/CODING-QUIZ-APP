@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
-      background: linear-gradient(135deg,#fff7f0,#fff3e6);
+      background: #ffffff;
     }
     .fade-in {
       opacity: 0;
@@ -22,7 +22,7 @@
     }
     .card-animate:hover {
       transform: scale(1.015);
-      box-shadow: 0 12px 28px -6px rgba(255, 102, 0, 0.35);
+      box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.1);
     }
     .score-badge {
       min-width: 56px;
@@ -33,7 +33,7 @@
       justify-content: center;
       font-weight: 600;
       font-size: 0.875rem;
-      box-shadow: 0 8px 24px -4px rgba(235,92,11,0.3);
+      box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.15);
       animation: popIn 0.4s ease forwards;
     }
     @keyframes popIn {
@@ -53,11 +53,11 @@
 <body class="font-sans text-gray-800">
 
   <div class="max-w-6xl mx-auto px-6 py-10">
-    <!-- Header / Title with Send Button -->
+    <!-- Header -->
     <div class="flex justify-between items-center mb-8 fade-in" style="animation-delay:.05s">
       <div class="text-left">
-        <h1 class="text-5xl font-extrabold text-orange-600 drop-shadow-md mb-2 animate-pulse">🎓 Student Test Result</h1>
-        <p class="text-gray-600">Detailed breakdown of your performance</p>
+        <h1 class="text-5xl font-extrabold text-orange-500 drop-shadow-md mb-2 animate-pulse">🎓 Student Test Result</h1>
+        <p class="text-gray-700">Detailed breakdown of your performance</p>
       </div>
       <button
         id="sendMailBtn"
@@ -67,34 +67,35 @@
       </button>
     </div>
 
-    <!-- Summary -->
+    <!-- Summary Cards -->
     <div class="grid grid-cols-1 sm:grid-cols-5 gap-4 mb-10">
-      <div class="bg-white rounded-xl shadow-lg p-5 flex flex-col items-center border-l-4 border-orange-500 fade-in card-animate" style="animation-delay:.1s">
-        <div class="text-sm text-gray-500">Total Questions</div>
-        <div class="text-2xl font-bold text-orange-600" id="total-questions">0</div>
+      <div class="bg-white rounded-xl shadow-md p-5 flex flex-col items-center border-l-4 border-orange-400 fade-in card-animate" style="animation-delay:.1s">
+        <div class="text-sm text-gray-600">Total Questions</div>
+        <div class="text-2xl font-bold text-orange-500" id="total-questions">0</div>
       </div>
-      <div class="bg-white rounded-xl shadow-lg p-5 flex flex-col items-center border-l-4 border-green-500 fade-in card-animate" style="animation-delay:.2s">
-        <div class="text-sm text-gray-500">Correct</div>
+      <div class="bg-white rounded-xl shadow-md p-5 flex flex-col items-center border-l-4 border-green-500 fade-in card-animate" style="animation-delay:.2s">
+        <div class="text-sm text-gray-600">Correct</div>
         <div class="text-2xl font-bold text-green-600" id="correct-answers">0</div>
       </div>
-      <div class="bg-white rounded-xl shadow-lg p-5 flex flex-col items-center border-l-4 border-red-500 fade-in card-animate" style="animation-delay:.3s">
-        <div class="text-sm text-gray-500">Wrong</div>
-        <div class="text-2xl font-bold text-red-600" id="wrong-answers">0</div>
+      <div class="bg-white rounded-xl shadow-md p-5 flex flex-col items-center border-l-4 border-red-500 fade-in card-animate" style="animation-delay:.3s">
+        <div class="text-sm text-gray-600">Wrong</div>
+        <div class="text-2xl font-bold text-red-500" id="wrong-answers">0</div>
       </div>
-      <div class="bg-white rounded-xl shadow-lg p-5 flex flex-col items-center border-l-4 border-blue-500 fade-in card-animate" style="animation-delay:.4s">
-        <div class="text-sm text-gray-500">Total Score</div>
+      <div class="bg-white rounded-xl shadow-md p-5 flex flex-col items-center border-l-4 border-blue-500 fade-in card-animate" style="animation-delay:.4s">
+        <div class="text-sm text-gray-600">Total Score</div>
         <div class="text-2xl font-bold text-blue-600" id="total-score">0</div>
       </div>
-      <div class="bg-white rounded-xl shadow-lg p-5 flex flex-col items-center border-l-4 border-yellow-500 fade-in card-animate" style="animation-delay:.5s">
-        <div class="text-sm text-gray-500">Score Per Question</div>
-        <div class="text-2xl font-bold text-yellow-600">1</div>
+      <div class="bg-white rounded-xl shadow-md p-5 flex flex-col items-center border-l-4 border-yellow-500 fade-in card-animate" style="animation-delay:.5s">
+        <div class="text-sm text-gray-600">Score Per Question</div>
+        <div class="text-2xl font-bold text-yellow-500">1</div>
       </div>
     </div>
 
-    <!-- Questions list -->
+    <!-- Question Cards -->
     <div id="questions-container" class="space-y-6"></div>
   </div>
 
+  <!-- Footer -->
   <footer class="text-center text-sm text-gray-500 py-6 footer-animate">
     © 2025 CodeCampus. All rights reserved.
   </footer>
@@ -130,14 +131,14 @@
       if (isCorrect) correct++;
 
       const card = document.createElement("div");
-      card.className = `relative flex flex-col md:flex-row items-start gap-4 bg-white rounded-2xl shadow-lg p-6 border ${isCorrect ? 'border-green-300' : 'border-red-300'} fade-in card-animate`;
+      card.className = `relative flex flex-col md:flex-row items-start gap-4 bg-white rounded-2xl shadow-md p-6 border ${isCorrect ? 'border-green-400' : 'border-red-400'} fade-in card-animate`;
       card.style.animationDelay = `${0.6 + idx * 0.15}s`;
 
       const left = document.createElement("div");
       left.className = "flex-1";
 
       const qTitle = document.createElement("h2");
-      qTitle.className = "text-lg font-semibold text-orange-700 mb-2";
+      qTitle.className = "text-lg font-semibold text-orange-600 mb-2";
       qTitle.textContent = `Q${idx+1}: ${q.question}`;
 
       const optionsList = document.createElement("ul");
@@ -148,13 +149,13 @@
         li.className = "flex justify-between items-center px-4 py-2 rounded-lg transition relative";
 
         if (i === q.correctIndex) {
-          li.classList.add("bg-green-50", "border", "border-green-300", "text-green-800", "font-medium");
+          li.classList.add("bg-green-50", "border", "border-green-400", "text-green-800", "font-medium");
           li.innerHTML = `<span>${String.fromCharCode(65 + i)}. ${opt}</span><span class="text-sm">✔️ Correct</span>`;
         } else if (i === q.selectedIndex && i !== q.correctIndex) {
-          li.classList.add("bg-red-50", "border", "border-red-300", "text-red-800");
+          li.classList.add("bg-red-50", "border", "border-red-400", "text-red-700");
           li.innerHTML = `<span>${String.fromCharCode(65 + i)}. ${opt}</span><span class="text-sm">✖️ Your answer</span>`;
         } else {
-          li.classList.add("bg-gray-50");
+          li.classList.add("bg-gray-50", "text-gray-700");
           li.innerHTML = `<span>${String.fromCharCode(65 + i)}. ${opt}</span>`;
         }
 
@@ -176,13 +177,11 @@
       container.appendChild(card);
     });
 
-    // Summary update
     document.getElementById("total-questions").textContent = resultsData.length;
     document.getElementById("correct-answers").textContent = correct;
     document.getElementById("wrong-answers").textContent = resultsData.length - correct;
     document.getElementById("total-score").textContent = correct * scorePerQuestion;
 
-    // Send button simulation
     document.getElementById("sendMailBtn").addEventListener("click", () => {
       const btn = document.getElementById("sendMailBtn");
       btn.disabled = true;

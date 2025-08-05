@@ -7,7 +7,7 @@
     <meta name="description" content="Dynamic profile page for college students">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="./assets/css/profile.css">
+    <link rel="stylesheet" href="profile.css">
     <script>
         tailwind.config = {
             theme: {
@@ -79,10 +79,6 @@
                 </div>
                 <span class="text-primary font-bold text-2xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Name</span>
             </div>
-            <div class="flex items-center space-x-4 animate-fade-in">
-                <span id="userBadge" class="px-4 py-2 bg-gradient-to-r from-primary to-accent text-white rounded-full text-sm font-medium shadow-md hover-lift animate-pulse-soft">Student</span>
-                <button class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-sm font-medium transition-all duration-300 hover:shadow-md">Logout</button>
-            </div>
         </nav>
     </header>
 
@@ -98,20 +94,23 @@
                     </button>
                 </div>
                 <div class="flex flex-col items-center animate-fade-in">
-                    <div class="relative animate-scale-in">
-                        <div class="gradient-border p-1 rounded-full">
-                            <img 
-                                id="profileImage"
-                                src="https://picsum.photos/150?random=1" 
-                                alt="Profile picture" 
-                                class="w-24 h-24 rounded-full cursor-pointer hover:opacity-80 transition-all duration-500 hover:scale-105"
-                                loading="lazy"
-                            >
-                        </div>
-                        <button id="changePhotoBtn" class="absolute bottom-2 right-2 bg-gradient-to-r from-primary to-accent text-white rounded-full w-8 h-8 flex items-center justify-center text-xs hover:scale-110 transition-all duration-300 shadow-lg animate-bounce-soft">
-                            <i class="fas fa-camera"></i>
-                        </button>
-                    </div>
+    <div class="relative animate-scale-in">
+        <div class="gradient-border p-1 rounded-full">
+            <img 
+                id="profileImage"
+                src="" 
+                alt="Profile picture" 
+                class="w-24 h-24 rounded-full cursor-pointer hover:opacity-80 transition-all duration-500 hover:scale-105 hidden"
+                loading="lazy"
+            >
+            <div id="defaultProfile" class="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center cursor-pointer">
+                <i class="fas fa-user text-gray-400 text-3xl"></i>
+            </div>
+        </div>
+        <button id="changePhotoBtn" class="absolute bottom-2 right-2 bg-gradient-to-r from-primary to-accent text-white rounded-full w-8 h-8 flex items-center justify-center text-xs hover:scale-110 transition-all duration-300 shadow-lg animate-bounce-soft">
+            <i class="fas fa-camera"></i>
+        </button>
+    </div>
                     <h2 id="profileName" class="text-xl font-bold text-dark mt-4 animate-fade-in">Rahul Sharma</h2>
                     <p id="profileRole" class="text-sm text-primary font-medium mb-2 animate-fade-in">Student</p>
                     <div class="w-full border-t border-orange-200 my-4 animate-fade-in"></div>
@@ -132,6 +131,12 @@
                         <div class="hover:bg-orange-50 p-2 rounded-lg transition-all duration-300">
                             <p class="text-xs text-gray-400 font-medium">Email</p>
                             <p id="profileEmail" class="text-sm font-semibold text-dark break-words">rahul.sharma@college.edu</p>
+                        </div>
+                        <div class="hover:bg-orange-50 p-2 rounded-lg transition-all duration-300">
+                            <button id="logoutBtn" class="w-full px-4 py-2 bg-gradient-to-r from-primary to-accent text-white rounded-lg hover:shadow-lg transition-all duration-300 hover:scale-[1.02] font-medium flex items-center justify-center space-x-2">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>Logout</span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -275,40 +280,37 @@
     </div>
 
     <div id="profilePhotoModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center hidden z-50 backdrop-blur-sm">
-        <div class="bg-white rounded-2xl p-8 w-full max-w-md shadow-2xl animate-scale-in glass-effect border border-orange-200">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Change Profile Photo</h3>
-                <button id="closePhotoModal" class="text-gray-500 hover:text-primary transition-all duration-300 p-2 rounded-full hover:bg-orange-50">
-                    <i class="fas fa-times"></i>
-                </button>
+    <div class="bg-white rounded-2xl p-8 w-full max-w-md shadow-2xl animate-scale-in glass-effect border border-orange-200">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Change Profile Photo</h3>
+            <button id="closePhotoModal" class="text-gray-500 hover:text-primary transition-all duration-300 p-2 rounded-full hover:bg-orange-50">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="space-y-6">
+            <div class="text-center animate-scale-in">
+                <div class="gradient-border p-1 rounded-full inline-block">
+                    <div id="previewDefault" class="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center mx-auto">
+                        <i class="fas fa-user text-gray-400 text-5xl"></i>
+                    </div>
+                    <img id="previewImage" src="" alt="Preview" class="w-32 h-32 rounded-full mx-auto hidden">
+                </div>
             </div>
-            <div class="space-y-6">
-                <div class="text-center animate-scale-in">
-                    <div class="gradient-border p-1 rounded-full inline-block">
-                        <img id="previewImage" src="" alt="Preview" class="w-32 h-32 rounded-full mx-auto">
-                    </div>
-                </div>
-                <div class="animate-fade-in" style="animation-delay: 0.1s">
-                    <label class="block text-sm font-bold text-gray-700 mb-3">Choose a new photo:</label>
-                    <input type="file" id="photoInput" accept="image/*" class="w-full px-4 py-3 border-2 border-dashed border-orange-300 rounded-xl hover:border-primary transition-all duration-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-medium file:bg-primary file:text-white hover:file:bg-secondary">
-                    <p class="text-xs text-gray-500 mt-2 flex items-center"><i class="fas fa-info-circle mr-1"></i>Supported formats: JPG, PNG, GIF (Max: 5MB)</p>
-                </div>
-                <div class="text-center animate-fade-in" style="animation-delay: 0.2s">
-                    <p class="text-sm font-bold text-gray-600 mb-4">Or select from these options:</p>
-                    <div class="grid grid-cols-4 gap-3">
-                        <img src="https://picsum.photos/150?random=1" class="w-16 h-16 rounded-full border-3 border-gray-300 cursor-pointer hover:border-primary preset-photo transition-all duration-300 hover:scale-110 hover:shadow-lg" alt="Option 1">
-                        <img src="https://picsum.photos/150?random=2" class="w-16 h-16 rounded-full border-3 border-gray-300 cursor-pointer hover:border-primary preset-photo transition-all duration-300 hover:scale-110 hover:shadow-lg" alt="Option 2">
-                        <img src="https://picsum.photos/150?random=3" class="w-16 h-16 rounded-full border-3 border-gray-300 cursor-pointer hover:border-primary preset-photo transition-all duration-300 hover:scale-110 hover:shadow-lg" alt="Option 3">
-                        <img src="https://picsum.photos/150?random=4" class="w-16 h-16 rounded-full border-3 border-gray-300 cursor-pointer hover:border-primary preset-photo transition-all duration-300 hover:scale-110 hover:shadow-lg" alt="Option 4">
-                    </div>
-                </div>
-                <div class="flex justify-end space-x-4 pt-4">
+            <div class="animate-fade-in" style="animation-delay: 0.1s">
+                <label class="block text-sm font-bold text-gray-700 mb-3">Choose a photo:</label>
+                <input type="file" id="photoInput" accept="image/*" class="w-full px-4 py-3 border-2 border-dashed border-orange-300 rounded-xl hover:border-primary transition-all duration-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-medium file:bg-primary file:text-white hover:file:bg-secondary">
+                <p class="text-xs text-gray-500 mt-2 flex items-center"><i class="fas fa-info-circle mr-1"></i>Supported formats: JPG, PNG, GIF (Max: 5MB)</p>
+            </div>
+            <div class="flex justify-between items-center pt-4">
+                <button type="button" id="removePhoto" class="px-6 py-3 text-red-500 hover:text-red-700 transition-all duration-300 font-medium">Remove Photo</button>
+                <div class="flex space-x-4">
                     <button type="button" id="cancelPhoto" class="px-6 py-3 border-2 border-gray-300 rounded-xl hover:bg-gray-50 transition-all duration-300 font-medium">Cancel</button>
                     <button type="button" id="savePhoto" class="px-6 py-3 bg-gradient-to-r from-primary to-accent text-white rounded-xl hover:shadow-lg transition-all duration-300 hover:scale-105 font-medium">Save Photo</button>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
     <div id="successToast" class="fixed top-6 right-6 bg-gradient-to-r from-primary to-accent text-white px-6 py-4 rounded-2xl shadow-2xl transform translate-x-full transition-all duration-500 z-50 animate-bounce-soft">
         <div class="flex items-center">
@@ -325,9 +327,9 @@
                 <div class="w-6 h-6 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center animate-float">
                     <i class="fas fa-graduation-cap text-white text-sm"></i>
                 </div>
-                <span class="text-primary font-bold text-lg">CodeCampus</span>
+                <span class="text-primary font-bold text-lg">Name</span>
             </div>
-            <p class="text-sm text-gray-500">© 2023 CodeCampus - College Coding Platform</p>
+            <p class="text-sm text-gray-500">© 2025 Name</p>
         </div>
     </footer>
 
@@ -340,7 +342,7 @@
             dept: "Computer Science",
             year: "II",
             email: "rahul.sharma@college.edu",
-            profileImage: "https://picsum.photos/150?random=1",
+            profileImage: "profile.jpg",
             stats: {
                 problemsSolved: 42,
                 testsTaken: 8,
@@ -361,7 +363,7 @@
         const testsTaken = document.getElementById('testsTaken');
         const avgScore = document.getElementById('avgScore');
         const rank = document.getElementById('rank');
-        const userBadge = document.getElementById('userBadge');
+        const logoutBtn = document.getElementById('logoutBtn');
 
         // Modal elements
         const editProfileBtn = document.getElementById('editProfileBtn');
@@ -392,7 +394,6 @@
         const savePhoto = document.getElementById('savePhoto');
         const photoInput = document.getElementById('photoInput');
         const previewImage = document.getElementById('previewImage');
-        const presetPhotos = document.querySelectorAll('.preset-photo');
 
         // Toast
         const successToast = document.getElementById('successToast');
@@ -406,7 +407,6 @@
         profileYear.textContent = userData.year;
         profileEmail.textContent = userData.email;
         profileImage.src = userData.profileImage;
-        userBadge.textContent = userData.role;
         problemsSolved.textContent = userData.stats.problemsSolved;
         testsTaken.textContent = userData.stats.testsTaken;
         avgScore.textContent = userData.stats.avgScore;
@@ -529,18 +529,6 @@
             }
         });
 
-        // Handle preset photo selection
-        presetPhotos.forEach(photo => {
-            photo.addEventListener('click', () => {
-                presetPhotos.forEach(p => p.classList.remove('border-primary'));
-                presetPhotos.forEach(p => p.classList.add('border-gray-300'));
-                photo.classList.remove('border-gray-300');
-                photo.classList.add('border-primary');
-                selectedPhotoSrc = photo.src;
-                previewImage.src = selectedPhotoSrc;
-            });
-        });
-
         // Save photo
         savePhoto.addEventListener('click', () => {
             if (selectedPhotoSrc) {
@@ -554,6 +542,12 @@
         // Click on profile image to change photo
         profileImage.addEventListener('click', () => {
             changePhotoBtn.click();
+        });
+
+        // Logout functionality
+        logoutBtn.addEventListener('click', () => {
+            // Add your logout logic here
+            alert('Logout functionality would be implemented here');
         });
 
         // Close modals when clicking outside
