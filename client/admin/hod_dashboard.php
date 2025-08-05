@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOD Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="hod_dashboard.css">
+    <link rel="stylesheet" href="../assets/css/hod_dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
@@ -291,9 +291,13 @@
                                 <button onclick="openAddStudentModal()" class="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-lg text-sm flex items-center">
                                     <i class="fas fa-plus mr-2"></i> Add Student
                                 </button>
-                                <button class="border border-gray-300 hover:bg-gray-50 px-4 py-2 rounded-lg text-sm flex items-center">
-                                    <i class="fas fa-filter mr-2"></i> Filter
-                                </button>
+                                <select id="yearFilter" class="text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-300">
+                                         <option value="all">All Years</option>
+                                         <option value="I">I Year</option>
+                                         <option value="II">II Year</option>
+                                         <option value="III">III Year</option>
+                                        <option value="IV">IV Year</option>
+                                </select>
                             </div>
                         </div>
                         <div class="overflow-x-auto">
@@ -323,7 +327,7 @@
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">3rd Year</span>
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">III Year</span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
@@ -350,7 +354,7 @@
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">3rd Year</span>
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">III Year</span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
@@ -377,7 +381,7 @@
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">4th Year</span>
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">IV Year</span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Probation</span>
@@ -494,9 +498,8 @@
                     <select id="newStaffDepartment" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition" required>
                         <option value="">Select Department</option>
                         <option value="Computer Science">Computer Science</option>
-                        <option value="Mathematics">Mathematics</option>
-                        <option value="Physics">Physics</option>
-                        <option value="Chemistry">Chemistry</option>
+                        <option value="Mathematics">Information Technology</option>
+                        <option value="Physics">Artificial Intelligence</option>
                     </select>
                 </div>
                 <div class="flex justify-end space-x-3">
@@ -529,10 +532,9 @@
                     <label class="block text-gray-700 text-sm mb-2">Program <span class="text-red-500">*</span></label>
                     <select id="newStudentProgram" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition" required>
                         <option value="">Select Program</option>
-                        <option value="B.Tech CSE">B.Tech Computer Science</option>
+                        <option value="B.Tech CSE">B.E Computer Science</option>
                         <option value="B.Tech IT">B.Tech Information Technology</option>
-                        <option value="B.Sc CS">B.Sc Computer Science</option>
-                        <option value="M.Tech CSE">M.Tech Computer Science</option>
+                        <option value="B.Sc CS">B.Tech  Artificial Intelligence</option>
                     </select>
                 </div>
                 <div class="mb-4">
