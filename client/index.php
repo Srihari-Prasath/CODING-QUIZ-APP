@@ -224,7 +224,7 @@
 
 
                 <div>
-                    <label for="role" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <label for="role" class="block text-sm font-medium text-gray-700 mb-1">Select role</label>
                     <div class="relative">
                         <select name="user_role" id="user_role" class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" required>
                             <option value="" selected disabled>-- Select Role --</option>

@@ -349,10 +349,10 @@
                     </div>
                     <select id="yearFilter" class="text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-300">
                         <option value="all">All Years</option>
-                        <option value="I">I Year</option>
-                        <option value="II">II Year</option>
-                        <option value="III">III Year</option>
-                        <option value="IV">IV Year</option>
+                        <option value="I">1st Year</option>
+                        <option value="II">2nd Year</option>
+                        <option value="III">3rd Year</option>
+                        <option value="IV">4th Year</option>
                     </select>
                     <button class="p-2 rounded-lg hover:bg-gray-50">
                         <i data-lucide="download" class="w-5 h-5 text-gray-500"></i>
@@ -365,6 +365,7 @@
                         <tr>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Year</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Progress</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tests Completed</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Average Score</th>
@@ -392,6 +393,9 @@
                                         <div class="text-sm text-gray-500">I Year - CS-2048</div>
                                     </div>
                                 </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <span class="px-2 py-1 bg-blue-50 text-blue-700 rounded-full text-xs">1st Year</span>
                             </td>
                             <td class="px6 py-4 whitespace-nowrap">
                                 <div class="w-32">
@@ -429,6 +433,9 @@
                                         <div class="text-sm text-gray-500">CS-2049</div>
                                     </div>
                                 </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <span class="px-2 py-1 bg-green-50 text-green-700 rounded-full text-xs">2nd Year</span>
                             </td>
                             <td class="px6 py-4 whitespace-nowrap">
                                 <div class="w-32">
@@ -472,6 +479,9 @@
                                     </div>
                                 </div>
                             </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <span class="px-2 py-1 bg-purple-50 text-purple-700 rounded-full text-xs">3rd Year</span>
+                            </td>
                             <td class="px6 py-4 whitespace-nowrap">
                                 <div class="w-32">
                                     <div class="progress-bar">
@@ -514,6 +524,9 @@
                                     </div>
                                 </div>
                             </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <span class="px-2 py-1 bg-yellow-50 text-yellow-700 rounded-full text-xs">4th Year</span>
+                            </td>
                             <td class="px6 py-4 whitespace-nowrap">
                                 <div class="w-32">
                                     <div class="progress-bar">
@@ -555,6 +568,9 @@
                                         <div class="text-sm text-gray-500">CS-2052</div>
                                     </div>
                                 </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <span class="px-2 py-1 bg-yellow-50 text-yellow-700 rounded-full text-xs">4th Year</span>
                             </td>
                             <td class="px6 py-4 whitespace-nowrap">
                                 <div class="w-32">
