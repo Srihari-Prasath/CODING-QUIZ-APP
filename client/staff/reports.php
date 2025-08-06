@@ -8,22 +8,7 @@
     <link rel="stylesheet" href="../assets/css/staff/reports.css">
 </head>
 <body>
-    <header>
-        <div class="container header-content">
-            <div>
-                <h1>Staff Dashboard</h1>
-                <p>Manage quizzes and monitor student progress</p>
-            </div>
-            <div class="profile">
-                <img src="/placeholder-avatar.jpg" alt="Profile">
-                <a href="../profile.php" style="text-decoration: none;" ><div class="profile-info">
-                    <p class="name">Alex Thompson</p>
-                    <p class="role">Faculty</p>
-                </div></a>
-                <a href="../auth/auth.php" style="text-decoration: none;" ><span id="logout-btn" class="logout-btn"><i data-lucide="log-out"></i></span></a>
-            </div>
-        </div>
-    </header>
+    <?php include('./header.php') ?>
 
     <main class="container">
         <?php include('./nav.php') ?>

@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,26 +8,12 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="../assets/css/staff/dashboard.css">
 </head>
+
 <body>
-    <header>
-        <div class="container header-content">
-            <div>
-                <h1>Staff Dashboard</h1>
-                <p>Manage quizzes and monitor student progress</p>
-            </div>
-            <div class="profile">
-                <img src="/placeholder-avatar.jpg" alt="Profile">
-                <div class="profile-info">
-                    <p class="name">Alex Thompson</p>
-                    <p class="role">Faculty</p>
-                </div>
-                <span id="logout-btn" class="logout-btn"><i data-lucide="log-out"></i></span>
-            </div>
-        </div>
-    </header>
+    <?php include('./header.php') ?>
 
     <main class="container">
-      <?php include('./nav.php') ?>
+        <?php include('./nav.php') ?>
         <div class="welcome">
             <h2>Welcome back, Alex! 👋</h2>
             <p>Manage your quizzes and monitor student progress.</p>
@@ -88,10 +74,11 @@
         <div id="quiz-grid" class="quiz-grid"></div>
     </main>
 
+    
+    <?php include('../resource/api.php') ?>
     <script>
         // Mock data
-        const quizzes = [
-            {
+        const quizzes = [{
                 id: "1",
                 title: "Data Structures & Algorithms",
                 subject: "Computer Science",
@@ -128,13 +115,13 @@
 
         lucide.createIcons();
 
-        
+
         function renderQuizzes(searchTerm = '', filterStatus = 'all') {
             const quizGrid = document.getElementById('quiz-grid');
             quizGrid.innerHTML = '';
             const filteredQuizzes = quizzes.filter(quiz => {
                 const matchesSearch = quiz.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                     quiz.subject.toLowerCase().includes(searchTerm.toLowerCase());
+                    quiz.subject.toLowerCase().includes(searchTerm.toLowerCase());
                 const matchesFilter = filterStatus === 'all' || quiz.status === filterStatus;
                 return matchesSearch && matchesFilter;
             });
@@ -172,7 +159,7 @@
             lucide.createIcons();
         }
 
-       
+
         document.getElementById('search-input').addEventListener('input', (e) => {
             renderQuizzes(e.target.value, document.getElementById('filter-status').value);
         });
@@ -181,14 +168,21 @@
             renderQuizzes(document.getElementById('search-input').value, e.target.value);
         });
 
-       
+
         function manageQuiz(quizId) {
             alert(`Managing quiz ID: ${quizId}`);
-            
+
         }
 
-        
+
         renderQuizzes();
     </script>
+
+    <!-- logout  -->
+    <?php include('../resource/logout.php') ?>
+    <!-- session end  -->
+    <?php include('../resource/check_session.php') ?>
+
 </body>
+
 </html>
