@@ -190,10 +190,10 @@
 
     <div class="w-full max-w-4xl mx-auto relative z-10">
         <!-- Toggle Buttons -->
-         <div class="flex mb-8 mt-5 rounded-full bg-white shadow-md overflow-hidden w-fit mx-auto">
+        <div class="flex mb-8 mt-5 rounded-full bg-white shadow-md overflow-hidden w-fit mx-auto">
             <a href="./"><button id="loginToggle" class="toggle-btn  px-6 py-2 font-medium rounded-full transition-all duration-300">Login</button></a>
             <a href="./register.php"><button id="registerToggle" class="toggle-btn active px-6 py-2 font-medium rounded-full transition-all duration-300">Register</button></a>
-        </div> 
+        </div>
 
         <!-- Register Form  -->
         <div id="registerForm" class="form-container rounded-2xl shadow-xl p-8 animate-fade">
@@ -227,101 +227,105 @@
                         <label for="department" class="block text-sm font-medium text-gray-700 mb-1">Department*</label>
                         <input type="text" id="department" class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="department" required disabled>
                     </div>
- </form>
- <form id="updatePasswordForm">
-                    <div>
-                        <label for="registerPassword" class="block text-sm font-medium text-gray-700 mb-1">Password*</label>
-                        <div class="relative">
-                            <input type="hidden" name="user_id" id="user_id"  value="">
-                            <input type="password" id="registerPassword" class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="••••••••" required oninput="checkPasswordStrength()">
-                            <button type="button" class="password-toggle absolute inset-y-0 right-0 flex items-center pr-3" onclick="togglePassword('registerPassword', 'registerEyeIcon')">
-                                <i id="registerEyeIcon" class="fas fa-eye text-gray-400 hover:text-[var(--color-primary)]"></i>
-                            </button>
-                        </div>
-                        <div class="password-strength">
-                            <div id="strengthBar" class="strength-bar"></div>
-                        </div>
-                        <p id="passwordHint" class="text-xs text-gray-500 mt-1"></p>
+            </form>
+            <form id="updatePasswordForm">
+                <div>
+                    <label for="registerPassword" class="block text-sm font-medium text-gray-700 mb-1">Password*</label>
+                    <div class="relative">
+                        <input type="hidden" name="user_id" id="user_id" value="">
+                        <input type="password" id="registerPassword" class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="••••••••" required oninput="checkPasswordStrength()">
+                        <button type="button" class="password-toggle absolute inset-y-0 right-0 flex items-center pr-3" onclick="togglePassword('registerPassword', 'registerEyeIcon')">
+                            <i id="registerEyeIcon" class="fas fa-eye text-gray-400 hover:text-[var(--color-primary)]"></i>
+                        </button>
                     </div>
-
-
+                    <div class="password-strength">
+                        <div id="strengthBar" class="strength-bar"></div>
+                    </div>
+                    <p id="passwordHint" class="text-xs text-gray-500 mt-1"></p>
                 </div>
 
 
-
-                <div class="flex justify-center">
-                    <button type="submit" class="btn-primary py-3 px-4 rounded-lg text-white font-semibold shadow-md transition-all duration-300">
-                        Create Account
-                    </button>
-                </div>
-
-</form>
-           
         </div>
+
+
+
+        <div class="flex justify-center">
+            <button type="submit" class="btn-primary py-3 px-4 rounded-lg text-white font-semibold shadow-md transition-all duration-300">
+                Create Account
+            </button>
+        </div>
+
+        </form>
+
+    </div>
     </div>
 
     <script src="./assets/js/auth/script.js"></script>
 
 
 
-   <?php include('./resource/api.php') ?>
-<!-- fetch students -->
-<script>
-document.getElementById('studentId').addEventListener('blur', async () => {
-    const rollNo = document.getElementById('studentId').value.trim();
-    if (!rollNo) return;
+    <?php include('./resource/api.php') ?>
+    <!-- fetch students -->
+    <script>
+        document.getElementById('studentId').addEventListener('blur', async () => {
+            const rollNo = document.getElementById('studentId').value.trim();
+            if (!rollNo) return;
 
-    try {
-        const response = await fetch('<?php echo $api; ?>auth/authRoutes.php?route=get-user-by-roll', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ roll_no: rollNo })
+            try {
+                const response = await fetch('<?php echo $api; ?>auth/authRoutes.php?route=get-user-by-roll', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        roll_no: rollNo
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result && result.name) {
+                    document.getElementById('firstName').value = result.name || '';
+                    document.getElementById('user_id').value = result.user_id || '';
+                    document.getElementById('registerEmail').value = result.email || '';
+                    document.getElementById('year').value = result.year || '';
+                    document.getElementById('department').value = result.department_name || '';
+                } else {
+                    alert("No user found for this roll number.");
+                }
+            } catch (error) {
+                console.error(error);
+                alert("Error fetching user details.");
+            }
         });
+    </script>
+    <!-- update password -->
+    <script>
+        document.getElementById('updatePasswordForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const userId = document.getElementById('user_id').value;
+            const newPassword = document.getElementById('registerPassword').value;
 
-        const result = await response.json();
+            const response = await fetch('<?php echo $api; ?>auth/authRoutes.php?route=register', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    user_id: userId,
+                    new_password: newPassword
+                })
+            });
 
-        if (result && result.name) {
-            document.getElementById('firstName').value = result.name || '';
-            document.getElementById('user_id').value = result.user_id || '';
-            document.getElementById('registerEmail').value = result.email || '';
-            document.getElementById('year').value = result.year || '';
-            document.getElementById('department').value = result.department_id || ''; 
-        } else {
-            alert("No user found for this roll number.");
-        }
-    } catch (error) {
-        console.error(error);
-        alert("Error fetching user details.");
-    }
-});
-</script>
-<!-- update password -->
-<script>
-    document.getElementById('updatePasswordForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const userId = document.getElementById('user_id').value;
-        const newPassword = document.getElementById('registerPassword').value;
-
-        const response = await fetch('<?php echo $api; ?>auth/authRoutes.php?route=register', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ user_id: userId, new_password: newPassword })
+            const result = await response.json();
+            if (result.success) {
+                alert('Password updated successfully');
+                window.location.href = "./";
+            } else {
+                alert('Failed to update password: ');
+            }
         });
-
-        const result = await response.json();
-        if (result.success) {
-            alert('Password updated successfully');
-            window.location.href = "./";
-        } else {
-            alert('Failed to update password: ');
-        }
-    });
-
-</script>
+    </script>
 </body>
 
 </html>

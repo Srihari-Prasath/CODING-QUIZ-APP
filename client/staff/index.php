@@ -58,16 +58,7 @@
         </div>
 
         <div class="filters">
-            <div class="search-container">
-                <i data-lucide="search"></i>
-                <input id="search-input" type="text" placeholder="Search quizzes...">
-            </div>
-            <select id="filter-status">
-                <option value="all">All Quizzes</option>
-                <option value="active">Active</option>
-                <option value="upcoming">Upcoming</option>
-                <option value="completed">Completed</option>
-            </select>
+         
             <button><i data-lucide="bar-chart-3"></i> Analytics</button>
         </div>
 
@@ -77,41 +68,7 @@
     
     <?php include('../resource/api.php') ?>
     <script>
-        // Mock data
-        const quizzes = [{
-                id: "1",
-                title: "Data Structures & Algorithms",
-                subject: "Computer Science",
-                instructor: "Dr. Sarah Johnson",
-                duration: 90,
-                totalQuestions: 50,
-                enrolledStudents: 28,
-                maxStudents: 30,
-                status: "active"
-            },
-            {
-                id: "2",
-                title: "React Fundamentals",
-                subject: "Web Development",
-                instructor: "Prof. Mike Chen",
-                duration: 60,
-                totalQuestions: 30,
-                enrolledStudents: 15,
-                maxStudents: 25,
-                status: "upcoming"
-            },
-            {
-                id: "3",
-                title: "Database Management",
-                subject: "Computer Science",
-                instructor: "Dr. Emily Davis",
-                duration: 120,
-                totalQuestions: 40,
-                enrolledStudents: 22,
-                maxStudents: 30,
-                status: "completed"
-            }
-        ];
+        
 
         lucide.createIcons();
 

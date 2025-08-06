@@ -1,8 +1,10 @@
 <?php
 require_once '../../config/db.php';
 
-class GetUserByRollController {
-    public static function getUserByRoll() {
+class GetUserByRollController
+{
+    public static function getUserByRoll()
+    {
         $input = json_decode(file_get_contents("php://input"), true);
         $roll_no = $input['roll_no'] ?? null;
 
@@ -15,7 +17,17 @@ class GetUserByRollController {
         $db = new Database();
         $conn = $db->connect();
 
-        $stmt = $conn->prepare("SELECT name, email, department_id,user_id, year FROM users WHERE roll_no = ?");
+        $stmt = $conn->prepare("
+            SELECT 
+                u.name, 
+                u.email, 
+                d.full_name AS department_name, 
+                u.user_id, 
+                u.year
+            FROM users u
+            JOIN departments d ON u.department_id = d.id
+            WHERE u.roll_no = ?
+        ");
         $stmt->execute([$roll_no]);
 
         $user = $stmt->fetch(PDO::FETCH_ASSOC);

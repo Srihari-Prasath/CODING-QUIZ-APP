@@ -8,23 +8,7 @@
     <link rel="stylesheet" href="../assets/css/student/dashboard.css">
 </head>
 <body>
-    <header>
-        <div class="container header-content">
-            <div>
-                <h1>Student Dashboard</h1>
-                <p>Manage quizzes and monitor student progress</p>
-            </div>
-            <div class="profile-section">
-                <a href="../profile.php" style="text-decoration: none;">
-                    <div class="profile">
-                        <img src="../assets/images/Infinity castle desktop wallpaper.jpg" alt="Profile">
-                        <div class="profile-info">
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </header>
+   <?php include('./header.php') ?>
 
     <main class="container">
         <nav>

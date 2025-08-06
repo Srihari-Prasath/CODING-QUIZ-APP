@@ -57,7 +57,13 @@
 
                 <div class="form-group">
                     <label for="year">Year</label>
-                    <input type="number" name="year" id="year" required>
+                    <select name="year" id="year" required>
+    <option value="">--Select Year--</option>
+    <option value="1">1st Year</option>
+    <option value="2">2nd Year</option>
+    <option value="3">3rd Year</option>
+    <option value="4">4th Year</option>
+</select>
                 </div>
 
                 <div class="form-group">
@@ -83,28 +89,25 @@
             e.preventDefault();
 
             const form = e.target;
-            const jsonObject = {
+            const jsonObject = { 
                 title: form.title.value,
                 description: form.description.value,
                 domain: form.domain.value,
-                department: "CSE",
                 year: parseInt(form.year.value),
                 start_time: form.startTime.value,
                 end_time: form.endTime.value,
                 duration_minutes: parseInt(form.duration.value),
                 total_marks: parseInt(form.totalMarks.value),
                 total_questions: parseInt(form.totalQuestion.value),
-                is_active: 1
-            };
-
-
-
+               
+            }; 
             try {
                 const response = await fetch('<?php echo $api; ?>faculty/test/testRoutes.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
+                     credentials: 'include', 
                     body: JSON.stringify(jsonObject)
                 });
 

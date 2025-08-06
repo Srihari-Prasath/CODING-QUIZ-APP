@@ -35,11 +35,14 @@ switch ($route) {
         break;
 
     case 'reset_password':
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require_once __DIR__ . '/../../controllers/auth/reset_password.php';
             exit;
         }
         break;
+        require_once __DIR__ . '/../../controllers/auth/reset_password.php';
+        exit;
 
 
     default:

@@ -18,24 +18,7 @@
     </style>
 </head>
 <body class="bg-[var(--color-surface)] font-sans">
-    <header class="bg-[var(--color-background)] shadow">
-        <div class="container mx-auto px-4 py-6 flex justify-between items-center">
-            <div>
-                <h1 class="text-2xl font-bold text-gray-800">Analytics Dashboard</h1>
-                <p class="text-gray-600">Visualize your performance and track progress</p>
-            </div>
-            <div class="flex items-center space-x-4">
-                <a href="../profile.php"><img src="../assets/images/Infinity castle desktop wallpaper.jpg" alt="Profile" class="w-10 h-10 rounded-full"></a>
-                <div>
-                    <p class="text-gray-800 font-medium">Alex Thompson</p>
-                    <p class="text-gray-600 text-sm">Student</p>
-                </div>
-                <a href="../student/dashboard.php" style="text-decoration: none;" ><button id="logout-btn" class="text-gray-600 hover:text-gray-800">
-                    <i data-lucide="log-out"></i>
-                </button></a>
-            </div>
-        </div>
-    </header>
+      <?php include('./header.php') ?>
 
     <main class="container mx-auto px-4 py-8">
         <nav class="flex space-x-4 mb-8">

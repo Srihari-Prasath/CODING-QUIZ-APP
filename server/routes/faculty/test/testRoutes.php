@@ -1,9 +1,16 @@
 <?php
-require_once '../../helpers/check-session.php';
+
+require_once '../../../helpers/auth.php';
+
+require_role(['faculty']);
+
 require_once '../../../controllers/faculty/test/testController.php';
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
+
+
+
 
 $controller = new TestController();
 
