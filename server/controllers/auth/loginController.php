@@ -1,9 +1,21 @@
 <?php
 require_once '../../config/db.php';
-session_start(); 
+
+session_set_cookie_params([
+    'lifetime' => 0,            
+    'path' => '/',
+    'domain' => '',               
+    'secure' => isset($_SERVER['HTTPS']),
+    'httponly' => true,
+    'samesite' => 'Lax'           
+]);
+session_start();
 
 class LoginController {
     public static function login() {
+        
+        
+
         $input = json_decode(file_get_contents("php://input"), true);
 
         if (!$input || !isset($input['roll_no'], $input['password'])) {
@@ -25,11 +37,12 @@ class LoginController {
             WHERE u.roll_no = ?
         ");
         $stmt->execute([$roll_no]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC); 
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user && password_verify($password, $user['password'])) {
+         
+            session_regenerate_id(true);
 
-            
             $_SESSION['roll_no'] = $user['roll_no'];
             $_SESSION['role'] = $user['role_name'];
 

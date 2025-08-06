@@ -1,4 +1,6 @@
 <?php
+
+require_once '../../helpers/check-session.php';
 require_once '../../../controllers/faculty/questions/questionController.php';
 
 header('Content-Type: application/json');
