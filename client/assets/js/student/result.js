@@ -28,7 +28,7 @@ function renderResults() {
     if (isCorrect) correct++;
 
     const card = document.createElement("div");
-    card.className = `relative flex flex-col md:flex-row items-start gap-4 bg-white rounded-2xl shadow-md p-6 border ${isCorrect ? 'border-green-400' : 'border-red-400'} fade-in card-animate`;
+    card.className = `relative w-full flex flex-col md:flex-row items-start gap-4 bg-white rounded-2xl shadow-md p-6 border ${isCorrect ? 'border-green-400' : 'border-red-400'} fade-in card-animate`;
     card.style.animationDelay = `${0.4 + idx * 0.15}s`;
 
     const left = document.createElement("div");

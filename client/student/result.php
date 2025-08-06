@@ -9,19 +9,11 @@
 </head>
 <body class="font-sans text-gray-800">
 
-  <div class="max-w-6xl mx-auto px-6 py-10">
+  <div class="max-w-4xl mx-auto px-6 py-10">
     <!-- Header -->
-    <div class="flex justify-between items-center mb-8 fade-in" style="animation-delay:.05s">
-      <div class="text-left">
-        <h1 class="text-5xl font-extrabold text-orange-500 drop-shadow-md mb-2">🎓 Student Test Result</h1>
-        <p class="text-gray-700">Detailed breakdown of your performance</p>
-      </div>
-      <button
-        id="sendMailBtn"
-        class="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-4 py-2 rounded-xl shadow-md transition-transform duration-300 hover:scale-105"
-      >
-        📩 Send to Mail
-      </button>
+    <div class="text-center mb-10 fade-in" style="animation-delay:.05s">
+      <h1 class="text-4xl font-extrabold text-orange-500 drop-shadow-md mb-2">🎓 Student Test Result</h1>
+      <p class="text-gray-700">Detailed breakdown of your performance</p>
     </div>
 
     <!-- Summary Cards -->
@@ -42,12 +34,17 @@
 
     <!-- Question Cards -->
     <div id="questions-container" class="space-y-6"></div>
-  </div>
 
-  <!-- Footer -->
-  <footer class="text-center text-sm text-gray-500 py-6 footer-animate">
-    © 2025 . All rights reserved.
-  </footer>
+    <!-- Centered Send Button -->
+    <div class="text-center mt-10 fade-in" style="animation-delay:.8s">
+      <button
+        id="sendMailBtn"
+        class="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-xl shadow-md transition-transform duration-300 hover:scale-105"
+      >
+        📩 Send to Mail
+      </button>
+    </div>
+  </div>
 
   <script src="./client/assets/student/result.js"></script>
 </body>
