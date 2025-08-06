@@ -18,12 +18,14 @@ switch ($route) {
         }
         break;
 
+
     case 'get-user-by-roll':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require_once __DIR__ . '/../../controllers/auth/getUserByRollController.php';
             exit;
         }
         break;
+
 
     case 'forgot_password':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -33,8 +35,12 @@ switch ($route) {
         break;
 
     case 'reset_password':
-        require_once __DIR__ . '/../../controllers/auth/reset_password.php';
-        exit;
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            require_once __DIR__ . '/../../controllers/auth/reset_password.php';
+            exit;
+        }
+        break;
+
 
     default:
         http_response_code(404);
