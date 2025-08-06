@@ -57,13 +57,13 @@ class ForgotPasswordController {
         try {
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com'; // ✅ Use 'smtp.gmail.com' if you switch back to Gmail
-            $mail->SMTPAuth = true;
+            // $mail->SMTPAuth = true;
             $mail->Username = 'aaswinjs2004@gmail.com'; // 🔁 your Brevo email
-            $mail->Password = 'whff olit iebp dtzf';    // 🔁 SMTP key
+            $mail->Password = 'dqpz haly gvgy grtm';    // 🔁 SMTP key
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
 
-            $mail->setFrom('aaswinjs@gmail.com', 'Coding Quiz App');
+            $mail->setFrom('aaswinjs2004@gmail.com', 'Coding Quiz App');
             $mail->addAddress($user['email'], $user['name']);
             $mail->isHTML(true);
             $mail->Subject = $subject;
