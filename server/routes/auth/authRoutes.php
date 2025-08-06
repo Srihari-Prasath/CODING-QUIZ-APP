@@ -38,10 +38,7 @@ switch ($route) {
         require_once __DIR__ . '/../../controllers/auth/reset_password.php';
         exit;
 
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
     default:
         http_response_code(404);
         echo json_encode(["error" => "Route not found"]);
