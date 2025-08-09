@@ -88,10 +88,10 @@ class TestController
 
 
         if ($stmt->execute()) {
-            echo json_encode(["message" => "Test created successfully."]);
+            echo json_encode(["success" => true, "message" => "Test created successfully."]);
         } else {
             http_response_code(500);
-            echo json_encode(["error" => "Failed to create test."]);
+            echo json_encode(["success" => false, "error" => "Failed to create test."]);
         }
     }
 }

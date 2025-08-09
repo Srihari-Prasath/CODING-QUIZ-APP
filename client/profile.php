@@ -16,10 +16,10 @@
     <header class="bg-white shadow-lg border-b-2 border-orange-100 animate-slide-down">
         <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-2 animate-fade-in">
-                <div class="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center animate-float">
+                <div class="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center ">
                     <i class="fas fa-graduation-cap text-white"></i>
                 </div>
-                <span class="text-primary font-bold text-2xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Name</span>
+                <span class="text-primary font-bold text-2xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">NSCET CODE MASTER</span>
             </div>
         </nav>
     </header>
@@ -53,7 +53,7 @@
             <i class="fas fa-camera"></i>
         </button>
     </div>
-                    <h2 id="profileName" class="text-xl font-bold text-dark mt-4 animate-fade-in">Rahul Sharma</h2>
+                    <h2 id="profileName" class="text-xl font-bold text-dark mt-4 animate-fade-in">Sachin</h2>
                     <p id="profileRole" class="text-sm text-primary font-medium mb-2 animate-fade-in">Student</p>
                     <div class="w-full border-t border-orange-200 my-4 animate-fade-in"></div>
                     
@@ -144,7 +144,7 @@
             </div>
             <form id="profileForm" class="space-y-6">
                 <div class="animate-fade-in">
-                    <label class="block text-sm font-bold text-gray-700 mb-2">Name</label>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Sachin</label>
                     <input type="text" id="editName" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl bg-gray-100 transition-all duration-300" readonly>
                     <p class="text-xs text-gray-500 mt-2 flex items-center"><i class="fas fa-lock mr-1"></i>Name cannot be edited</p>
                 </div>
@@ -263,18 +263,7 @@
         </div>
     </div>
 
-    <footer class="bg-white border-t-2 border-orange-100 mt-12 py-8 animate-fade-in">
-        <div class="container mx-auto px-4 text-center">
-            <div class="flex items-center justify-center space-x-2 mb-2">
-                <div class="w-6 h-6 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center animate-float">
-                    <i class="fas fa-graduation-cap text-white text-sm"></i>
-                </div>
-                <span class="text-primary font-bold text-lg">Name</span>
-            </div>
-            <p class="text-sm text-gray-500">© 2025 Name</p>
-        </div>
-    </footer>
-
+   
     <?php include('./assets/js/profile/script.php') ?>
 </body>
 </html>

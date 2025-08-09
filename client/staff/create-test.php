@@ -58,12 +58,12 @@
                 <div class="form-group">
                     <label for="year">Year</label>
                     <select name="year" id="year" required>
-    <option value="">--Select Year--</option>
-    <option value="1">1st Year</option>
-    <option value="2">2nd Year</option>
-    <option value="3">3rd Year</option>
-    <option value="4">4th Year</option>
-</select>
+                        <option value="">--Select Year--</option>
+                        <option value="1">1st Year</option>
+                        <option value="2">2nd Year</option>
+                        <option value="3">3rd Year</option>
+                        <option value="4">4th Year</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
@@ -89,7 +89,7 @@
             e.preventDefault();
 
             const form = e.target;
-            const jsonObject = { 
+            const jsonObject = {
                 title: form.title.value,
                 description: form.description.value,
                 domain: form.domain.value,
@@ -99,27 +99,34 @@
                 duration_minutes: parseInt(form.duration.value),
                 total_marks: parseInt(form.totalMarks.value),
                 total_questions: parseInt(form.totalQuestion.value),
-               
-            }; 
+
+            };
             try {
                 const response = await fetch('<?php echo $api; ?>faculty/test/testRoutes.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                     credentials: 'include', 
+                    credentials: 'include',
                     body: JSON.stringify(jsonObject)
                 });
 
                 const result = await response.json();
-                alert(result.message || result.error);
+                alert(result.message);
 
-
+console.log(result);
                 if (result.message) {
+                    alert(result.message);
                     form.reset();
+                } else if (result.error) {
+                    alert("Error: " + result.error);
+                } else {
+                    alert("Unknown response format");
                 }
+
             } catch (error) {
                 console.error('Request failed:', error);
+                alert("Request failed: " + error.message);
             }
         });
     </script>

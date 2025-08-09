@@ -59,12 +59,12 @@ tailwind.config = {
         }
 // User data
         const userData = {
-            name: "Rahul Sharma",
+            name: "Sachin",
             role: "Student",
-            roll: "CS2023001",
+            roll: "921022205011",
             dept: "Computer Science",
-            year: "II",
-            email: "rahul.sharma@college.edu",
+            year: "IV",
+            email: "sachin@gmail.com",
             profileImage: "profile.jpg",
             stats: {
                 problemsSolved: 42,

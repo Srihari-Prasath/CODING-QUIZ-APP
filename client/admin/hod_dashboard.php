@@ -789,7 +789,7 @@
         // Modal functions
         function openProfileSettings() {
             // In a real app, you would fetch the current profile data from an API
-            document.getElementById('profileName').value = 'Dr. John Smith';
+            document.getElementById('profileName').value = 'HOD Nam';
             document.getElementById('profileEmail').value = 'john.smith@univ.edu';
             document.getElementById('profileDepartment').value = 'Computer Science';
             

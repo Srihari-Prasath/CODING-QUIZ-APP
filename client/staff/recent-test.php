@@ -12,7 +12,67 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    
+<style>
+  .quiz-list-container {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 24px;
+  background: #f0f4f8;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.quiz-list-container h2 {
+  font-size: 24px;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.quiz-list-container .description {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 16px;
+}
+
+.quiz-info-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.quiz-info-list li {
+  background: #fff;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #444;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.status {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.status.active {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.quiz-list-container{
+  display: flex;
+  gap: 3rem;
+  flex-direction: column;
+}
+
+
+</style>    
 
 </head>
 
@@ -22,19 +82,41 @@
     <main class="container mx-auto px-4 py-6">
         <?php include('./nav.php') ?>
         
-    <div id="quiz-card" style="
-  background: linear-gradient(to bottom right, #F97316, #fffbeb);
-  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-  border-radius: 1rem;
-  padding: 1.5rem;
-  border: 1px solid #F97316;
-  font-family: ui-sans-serif, system-ui, sans-serif;
-  margin-bottom: 1.5rem;
-  transition: all 0.3s ease;
-"
-onmouseover="this.style.boxShadow='0 25px 50px -12px rgb(0 0 0 / 0.25)';this.style.transform='scale(1.02)'"
-onmouseout="this.style.boxShadow='0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)';this.style.transform='scale(1)'">
+  <div class="quiz-list-container">
+  <div>
+    <h2>Data Structures Quiz</h2>
+  <p class="description">Covers Linked Lists, Trees, and Graphs fundamentals.</p>
+
+  <ul class="quiz-info-list">
+    <li><strong>Domain:</strong> Programming</li>
+    <li><strong>Department:</strong> CSE</li>
+    <li><strong>Year:</strong> II</li>
+    <li><strong>Start Time:</strong> 10:00 AM</li>
+    <li><strong>End Time:</strong> 11:00 AM</li>
+    <li><strong>Duration:</strong> 60 mins</li>
+    <li><strong>Total Questions:</strong> 25</li>
+    <li><strong>Total Marks:</strong> 50</li>
+    <li><strong>Status:</strong> <span class="status active">Active</span></li>
+  </ul>
+  </div>
+  <div>
+    <h2>Data Structures Quiz</h2>
+  <p class="description">Covers Linked Lists, Trees, and Graphs fundamentals.</p>
+
+  <ul class="quiz-info-list">
+    <li><strong>Domain:</strong> Programming</li>
+    <li><strong>Department:</strong> CSE</li>
+    <li><strong>Year:</strong> II</li>
+    <li><strong>Start Time:</strong> 10:00 AM</li>
+    <li><strong>End Time:</strong> 11:00 AM</li>
+    <li><strong>Duration:</strong> 60 mins</li>
+    <li><strong>Total Questions:</strong> 25</li>
+    <li><strong>Total Marks:</strong> 50</li>
+    <li><strong>Status:</strong> <span class="status active">Active</span></li>
+  </ul>
+  </div>
 </div>
+
 
 <script>
 
@@ -55,90 +137,6 @@ const quizData = {
 };
 
 
-function renderQuizCard() {
-  const quizCard = document.getElementById('quiz-card');
-  
-  quizCard.innerHTML = `
-    <h3 style="
-      font-size: 1.5rem;
-      line-height: 2rem;
-      font-weight: 800;
-      color: #7c2d12;
-      margin-bottom: 0.5rem;
-      letter-spacing: 0.025em;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    ">
-      <i class="fas fa-brain" style="color: #92400e;"></i> ${quizData.title}
-    </h3>
-
-    <p style="
-      font-size: 0.875rem;
-      line-height: 1.25rem;
-      color: #9a3412;
-      margin-bottom: 1rem;
-      font-style: italic;
-    ">
-      ${quizData.description}
-    </p>
-
-    <div style="
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      row-gap: 0.75rem;
-      column-gap: 1.5rem;
-      font-size: 15px;
-      color: #7c2d12;
-    ">
-      <div>
-        <i class="fas fa-folder" style="margin-right: 0.5rem; color: #92400e;"></i>
-        <strong>Domain:</strong>
-        <span style="color: #9a3412; margin-left: 0.25rem;">${quizData.details.domain}</span>
-      </div>
-      <div>
-        <i class="fas fa-building-columns" style="margin-right: 0.5rem; color: #92400e;"></i>
-        <strong>Department:</strong>
-        <span style="color: #9a3412; margin-left: 0.25rem;">${quizData.details.department}</span>
-      </div>
-      <div>
-        <i class="fas fa-calendar-alt" style="margin-right: 0.5rem; color: #92400e;"></i>
-        <strong>Year:</strong>
-        <span style="color: #9a3412; margin-left: 0.25rem;">${quizData.details.year}</span>
-      </div>
-      <div>
-        <i class="fas fa-clock" style="margin-right: 0.5rem; color: #92400e;"></i>
-        <strong>Start Time:</strong>
-        <span style="color: #9a3412; margin-left: 0.25rem;">${quizData.details.startTime}</span>
-      </div>
-      <div>
-        <i class="fas fa-hourglass-end" style="margin-right: 0.5rem; color: #92400e;"></i>
-        <strong>End Time:</strong>
-        <span style="color: #9a3412; margin-left: 0.25rem;">${quizData.details.endTime}</span>
-      </div>
-      <div>
-        <i class="fas fa-stopwatch" style="margin-right: 0.5rem; color: #92400e;"></i>
-        <strong>Duration:</strong>
-        <span style="color: #9a3412; margin-left: 0.25rem;">${quizData.details.duration}</span>
-      </div>
-      <div>
-        <i class="fas fa-list-ol" style="margin-right: 0.5rem; color: #92400e;"></i>
-        <strong>Total Qs:</strong>
-        <span style="color: #9a3412; margin-left: 0.25rem;">${quizData.details.totalQuestions}</span>
-      </div>
-      <div>
-        <i class="fas fa-chart-bar" style="margin-right: 0.5rem; color: #92400e;"></i>
-        <strong>Total Marks:</strong>
-        <span style="color: #9a3412; margin-left: 0.25rem;">${quizData.details.totalMarks}</span>
-      </div>
-      <div>
-        <i class="fas fa-check-circle" style="margin-right: 0.5rem; color: #92400e;"></i>
-        <strong>Status:</strong>
-        <span style="color: #15803d; font-weight: 700; margin-left: 0.25rem;">${quizData.details.status}</span>
-      </div>
-    </div>
-  `;
-}
 
 
 </script>
