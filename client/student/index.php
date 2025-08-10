@@ -6,13 +6,14 @@
     <title>Student Dashboard</title>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="../assets/css/student/dashboard.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
 </head>
 <body>
    <?php include('./header.php') ?>
 
     <main class="container">
         <nav>
-            <a href="dashboard.php" class="active">Dashboard</a>
+            <a href="index.php" class="active">Dashboard</a>
             <a href="quiz-attend.php">Quiz-attend</a>
             <a href="leaderboard.php">Leaderboard</a>
             <a href="Result.php">Result</a>
@@ -72,7 +73,7 @@
     <script>
         
 
-        // Theme toggle functionality
+        
         const themeToggle = document.getElementById('theme-toggle');
         const body = document.body;
 
@@ -83,7 +84,7 @@
             lucide.createIcons();
         }
 
-        // Load saved theme or default to light
+        
         const savedTheme = localStorage.getItem('theme') || 'light';
         setTheme(savedTheme);
 
