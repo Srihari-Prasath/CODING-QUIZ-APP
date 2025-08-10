@@ -1,4 +1,6 @@
 <?php
+session_start(); // Start session at the very beginning
+
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -50,52 +52,60 @@ try {
         $mark_map[$row['question_id']] = intval($row['mark']);
     }
 
-    // Insert student_test record
-    $insertTest = $conn->prepare("INSERT INTO student_tests (student_id, test_id) VALUES (?, ?)");
+    // Insert into student_tests to track this attempt
+    $insertTest = $conn->prepare("INSERT INTO student_tests (student_id, test_id, submitted_at) VALUES (?, ?, NOW())");
     $insertTest->execute([$user_id, $test_id]);
     $student_test_id = $conn->lastInsertId();
+
+    $total_score = 0;
 
     // Prepare insert into student_answers
     $insertAnswer = $conn->prepare("
         INSERT INTO student_answers 
-        (student_test_id, question_id, selected_option, is_correct, marks_awarded) 
-        VALUES (?, ?, ?, ?, ?)
+        (student_test_id, user_id, test_id, question_id, selected_option, answered_at) 
+        VALUES (?, ?, ?, ?, ?, NOW())
     ");
 
     foreach ($user_answers as $question_id => $selected_option) {
         $question_id = intval($question_id);
         $selected_option = strtoupper(trim($selected_option));
 
-        // Skip if not a valid question
         if (!isset($correct_map[$question_id])) continue;
 
-        // Handle skipped
         if (!in_array($selected_option, ['A', 'B', 'C', 'D'])) {
+            // Skipped or invalid answer
             $selected_option = null;
-            $is_correct = null;
             $marks_awarded = 0;
         } else {
             $is_correct = ($selected_option === $correct_map[$question_id]) ? 1 : 0;
-            $marks_awarded = $is_correct ? $marks_map[$question_id] : 0;
+            $marks_awarded = $is_correct ? $mark_map[$question_id] : 0;
+            $total_score += $marks_awarded;
         }
 
         $insertAnswer->execute([
             $student_test_id,
+            $user_id,
+            $test_id,
             $question_id,
-            $selected_option,
-            $is_correct,
-            $marks_awarded
+            $selected_option ?: 'A' // default to A if null (avoid DB errors)
         ]);
     }
 
+    // Update total score in student_tests
+    $updateScore = $conn->prepare("UPDATE student_tests SET score = ? WHERE student_test_id = ?");
+    $updateScore->execute([$total_score, $student_test_id]);
+
     $conn->commit();
+
+    // Set session flag here to indicate quiz submitted
+    $_SESSION['quiz_submitted'] = true;
 
     echo json_encode([
         'status' => 'success',
-        'message' => 'Answers submitted successfully',
-        'student_test_id' => $student_test_id
+        'message' => 'Quiz submitted successfully',
+        'student_test_id' => $student_test_id,
+        'score' => $total_score
     ]);
-
 } catch (Exception $e) {
     $conn->rollBack();
     http_response_code(500);

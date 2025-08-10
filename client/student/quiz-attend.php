@@ -1,20 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>MCQ Quiz App</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/student/quiz-attend.css">
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../assets/css/student/quiz-attend.css" />
 </head>
 <body class="bg-gray-100 font-sans">
     <!-- Landing Page -->
     <div id="landingPage" class="flex h-screen items-center justify-center">
         <div class="bg-white p-8 rounded-xl shadow-md text-center">
-            <h1 class="text-3xl font-bold text-gray-800 mb-4">Welcome to the General Knowledge Quiz</h1>
-            <p class="text-gray-600 mb-6">Test your knowledge with 10 exciting questions. Click below to start the quiz in full-screen mode.</p>
-            <button id="startQuiz" class="bg-blue-500 hover:bg-blue-600 text-white py-3 px-8 rounded-md transition duration-300 text-lg">
+            <h1 class="text-3xl font-bold text-gray-800 mb-4">
+                Welcome to the General Knowledge Quiz
+            </h1>
+            <p class="text-gray-600 mb-6">
+                Test your knowledge with 10 exciting questions. Click below to
+                start the quiz in full-screen mode.
+            </p>
+            <button
+                id="startQuiz"
+                class="bg-blue-500 hover:bg-blue-600 text-white py-3 px-8 rounded-md transition duration-300 text-lg"
+            >
                 Start Test
             </button>
         </div>
@@ -23,10 +34,15 @@
     <!-- Quiz Content -->
     <div id="quizContent" class="hidden flex h-screen overflow-hidden">
         <!-- Sidebar -->
-        <div class="sidebar bg-white w-64 border-r border-gray-200 p-4 flex flex-col md:relative">
+        <div
+            class="sidebar bg-white w-64 border-r border-gray-200 p-4 flex flex-col md:relative"
+        >
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-xl font-bold text-gray-800">Quiz Navigation</h2>
-                <button id="closeSidebar" class="md:hidden text-gray-500 hover:text-gray-700">
+                <button
+                    id="closeSidebar"
+                    class="md:hidden text-gray-500 hover:text-gray-700"
+                >
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -37,28 +53,46 @@
                 </div>
             </div>
             <div class="flex-1 overflow-y-auto">
-                <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Questions</h3>
-                <div class="grid grid-cols-5 gap-2 mb-6" id="questionNumbers">
-                    <!-- Question numbers will be added here by JavaScript -->
-                </div>
-                
+                <h3
+                    class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2"
+                >
+                    Questions
+                </h3>
+                <div
+                    class="grid grid-cols-5 gap-2 mb-6"
+                    id="questionNumbers"
+                ></div>
+
                 <div class="space-y-2 text-sm">
                     <div class="flex items-center">
-                        <div class="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
-                        <span>Answered: <span id="answeredCount">0</span></span>
+                        <div
+                            class="w-3 h-3 rounded-full bg-green-500 mr-2"
+                        ></div>
+                        <span
+                            >Answered: <span id="answeredCount">0</span></span
+                        >
                     </div>
                     <div class="flex items-center">
-                        <div class="w-3 h-3 rounded-full bg-red-500 mr-2"></div>
-                        <span>Not Answered: <span id="notAnsweredCount">0</span></span>
+                        <div
+                            class="w-3 h-3 rounded-full bg-red-500 mr-2"
+                        ></div>
+                        <span
+                            >Not Answered: <span id="notAnsweredCount">0</span></span
+                        >
                     </div>
                     <div class="flex items-center">
-                        <div class="w-3 h-3 rounded-full bg-yellow-500 mr-2"></div>
+                        <div
+                            class="w-3 h-3 rounded-full bg-yellow-500 mr-2"
+                        ></div>
                         <span>Skipped: <span id="skippedCount">0</span></span>
                     </div>
                 </div>
             </div>
             <div class="mt-auto pt-4 border-t border-gray-200">
-                <button id="submitQuiz" class="w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md transition duration-300">
+                <button
+                    id="submitQuiz"
+                    class="w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md transition duration-300"
+                >
                     Submit Quiz
                 </button>
             </div>
@@ -66,7 +100,10 @@
 
         <!-- Mobile sidebar toggle -->
         <div class="md:hidden fixed bottom-6 right-6 z-30">
-            <button id="toggleSidebar" class="bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600 transition duration-300">
+            <button
+                id="toggleSidebar"
+                class="bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600 transition duration-300"
+            >
                 <i class="fas fa-bars"></i>
             </button>
         </div>
@@ -80,80 +117,79 @@
                 <!-- Header -->
                 <header class="flex justify-between items-center mb-8">
                     <div>
-                        <h1 class="text-2xl font-bold text-gray-800">General Knowledge Quiz</h1>
-                        <p class="text-gray-600">Test your knowledge with these questions</p>
+                        <h1 class="text-2xl font-bold text-gray-800">
+                            General Knowledge Quiz
+                        </h1>
+                        <p class="text-gray-600">
+                            Test your knowledge with these questions
+                        </p>
                     </div>
                     <div class="flex items-center space-x-4">
-                        <div class="bg-white p-3 rounded-lg shadow-sm flex items-center">
-                            <i class="fas fa-clock text-orange-500 mr-2"></i>
-                            <span id="mainTimer" class="font-bold timer">10:00</span>
+                        <div
+                            class="bg-white p-3 rounded-lg shadow-sm flex items-center"
+                        >
+                            <i
+                                class="fas fa-clock text-orange-500 mr-2"
+                            ></i>
+                            <span id="mainTimer" class="font-bold timer"
+                                >10:00</span
+                            >
                         </div>
                     </div>
                 </header>
 
-                <!-- Question Card 
-                <div class="bg-white rounded-xl shadow-md overflow-hidden mb-6 transition-all duration-300">
-                    <div class="p-6">
-                        <div class="flex justify-between items-center mb-4">
-                            <span class="text-sm font-medium text-blue-500">Question <span id="currentQuestionNumber">1</span>/10</span>
-                            <span class="text-sm font-medium text-gray-500">1 point</span>
-                        </div>
-                        <h2 id="questionText" class="text-xl font-semibold text-gray-800 mb-6">What is the capital of France?</h2>
-                        
-                       Options 
-                        <div class="space-y-3" id="optionsContainer">
-                            <div class="option bg-white border border-gray-200 rounded-lg p-4 cursor-pointer transition duration-300 hover:shadow-md">
-                                <div class="flex items-center">
-                                    <span class="font-medium mr-3">A.</span>
-                                    <span>London</span>
-                                </div>
-                            </div>
-                            <div class="option bg-white border border-gray-200 rounded-lg p-4 cursor-pointer transition duration-300 hover:shadow-md">
-                                <div class="flex items-center">
-                                    <span class="font-medium mr-3">B.</span>
-                                    <span>Paris</span>
-                                </div>
-                            </div>
-                            <div class="option bg-white border border-gray-200 rounded-lg p-4 cursor-pointer transition duration-300 hover:shadow-md">
-                                <div class="flex items-center">
-                                    <span class="font-medium mr-3">C.</span>
-                                    <span>Berlin</span>
-                                </div>
-                            </div>
-                            <div class="option bg-white border border-gray-200 rounded-lg p-4 cursor-pointer transition duration-300 hover:shadow-md">
-                                <div class="flex items-center">
-                                    <span class="font-medium mr-3">D.</span>
-                                    <span>Madrid</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
-
                 <div id="quiz-container" class="mt-10"></div>
-                <div id="submitModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-                    <div class="bg-white p-6 rounded shadow-md text-center">
+                <div
+                    id="submitModal"
+                    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden"
+                >
+                    <div
+                        class="bg-white p-6 rounded shadow-md text-center max-w-sm mx-auto"
+                    >
                         <h2 class="text-xl font-semibold mb-4">Submit Quiz</h2>
-                        <p class="mb-4">You’ve answered all questions. Do you want to submit your answers?</p>
+                        <p class="mb-4">
+                            You’ve answered all questions. Do you want to submit
+                            your answers?
+                        </p>
                         <div class="flex justify-center space-x-4">
-                            <button id="confirmSubmit" class="bg-green-500 text-white px-4 py-2 rounded">Submit</button>
-                            <button id="cancelSubmit" class="bg-gray-300 px-4 py-2 rounded">Cancel</button>
+                            <button
+                                id="confirmSubmit"
+                                class="bg-green-500 text-white px-4 py-2 rounded"
+                            >
+                                Submit
+                            </button>
+                            <button
+                                id="cancelSubmit"
+                                class="bg-gray-300 px-4 py-2 rounded"
+                            >
+                                Cancel
+                            </button>
                         </div>
                     </div>
                 </div>
 
-
-
                 <!-- Navigation Buttons -->
-                <div class="flex justify-between items-center mt-6">
-                    <button id="prevBtn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 px-6 rounded-md transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                <div
+                    class="flex justify-between items-center mt-6 max-w-4xl mx-auto"
+                >
+                    <button
+                        id="prevBtn"
+                        class="bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 px-6 rounded-md transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                        disabled
+                    >
                         <i class="fas fa-arrow-left mr-2"></i> Previous
                     </button>
                     <div class="flex space-x-3">
-                        <button id="skipBtn" class="bg-yellow-100 hover:bg-yellow-200 text-yellow-800 py-2 px-6 rounded-md transition duration-300">
+                        <button
+                            id="skipBtn"
+                            class="bg-yellow-100 hover:bg-yellow-200 text-yellow-800 py-2 px-6 rounded-md transition duration-300"
+                        >
                             <i class="fas fa-forward mr-2"></i> Skip
                         </button>
-                        <button id="nextBtn" class="bg-orange-500 hover:bg-orange-600 text-white py-2 px-6 rounded-md transition duration-300">
+                        <button
+                            id="nextBtn"
+                            class="bg-orange-500 hover:bg-orange-600 text-white py-2 px-6 rounded-md transition duration-300"
+                        >
                             Next <i class="fas fa-arrow-right ml-2"></i>
                         </button>
                     </div>
@@ -169,6 +205,7 @@ let currentQuestionIndex = 0;
 let timeLeft = 0;
 let timerInterval;
 let answers = {}; // { question_id: selectedOption }
+let totalMarks = 0;
 
 const urlParams = new URLSearchParams(window.location.search);
 const testId = urlParams.get('test_id');
@@ -176,29 +213,42 @@ const testId = urlParams.get('test_id');
 const submitModal = document.getElementById("submitModal");
 const confirmSubmit = document.getElementById("confirmSubmit");
 const cancelSubmit = document.getElementById("cancelSubmit");
+const startQuiz = document.getElementById("startQuiz");
+const landingPage = document.getElementById("landingPage");
+const quizContent = document.getElementById("quizContent");
+const questionNumbers = document.getElementById("questionNumbers");
+const submitQuiz = document.getElementById("submitQuiz");
+const skipBtn = document.getElementById("skipBtn");
+const nextBtn = document.getElementById("nextBtn");
+const prevBtn = document.getElementById("prevBtn");
+
+// TODO: Replace with actual logged-in user id dynamically (from PHP session or backend)
+const userId = 1; 
 
 // Prevent reload
-window.onbeforeunload = () => "Are you sure you want to leave? Your quiz progress will be lost.";
+window.onbeforeunload = () =>
+    "Are you sure you want to leave? Your quiz progress will be lost.";
 
 // Auto-submit
 function autoSubmitQuiz() {
     clearInterval(timerInterval);
     alert("Time is up! Submitting your answers...");
-    console.log("Auto Submitted Answers:", answers);
-    document.getElementById('quiz-container').innerHTML = `<p class="text-green-500 text-center">Quiz submitted successfully!</p>`;
+    submitAnswers();
 }
 
 // Timer
 function updateTimerDisplay() {
     const minutes = Math.floor(timeLeft / 60);
     const seconds = timeLeft % 60;
-    const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-    document.getElementById('mainTimer').textContent = formattedTime;
-    document.getElementById('sidebarTimer').textContent = formattedTime;
+    const formattedTime = `${String(minutes).padStart(2, "0")}:${String(
+        seconds
+    ).padStart(2, "0")}`;
+    document.getElementById("mainTimer").textContent = formattedTime;
+    document.getElementById("sidebarTimer").textContent = formattedTime;
 
     if (timeLeft <= 60) {
-        document.getElementById('mainTimer').classList.add('text-red-500');
-        document.getElementById('sidebarTimer').classList.add('text-red-500');
+        document.getElementById("mainTimer").classList.add("text-red-500");
+        document.getElementById("sidebarTimer").classList.add("text-red-500");
     }
 }
 
@@ -214,38 +264,43 @@ function startTimer() {
     }, 1000);
 }
 
-// Fetch quiz
+// Fetch quiz & test details
 if (!testId) {
-    document.getElementById('quiz-container').innerHTML = `<p class="text-red-500">Invalid test ID.</p>`;
+    document.getElementById("quiz-container").innerHTML =
+        `<p class="text-red-500">Invalid test ID.</p>`;
 } else {
-    fetch('../../server/controllers/student/test-list.php')
-        .then(res => res.json())
-        .then(tests => {
-            const currentTest = tests.find(test => test.test_id == testId);
+    // Fetch test info (for duration and total marks)
+    fetch("../../server/controllers/student/test-list.php")
+        .then((res) => res.json())
+        .then((tests) => {
+            const currentTest = tests.find((test) => test.test_id == testId);
             if (currentTest) {
                 timeLeft = parseInt(currentTest.duration_minutes) * 60;
+                totalMarks = parseInt(currentTest.total_marks);
                 startTimer();
             }
         });
 
+    // Fetch questions
     fetch(`../../server/controllers/student/quiz-questions.php?test_id=${testId}`)
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === 'success') {
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.status === "success") {
                 questions = data.questions;
                 quizData = questions;
                 initQuiz();
                 renderSingleQuestion();
             } else {
-                document.getElementById('quiz-container').innerHTML = `<p class="text-red-500">${data.message}</p>`;
+                document.getElementById("quiz-container").innerHTML =
+                    `<p class="text-red-500">${data.message}</p>`;
             }
         });
 }
 
 // Render Question
 function renderSingleQuestion() {
-    const quizContainer = document.getElementById('quiz-container');
-    quizContainer.innerHTML = '';
+    const quizContainer = document.getElementById("quiz-container");
+    quizContainer.innerHTML = "";
 
     if (currentQuestionIndex >= questions.length) {
         currentQuestionIndex = 0;
@@ -254,15 +309,19 @@ function renderSingleQuestion() {
     const q = questions[currentQuestionIndex];
     const selectedAnswer = answers[q.question_id] || "";
 
-    const card = document.createElement('div');
+    const card = document.createElement("div");
     card.className = "bg-white rounded-xl shadow-md overflow-hidden mb-6";
     card.innerHTML = `
         <div class="p-6">
             <div class="flex justify-between items-center mb-4">
-                <span class="text-sm font-medium text-blue-500">Question ${currentQuestionIndex + 1}/${questions.length}</span>
+                <span class="text-sm font-medium text-blue-500">Question ${
+                    currentQuestionIndex + 1
+                }/${questions.length}</span>
                 <span class="text-sm font-medium text-gray-500">1 point</span>
             </div>
-            <h2 class="text-xl font-semibold text-gray-800 mb-6">${q.question_text}</h2>
+            <h2 class="text-xl font-semibold text-gray-800 mb-6">${
+                q.question_text
+            }</h2>
             <div class="space-y-3" id="optionsContainer">
                 ${renderStyledOption("A", q.option_a, q.question_id, selectedAnswer)}
                 ${renderStyledOption("B", q.option_b, q.question_id, selectedAnswer)}
@@ -273,10 +332,10 @@ function renderSingleQuestion() {
     `;
     quizContainer.appendChild(card);
 
-    card.querySelectorAll('.option').forEach(option => {
-        option.addEventListener('click', () => {
-            const label = option.getAttribute('data-label');
-            const qid = option.getAttribute('data-question-id');
+    card.querySelectorAll(".option").forEach((option) => {
+        option.addEventListener("click", () => {
+            const label = option.getAttribute("data-label");
+            const qid = option.getAttribute("data-question-id");
             if (answers[qid] === label) {
                 delete answers[qid];
             } else {
@@ -284,14 +343,19 @@ function renderSingleQuestion() {
             }
             updateSidebarStatus(qid);
             renderSingleQuestion();
+            updateAnsweredCounts();
         });
     });
+
+    updateAnsweredCounts();
 }
 
-// Render Option
+// Render Option helper
 function renderStyledOption(label, text, questionId, selectedAnswer) {
     const isSelected = selectedAnswer === label;
-    const selectedClass = isSelected ? 'border-orange-500 ring-2 ring-orange-300 bg-orange-50' : '';
+    const selectedClass = isSelected
+        ? "border-orange-500 ring-2 ring-orange-300 bg-orange-50"
+        : "";
     return `
         <div class="option border border-gray-200 rounded-lg p-4 cursor-pointer transition duration-300 hover:shadow-md ${selectedClass}" 
              data-label="${label}" data-question-id="${questionId}">
@@ -300,96 +364,175 @@ function renderStyledOption(label, text, questionId, selectedAnswer) {
     `;
 }
 
-// Init Sidebar
+// Init Sidebar navigation numbers
 function initQuiz() {
-    const questionNumbers = document.getElementById('questionNumbers');
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay');
-
-    questionNumbers.innerHTML = '';
+    questionNumbers.innerHTML = "";
     quizData.forEach((_, index) => {
-        const questionNumber = document.createElement('div');
-        questionNumber.className = 'question-number w-10 h-10 flex items-center justify-center rounded-md border border-gray-300 cursor-pointer transition duration-300 hover:bg-gray-100';
+        const questionNumber = document.createElement("div");
+        questionNumber.className =
+            "question-number w-10 h-10 flex items-center justify-center rounded-md border border-gray-300 cursor-pointer transition duration-300 hover:bg-gray-100";
         questionNumber.textContent = index + 1;
         questionNumber.dataset.index = index;
         questionNumber.id = `qnum-${quizData[index].question_id}`;
-        questionNumber.addEventListener('click', () => {
+        questionNumber.addEventListener("click", () => {
             currentQuestionIndex = index;
             renderSingleQuestion();
             if (window.innerWidth < 768) {
-                sidebar.classList.remove('active');
-                overlay.classList.remove('active');
+                document.querySelector(".sidebar").classList.remove("active");
+                document.getElementById("overlay").classList.remove("active");
             }
         });
         questionNumbers.appendChild(questionNumber);
         updateSidebarStatus(quizData[index].question_id);
     });
+    updateAnsweredCounts();
 }
 
-// Update Sidebar
+// Update sidebar question status colors
 function updateSidebarStatus(questionId) {
     const elem = document.getElementById(`qnum-${questionId}`);
     if (elem) {
         if (answers[questionId]) {
-            elem.classList.add('bg-green-200', 'text-green-800', 'font-semibold');
+            elem.classList.add("bg-green-200", "text-green-800", "font-semibold");
+            elem.classList.remove("bg-yellow-200", "text-yellow-800");
         } else {
-            elem.classList.remove('bg-green-200', 'text-green-800', 'font-semibold');
+            elem.classList.remove("bg-green-200", "text-green-800", "font-semibold");
+            elem.classList.remove("bg-yellow-200", "text-yellow-800");
         }
     }
 }
 
-// Start
-startQuiz.addEventListener('click', () => {
-    landingPage.classList.add('hidden');
-    quizContent.classList.remove('hidden');
+// Update answered / not answered / skipped counts display
+function updateAnsweredCounts() {
+    const total = questions.length;
+    const answered = Object.keys(answers).filter(
+        (qid) => answers[qid] !== undefined && answers[qid] !== ""
+    ).length;
+    const skipped = Object.keys(answers).filter((qid) => answers[qid] === "").length;
+    const notAnswered = total - answered - skipped;
+
+    document.getElementById("answeredCount").textContent = answered;
+    document.getElementById("notAnsweredCount").textContent = notAnswered;
+    document.getElementById("skippedCount").textContent = skipped;
+}
+
+// Start Quiz Button
+startQuiz.addEventListener("click", () => {
+    landingPage.classList.add("hidden");
+    quizContent.classList.remove("hidden");
 });
 
-// Skip
-skipBtn.addEventListener('click', () => {
+// Skip Button
+skipBtn.addEventListener("click", () => {
     const q = questions[currentQuestionIndex];
     if (!answers[q.question_id]) {
         answers[q.question_id] = ""; // mark as skipped
-        document.getElementById(`qnum-${q.question_id}`)?.classList.add('bg-yellow-200', 'text-yellow-800', 'font-semibold');
+        updateSidebarStatus(q.question_id);
     }
     currentQuestionIndex++;
+    if (currentQuestionIndex >= questions.length) currentQuestionIndex = 0;
     renderSingleQuestion();
 });
 
-// Next
-nextBtn.addEventListener('click', () => {
-    const allAnswered = quizData.every(q => answers[q.question_id]);
-    if (allAnswered) {
+// Next Button
+nextBtn.addEventListener("click", () => {
+    currentQuestionIndex++;
+    if (currentQuestionIndex >= questions.length) currentQuestionIndex = 0;
+    renderSingleQuestion();
+
+    // Show submit modal if all answered or skipped
+    const allAnsweredOrSkipped = questions.every(
+        (q) => answers.hasOwnProperty(q.question_id)
+    );
+    if (allAnsweredOrSkipped) {
         submitModal.classList.remove("hidden");
-    } else {
-        currentQuestionIndex++;
+    }
+});
+
+// Previous Button
+prevBtn.addEventListener("click", () => {
+    if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
         renderSingleQuestion();
     }
 });
 
-// Manual Submit button (optional)
-submitQuiz.addEventListener('click', () => {
+// Manual Submit Button in Sidebar
+submitQuiz.addEventListener("click", () => {
     if (confirm("Are you sure you want to submit the quiz?")) {
         clearInterval(timerInterval);
-        console.log("Manual submission", answers);
-        document.getElementById('quiz-container').innerHTML = `<p class="text-green-500 text-center">Quiz submitted successfully!</p>`;
+        submitAnswers();
     }
 });
 
 // Submit Modal Buttons
-confirmSubmit.addEventListener('click', () => {
+confirmSubmit.addEventListener("click", () => {
     clearInterval(timerInterval);
-    console.log("Submitted via popup", answers);
     submitModal.classList.add("hidden");
-    document.getElementById('quiz-container').innerHTML = `<p class="text-green-500 text-center">Quiz submitted successfully!</p>`;
+    submitAnswers();
 });
-cancelSubmit.addEventListener('click', () => {
+
+cancelSubmit.addEventListener("click", () => {
     submitModal.classList.add("hidden");
 });
+
+// Function to submit answers and save score
+async function submitAnswers() {
+    try {
+        const response = await fetch(
+            "../../server/controllers/student/submit_quiz.php",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    test_id: testId,
+                    user_id: userId,
+                    answers: answers,
+                }),
+                credentials: "include",
+            }
+        );
+        const result = await response.json();
+
+        if (result.status === "success") {
+            document.getElementById(
+                "quiz-container"
+            ).innerHTML = `<p class="text-green-500 text-center">Quiz submitted successfully! Your test ID: ${result.student_test_id}</p>`;
+
+            // Save the score now with totalMarks
+            const saveScoreResponse = await fetch(
+                "../../server/controllers/student/save_quiz_result.php",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        user_id: userId,
+                        test_id: testId,
+                        score: result.score,
+                        total_marks: totalMarks,
+                    }),
+                }
+            );
+            const saveScoreResult = await saveScoreResponse.json();
+
+            if (saveScoreResult.status !== "success") {
+                console.error("Failed to save score:", saveScoreResult.message);
+            } else {
+                // Redirect to congrats.php page after successful submission
+                window.location.href = "/CODING-QUIZ-APP/client/student/congrats.php";
+            }
+
+        } else {
+            alert("Submission failed: " + result.message);
+        }
+    } catch (error) {
+        alert("Error submitting quiz: " + error.message);
+    }
+}
 </script>
-
-
-
-
-
 </body>
 </html>

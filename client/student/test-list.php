@@ -36,18 +36,16 @@
                     : 'status-active';
 
                 card.innerHTML = `
-                    <!-- Status indicator -->
-                    <span class="absolute top-3 right-3 w-3 h-3 rounded-full ${statusColor}" title="${test.is_active == 1 ? 'Active' : 'Inactive'}"></span>
-
-                    <h2 class="text-xl font-semibold mb-1">${test.title}</h2>
-                    <p class="text-gray-700 mb-2">${test.description || "No description available."}</p>
-                    <p class="text-sm text-gray-500 mb-1"><strong>Domain:</strong> ${test.domain || "N/A"}</p>
-                    <p class="text-sm text-gray-500 mb-1"><strong>Department:</strong> ${test.department || "N/A"} | <strong>Year:</strong> ${test.year || "N/A"}</p>
-                    <p class="text-sm text-gray-500 mb-1"><strong>Start:</strong> ${new Date(test.start_time).toLocaleString()}</p>
-                    <p class="text-sm text-gray-500 mb-1"><strong>End:</strong> ${new Date(test.end_time).toLocaleString()}</p>
-                    <p class="text-sm text-gray-500 mb-3"><strong>Duration:</strong> ${test.duration_minutes} mins | <strong>Marks:</strong> ${test.total_marks}</p>
-                    <a href="quiz-attend.php?test_id=${test.test_id}" class="inline-block mt-2 px-4 py-2 custom-button text-white rounded transition">Start Test</a>
-                `;
+    <span class="absolute top-3 right-3 w-3 h-3 rounded-full ${statusColor}" title="${test.is_active == 1 ? 'Active' : 'Inactive'}"></span>
+    <h2 class="text-xl font-semibold mb-1">${test.title}</h2>
+    <p class="text-gray-700 mb-2">${test.description || "No description available."}</p>
+    <p class="text-sm text-gray-500 mb-1"><strong>Domain:</strong> ${test.domain || "N/A"}</p>
+    <p class="text-sm text-gray-500 mb-1"><strong>Department:</strong> ${test.department || "N/A"} | <strong>Year:</strong> ${test.year || "N/A"}</p>
+    <p class="text-sm text-gray-500 mb-1"><strong>Start:</strong> ${new Date(test.start_time).toLocaleString()}</p>
+    <p class="text-sm text-gray-500 mb-1"><strong>End:</strong> ${new Date(test.end_time).toLocaleString()}</p>
+    <p class="text-sm text-gray-500 mb-3"><strong>Duration:</strong> ${test.duration_minutes} mins | <strong>Marks:</strong> ${test.total_marks}</p>
+    <button onclick="enrollAndStart(${test.test_id})" class="inline-block mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">Start Test</button>
+`;
 
                 container.appendChild(card);
             });
@@ -56,5 +54,27 @@
             console.error('Error fetching test data:', error);
         });
     </script>
+
+<script>
+    function enrollAndStart(test_id) {
+    fetch('../../server/controllers/student/enroll.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `test_id=${test_id}`
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            window.location.href = `quiz-attend.php?test_id=${test_id}`;
+        } else {
+            alert(data.error || 'Something went wrong.');
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        alert('Error enrolling in test.');
+    });
+}
+</script>
 </body>
 </html>

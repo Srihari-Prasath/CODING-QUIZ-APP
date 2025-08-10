@@ -1,3 +1,17 @@
+<?php
+session_start();
+error_log("Session at dashboard: " . print_r($_SESSION, true));
+
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'student') {
+    header("Location: ../auth/login.php");
+    exit;
+}
+
+$user_id = $_SESSION['user_id'];
+$roll_no = $_SESSION['roll_no'];
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,14 +28,14 @@
     <main class="container">
         <nav>
             <a href="index.php" class="active">Dashboard</a>
-            <a href="quiz-attend.php">Quiz-attend</a>
+            <a href="test-list.php">Quiz-attend</a>
             <a href="leaderboard.php">Leaderboard</a>
             <a href="Result.php">Result</a>
             <a href="reports.php">Reports</a>
         </nav>
 
         <div class="welcome">
-            <h2>Welcome back, Alex! 👋</h2>
+            <h2>Welcome back, <?php echo htmlspecialchars($roll_no); ?>! 👋</h2>
             <p>Manage your quizzes and monitor student progress.</p>
         </div>
 
@@ -144,5 +158,32 @@
 
         renderQuizzes();
     </script>
+    <script>
+    lucide.createIcons();
+
+    document.getElementById("logout-btn").addEventListener("click", async () => {
+        try {
+            const res = await fetch("<?php echo $api; ?>helpers/logout.php", {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                alert("Logout successful!");
+                window.location.href = "../";  // redirect after logout
+            } else {
+                alert("Logout failed: " + data.error);
+            }
+        } catch (err) {
+            alert("Logout error: " + err.message);
+        }
+    });
+</script>
+
 </body>
 </html>

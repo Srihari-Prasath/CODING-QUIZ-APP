@@ -1,6 +1,7 @@
 <?php
 require_once '../../config/db.php';
 
+
 session_set_cookie_params([
     'lifetime' => 0,            
     'path' => '/',
@@ -13,9 +14,6 @@ session_start();
 
 class LoginController {
     public static function login() {
-        
-        
-
         $input = json_decode(file_get_contents("php://input"), true);
 
         if (!$input || !isset($input['roll_no'], $input['password'])) {
@@ -30,8 +28,9 @@ class LoginController {
         $db = new Database();
         $conn = $db->connect();
 
+        // Fetch user_id as well
         $stmt = $conn->prepare("
-            SELECT u.roll_no, u.password, r.role_name
+            SELECT u.user_id, u.roll_no, u.password, r.role_name
             FROM users u
             JOIN roles r ON u.role_id = r.role_id
             WHERE u.roll_no = ?
@@ -40,15 +39,16 @@ class LoginController {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user && password_verify($password, $user['password'])) {
-         
             session_regenerate_id(true);
 
+            $_SESSION['user_id'] = $user['user_id']; // store in session
             $_SESSION['roll_no'] = $user['roll_no'];
             $_SESSION['role'] = $user['role_name'];
 
             echo json_encode([
                 "message" => "Login successful",
                 "user" => [
+                    "user_id" => $user['user_id'], // return to frontend if needed
                     "roll_no" => $user['roll_no'],
                     "role" => $user['role_name']
                 ]

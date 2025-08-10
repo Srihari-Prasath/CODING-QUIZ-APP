@@ -1,10 +1,11 @@
 <?php
 
-
 function handleLogout() {
     session_start();
 
     $_SESSION = [];
+    error_log("Session before logout: " . print_r($_SESSION, true));
+
 
     if (ini_get("session.use_cookies")) {
         $params = session_get_cookie_params();
@@ -21,6 +22,5 @@ function handleLogout() {
 
     session_destroy();
 
-    header("Content-Type: application/json");
     echo json_encode(["message" => "Logged out successfully"]);
 }

@@ -7,7 +7,8 @@ if (isset($_SESSION['roll_no'], $_SESSION['role'])) {
     echo json_encode([
         "logged_in" => true,
         "roll_no" => $_SESSION['roll_no'],
-        "role" => $_SESSION['role']
+        "role" => $_SESSION['role'],
+        "user_id" => $_SESSION['user_id'] 
     ]);
 } else {
     echo json_encode(["logged_in" => false]);

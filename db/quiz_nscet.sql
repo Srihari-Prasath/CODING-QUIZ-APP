@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 09, 2025 at 01:58 PM
+-- Generation Time: Aug 10, 2025 at 06:21 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -112,46 +112,36 @@ CREATE TABLE `questions` (
 --
 
 INSERT INTO `questions` (`question_id`, `test_id`, `question_text`, `option_a`, `option_b`, `option_c`, `option_d`, `correct_option`, `mark`) VALUES
-(74, 26, 'What is the correct file extension for Python files?', '.pt', '.pyt', '.py', '.python', 'C', 1),
-(75, 26, 'How do you insert comments in Python?', '// comment', '<!-- comment -->', '-- comment', '# comment', 'D', 1),
-(76, 26, 'Which keyword is used to define a function in Python?', 'func', 'define', 'def', 'function', 'C', 1),
-(77, 26, 'Which of the following is a correct variable name in Python?', '2variable', 'my-var', 'my_variable', 'my variable', 'C', 1),
-(78, 26, 'What is the output of print(2 ** 3)?', '6', '8', '9', '5', 'B', 1),
-(79, 26, 'Which operator is used for floor division?', '/', '//', '%', '**', 'B', 1),
-(80, 26, 'What is the output of print(type([]))?', '<class \'tuple\'>', '<class \'list\'>', '<class \'dict\'>', '<class \'set\'>', 'B', 1),
-(81, 26, 'Which data type is immutable in Python?', 'list', 'set', 'dict', 'tuple', 'D', 1),
-(82, 26, 'What is the output of len(\"Python\")?', '5', '6', '7', 'Error', 'B', 1),
-(83, 26, 'Which keyword is used for loops in Python?', 'iterate', 'loop', 'for', 'repeat', 'C', 1),
-(84, 26, 'What will print(\"Hello\" * 3) output?', 'HelloHelloHello', 'Hello*3', 'Hello 3', 'Error', 'A', 1),
-(85, 26, 'Which method is used to remove whitespace from the beginning or end of a string?', 'strip()', 'trim()', 'clean()', 'remove()', 'A', 1),
-(86, 26, 'What does the input() function return?', 'String', 'Integer', 'Boolean', 'Float', 'A', 1),
-(87, 26, 'Which of the following is a Boolean operator?', '==', '!=', 'and', '+', 'C', 1),
-(88, 26, 'Which of these is NOT a valid Python data type?', 'list', 'tuple', 'array', 'set', 'C', 1),
-(89, 26, 'Which function converts a string to an integer?', 'str()', 'int()', 'float()', 'bool()', 'B', 1),
-(90, 26, 'Which of the following is used to define a block of code in Python?', 'Brackets', 'Curly braces', 'Indentation', 'Parentheses', 'C', 1),
-(91, 26, 'What will print(5 == \"5\") return?', 'True', 'False', 'Error', 'None', 'B', 1),
-(92, 26, 'How do you start a multiline comment?', '/*', '#', '\"\"\"', '//', 'C', 1),
-(93, 26, 'What does the \"pass\" keyword do?', 'Skips a loop', 'Ends a function', 'Does nothing', 'Raises an error', 'C', 1),
-(94, 26, 'Which keyword is used for exception handling?', 'except', 'catch', 'try', 'error', 'A', 1),
-(95, 26, 'What is the output of bool(0)?', 'True', 'False', '0', 'Error', 'B', 1),
-(96, 26, 'What is the result of 10 // 3?', '3.33', '3', '4', '3.0', 'B', 1),
-(97, 26, 'Which of the following is a mutable data type?', 'tuple', 'list', 'int', 'str', 'B', 1),
-(98, 26, 'Which function returns the largest item?', 'min()', 'max()', 'big()', 'top()', 'B', 1),
-(99, 26, 'What will print(0.1 + 0.2 == 0.3) return?', 'True', 'False', 'Error', 'None', 'B', 1),
-(100, 26, 'How do you create a dictionary?', '{}', '()', '[]', '<>', 'A', 1),
-(101, 26, 'What is the output of list(\"abc\")?', '[abc]', '[a, b, c]', '[\"abc\"]', '[\"a\", \"b\", \"c\"]', 'D', 1),
-(102, 26, 'Which of the following opens a file for reading?', 'open(\"file.txt\", \"w\")', 'open(\"file.txt\", \"r\")', 'open(\"file.txt\", \"x\")', 'open(\"file.txt\", \"a\")', 'B', 1),
-(103, 26, 'Which loop is guaranteed to run at least once?', 'for', 'while', 'do-while', 'None', 'C', 1),
-(104, 26, 'What does the \"continue\" statement do in loops?', 'Breaks the loop', 'Skips to the next iteration', 'Exits function', 'Restarts loop', 'B', 1),
-(105, 26, 'Which module is used for regular expressions?', 'regex', 're', 'match', 'pattern', 'B', 1),
-(106, 26, 'What will len({1,2,2,3}) return?', '3', '4', '5', 'Error', 'A', 1),
-(107, 26, 'Which of the following is used to install external packages?', 'get', 'install', 'pip', 'fetch', 'C', 1),
-(108, 26, 'Which keyword is used to create a class?', 'struct', 'class', 'def', 'object', 'B', 1),
-(109, 26, 'What is __init__ in Python?', 'A variable', 'A loop', 'A constructor', 'A destructor', 'C', 1),
-(110, 26, 'Which method is used to return a string in all lowercase?', 'lower()', 'down()', 'min()', 'small()', 'A', 1),
-(111, 26, 'Which symbol is used to import modules?', '@', '#', 'import', 'from', 'C', 1),
-(112, 26, 'What does isinstance(x, int) check?', 'If x is defined', 'If x is int', 'If x is integer-like', 'If x is float', 'B', 1),
-(113, 26, 'What will print([i for i in range(3)]) output?', '[1,2,3]', '[0,1,2]', '[1,2]', '[0,1,2,3]', 'B', 1);
+(1, 1, 'What is the capital of France?', 'Berlin', 'Madrid', 'Paris', 'Rome', 'C', 1),
+(2, 1, 'Which planet is known as the Red Planet?', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'B', 1),
+(3, 1, 'What is the boiling point of water?', '90°C', '100°C', '110°C', '120°C', 'B', 1),
+(4, 1, 'Who wrote \"Romeo and Juliet\"?', 'Mark Twain', 'William Shakespeare', 'Charles Dickens', 'Leo Tolstoy', 'B', 1),
+(5, 1, 'What is the largest mammal?', 'Elephant', 'Blue Whale', 'Giraffe', 'Hippopotamus', 'B', 1),
+(6, 1, 'Which country hosted the 2016 Summer Olympics?', 'China', 'Brazil', 'UK', 'Russia', 'B', 1),
+(7, 1, 'What is the chemical symbol for gold?', 'Au', 'Ag', 'Fe', 'Pb', 'A', 1),
+(8, 1, 'How many continents are there?', '5', '6', '7', '8', 'C', 1),
+(9, 1, 'Who painted the Mona Lisa?', 'Michelangelo', 'Leonardo da Vinci', 'Raphael', 'Donatello', 'B', 1),
+(10, 1, 'What gas do plants absorb?', 'Oxygen', 'Carbon Dioxide', 'Nitrogen', 'Hydrogen', 'B', 1),
+(11, 2, 'What does CPU stand for?', 'Central Process Unit', 'Central Processing Unit', 'Computer Personal Unit', 'Control Processing Unit', 'B', 1),
+(12, 2, 'Which language is primarily used for web development?', 'Python', 'HTML', 'C++', 'Java', 'B', 1),
+(13, 2, 'What does RAM stand for?', 'Read Access Memory', 'Random Access Memory', 'Run Access Memory', 'Real Application Memory', 'B', 1),
+(14, 2, 'Which company created the Windows OS?', 'Apple', 'Google', 'Microsoft', 'IBM', 'C', 1),
+(15, 2, 'What is an IP address?', 'Internet Provider', 'Internet Protocol Address', 'Internal Protocol Address', 'Internet Public Address', 'B', 1),
+(16, 2, 'Which of these is a programming language?', 'HTTP', 'FTP', 'JavaScript', 'HTML', 'C', 1),
+(17, 2, 'What is the main function of the motherboard?', 'Storage', 'Processing', 'Connectivity', 'Power supply', 'C', 1),
+(18, 2, 'Which is not an operating system?', 'Linux', 'Windows', 'Google Chrome', 'macOS', 'C', 1),
+(19, 2, 'What does URL stand for?', 'Uniform Resource Locator', 'Uniform Reference Locator', 'Unified Resource Locator', 'Universal Resource Locator', 'A', 1),
+(20, 2, 'Which protocol is used to send emails?', 'HTTP', 'FTP', 'SMTP', 'POP3', 'C', 1),
+(21, 3, 'What is 7 x 8?', '54', '56', '58', '60', 'B', 1),
+(22, 3, 'What is the square root of 81?', '7', '8', '9', '10', 'C', 1),
+(23, 3, 'What is 15% of 200?', '20', '25', '30', '35', 'C', 1),
+(24, 3, 'If x + 2 = 7, what is x?', '3', '4', '5', '6', 'C', 1),
+(25, 3, 'What is the next prime number after 7?', '9', '10', '11', '13', 'C', 1),
+(26, 3, 'What is 12 divided by 3?', '3', '4', '5', '6', 'B', 1),
+(27, 3, 'What is the value of pi (approx)?', '3.14', '3.15', '3.16', '3.17', 'A', 1),
+(28, 3, 'What is 5 squared?', '10', '15', '20', '25', 'D', 1),
+(29, 3, 'What is the sum of angles in a triangle?', '90°', '180°', '270°', '360°', 'B', 1),
+(30, 3, 'Solve: 2(3 + 4)', '10', '12', '14', '16', 'C', 1);
 
 -- --------------------------------------------------------
 
@@ -183,12 +173,13 @@ INSERT INTO `roles` (`role_id`, `role_name`) VALUES
 
 CREATE TABLE `student_answers` (
   `answer_id` int(11) NOT NULL,
-  `student_test_id` int(11) DEFAULT NULL,
-  `question_id` int(11) DEFAULT NULL,
-  `selected_option` enum('A','B','C','D') DEFAULT NULL,
-  `is_correct` tinyint(1) DEFAULT NULL,
-  `marks_awarded` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `user_id` int(11) NOT NULL,
+  `test_id` int(11) NOT NULL,
+  `question_id` int(11) NOT NULL,
+  `selected_option` enum('A','B','C','D') NOT NULL,
+  `answered_at` datetime DEFAULT current_timestamp(),
+  `student_test_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -201,7 +192,22 @@ CREATE TABLE `student_enrollment` (
   `student_id` int(11) DEFAULT NULL,
   `test_id` int(11) DEFAULT NULL,
   `enrolled_on` datetime DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `student_quiz_results`
+--
+
+CREATE TABLE `student_quiz_results` (
+  `result_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `test_id` int(11) NOT NULL,
+  `score` int(11) NOT NULL,
+  `total_marks` int(11) NOT NULL,
+  `submitted_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -246,23 +252,9 @@ CREATE TABLE `tests` (
 --
 
 INSERT INTO `tests` (`test_id`, `title`, `description`, `domain`, `department`, `year`, `created_by`, `start_time`, `end_time`, `duration_minutes`, `total_marks`, `total_questions`, `is_active`) VALUES
-(26, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0),
-(27, '9210', 'iykjbiuhii', '878998', '1', 1, 1, '21:08:00', '20:00:00', 9809, 9809, 9809, 0),
-(28, '9210', 'iykjbiuhii', '878998', '1', 1, 1, '21:08:00', '20:00:00', 9809, 9809, 9809, 0),
-(29, '9210', 'iykjbiuhii', '878998', '1', 1, 1, '21:08:00', '20:00:00', 9809, 9809, 9809, 0),
-(30, '9210', 'iykjbiuhii', '878998', '1', 1, 1, '21:08:00', '20:00:00', 9809, 9809, 9809, 0),
-(31, 'mark', '23', 'mark', '1', 2, 1, '13:35:00', '13:35:00', 323, 2323, 23, 0),
-(32, 'mark', 'df', 'mrk', '1', 1, 1, '20:09:00', '20:09:00', 80, 8989, 8098, 0),
-(33, 'mark', 'df', 'mrk', '1', 1, 1, '20:09:00', '20:09:00', 80, 8989, 8098, 0),
-(34, 'mark', 'df', 'mrk', '1', 1, 1, '20:09:00', '20:09:00', 80, 8989, 8098, 0),
-(35, 'mark', 'df', 'mrk', '1', 1, 1, '20:09:00', '20:09:00', 80, 8989, 8098, 0),
-(36, 'mark', 'df', 'mrk', '1', 1, 1, '20:09:00', '20:09:00', 80, 8989, 8098, 0),
-(37, '921022205011', '23', 'lhh', '1', 1, 1, '21:08:00', '14:17:00', 23223, 9098, 2323, 0),
-(38, '921022205011', '23', 'lhh', '1', 1, 1, '21:08:00', '14:17:00', 23223, 9098, 2323, 0),
-(39, '921022205011', '23', 'lhh', '1', 1, 1, '21:08:00', '14:17:00', 23223, 9098, 2323, 0),
-(40, 'w23', '23', '2323', '1', 3, 1, '14:19:00', '02:19:00', 23, 23, 23, 0),
-(41, '23', '233', '23', '1', 1, 1, '14:20:00', '14:20:00', 23, 23, 23, 0),
-(42, 'Python Coding`', 'its python questions', 'Python', '1', 1, 1, '14:39:00', '14:39:00', 50, 50, 40, 0);
+(1, 'General Knowledge Quiz', 'Test your general knowledge with diverse questions.', 'General Knowledge', 'All Departments', 4, 1, '10:00:00', '11:00:00', 60, 10, 10, 1),
+(2, 'Tech Basics Test', 'Assessment on fundamental technology concepts.', 'Technology', 'IT', 4, 2, '14:00:00', '15:00:00', 60, 10, 10, 1),
+(3, 'Math Challenge', 'Mathematics proficiency test for 1st year students.', 'Mathematics', 'Science', 4, 3, '09:00:00', '09:45:00', 45, 10, 10, 1);
 
 -- --------------------------------------------------------
 
@@ -287,7 +279,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `role_id`, `roll_no`, `name`, `email`, `password`, `year`, `created_at`, `department_id`) VALUES
-(1, 2, '921022205011', 'Mark', 'naveenbharathi5050@gmail.com', '$2y$10$ydD4abq6ROV77jty0SFpD.v2iQKv39puZDGwtB6WYXtqhHRt8HRea', 2, '2025-08-05 08:49:37', 1);
+(1, 1, '921022205021', 'Hari Prasath', 'hari@example.com', '', 4, '2025-08-10 16:12:34', 7),
+(2, 1, '921022205011', 'Naveen Bharathi', 'Naveen@example.com', '', 4, '2025-08-10 16:12:34', 7),
+(3, 1, '921022243017', 'Sandhosh', 'sandhosh@example.com', '', 4, '2025-08-10 16:12:34', 6),
+(4, 1, '921022243011', 'Keerthana', 'keerthana@example.com', '', 4, '2025-08-10 16:12:34', 6),
+(5, 1, '921022104033', 'Joshika', 'joshika@example.com', '', 4, '2025-08-10 16:12:34', 1),
+(6, 1, '921022104041', 'Sachin', 'sachin@example.com', '', 4, '2025-08-10 16:12:34', 1);
 
 --
 -- Indexes for dumped tables
@@ -341,8 +338,10 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `student_answers`
   ADD PRIMARY KEY (`answer_id`),
-  ADD KEY `student_test_id` (`student_test_id`),
-  ADD KEY `question_id` (`question_id`);
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `test_id` (`test_id`),
+  ADD KEY `question_id` (`question_id`),
+  ADD KEY `student_test_id` (`student_test_id`);
 
 --
 -- Indexes for table `student_enrollment`
@@ -350,6 +349,14 @@ ALTER TABLE `student_answers`
 ALTER TABLE `student_enrollment`
   ADD PRIMARY KEY (`enrollment_id`),
   ADD KEY `student_id` (`student_id`),
+  ADD KEY `test_id` (`test_id`);
+
+--
+-- Indexes for table `student_quiz_results`
+--
+ALTER TABLE `student_quiz_results`
+  ADD PRIMARY KEY (`result_id`),
+  ADD KEY `user_id` (`user_id`),
   ADD KEY `test_id` (`test_id`);
 
 --
@@ -372,9 +379,9 @@ ALTER TABLE `tests`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`),
-  ADD UNIQUE KEY `email` (`email`),
   ADD KEY `role_id` (`role_id`),
-  ADD KEY `fk_department` (`department_id`);
+  ADD KEY `email` (`email`),
+  ADD KEY `department_id` (`department_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -408,7 +415,7 @@ ALTER TABLE `feedback`
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
+  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -429,6 +436,12 @@ ALTER TABLE `student_enrollment`
   MODIFY `enrollment_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `student_quiz_results`
+--
+ALTER TABLE `student_quiz_results`
+  MODIFY `result_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `student_tests`
 --
 ALTER TABLE `student_tests`
@@ -438,13 +451,13 @@ ALTER TABLE `student_tests`
 -- AUTO_INCREMENT for table `tests`
 --
 ALTER TABLE `tests`
-  MODIFY `test_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `test_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
@@ -469,46 +482,6 @@ ALTER TABLE `faculty_test_history`
 ALTER TABLE `feedback`
   ADD CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`student_test_id`) REFERENCES `student_tests` (`student_test_id`),
   ADD CONSTRAINT `feedback_ibfk_2` FOREIGN KEY (`faculty_id`) REFERENCES `users` (`user_id`);
-
---
--- Constraints for table `questions`
---
-ALTER TABLE `questions`
-  ADD CONSTRAINT `questions_ibfk_1` FOREIGN KEY (`test_id`) REFERENCES `tests` (`test_id`);
-
---
--- Constraints for table `student_answers`
---
-ALTER TABLE `student_answers`
-  ADD CONSTRAINT `student_answers_ibfk_1` FOREIGN KEY (`student_test_id`) REFERENCES `student_tests` (`student_test_id`),
-  ADD CONSTRAINT `student_answers_ibfk_2` FOREIGN KEY (`question_id`) REFERENCES `questions` (`question_id`);
-
---
--- Constraints for table `student_enrollment`
---
-ALTER TABLE `student_enrollment`
-  ADD CONSTRAINT `student_enrollment_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `users` (`user_id`),
-  ADD CONSTRAINT `student_enrollment_ibfk_2` FOREIGN KEY (`test_id`) REFERENCES `tests` (`test_id`);
-
---
--- Constraints for table `student_tests`
---
-ALTER TABLE `student_tests`
-  ADD CONSTRAINT `student_tests_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `users` (`user_id`),
-  ADD CONSTRAINT `student_tests_ibfk_2` FOREIGN KEY (`test_id`) REFERENCES `tests` (`test_id`);
-
---
--- Constraints for table `tests`
---
-ALTER TABLE `tests`
-  ADD CONSTRAINT `tests_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`user_id`);
-
---
--- Constraints for table `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `fk_department` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
