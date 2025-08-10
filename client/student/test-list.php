@@ -4,12 +4,16 @@
     <meta charset="UTF-8">
     <title>Test List</title>
     <script src="https://cdn.tailwindcss.com"></script>
+   <link rel="stylesheet" href="../assets/css/student/testlist.css">
+   <link rel="stylesheet" href="../assets/css/main.css">
+
+
 </head>
-<body class="bg-gray-100 text-gray-800">
-    <div class="max-w-4xl mx-auto mt-10">
+<body>
+    <div class="max-w-7xl mx-auto mt-10 px-4">
         <h1 class="text-3xl font-bold mb-6">Available Tests</h1>
-        <div id="testContainer" class="grid gap-4"></div>
-        <div id="test-list" class="space-y-4 p-4 bg-white shadow rounded"></div>
+        <div id="testContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        <div id="test-list" class="space-y-4 p-4 custom-card rounded"></div>
     </div>
 
     <script>
@@ -18,18 +22,18 @@
         .then(data => {
             const container = document.getElementById('testContainer');
             if (!data || data.length === 0) {
-                container.innerHTML = "<p>No tests available.</p>";
+                container.innerHTML = "<p class='text-gray-500'>No tests available.</p>";
                 return;
             }
 
             data.forEach(test => {
                 const card = document.createElement('div');
-                card.className = "relative p-6 bg-white shadow rounded border";
+                card.className = "relative p-6 custom-card rounded";
 
                 // Set indicator color based on is_active
                 const statusColor = test.is_active === "0" || test.is_active === 0
-                    ? 'bg-green-500'
-                    : 'bg-red-500';
+                    ? 'status-inactive'
+                    : 'status-active';
 
                 card.innerHTML = `
                     <!-- Status indicator -->
@@ -42,7 +46,7 @@
                     <p class="text-sm text-gray-500 mb-1"><strong>Start:</strong> ${new Date(test.start_time).toLocaleString()}</p>
                     <p class="text-sm text-gray-500 mb-1"><strong>End:</strong> ${new Date(test.end_time).toLocaleString()}</p>
                     <p class="text-sm text-gray-500 mb-3"><strong>Duration:</strong> ${test.duration_minutes} mins | <strong>Marks:</strong> ${test.total_marks}</p>
-                    <a href="quiz-attend.php?test_id=${test.test_id}" class="inline-block mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">Start Test</a>
+                    <a href="quiz-attend.php?test_id=${test.test_id}" class="inline-block mt-2 px-4 py-2 custom-button text-white rounded transition">Start Test</a>
                 `;
 
                 container.appendChild(card);
@@ -51,7 +55,6 @@
         .catch(error => {
             console.error('Error fetching test data:', error);
         });
-</script>
-
+    </script>
 </body>
 </html>

@@ -1,0 +1,28 @@
+
+
+        body {
+            background-color: var(--color-background);
+            color: var(--text);
+        }
+
+        .custom-card {
+            background-color: var(--color-surface);
+            border: 1px solid var(--card-border);
+            box-shadow: 0 2px 4px var(--shadow);
+        }
+
+        .custom-button {
+            background-color: var(--color-primary);
+        }
+
+        .custom-button:hover {
+            background-color: var(--color-primary-hover);
+        }
+
+        .status-active {
+            background-color: #10B981; 
+        }
+
+        .status-inactive {
+            background-color: #EF4444;
+        }
