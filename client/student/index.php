@@ -32,7 +32,7 @@ $roll_no = $_SESSION['roll_no'];
             <a href="leaderboard.php">Leaderboard</a>
             <a href="Result.php">Result</a>
             <a href="reports.php">Reports</a>
-        </nav>
+        </nav>  
 
         <div class="welcome">
             <h2>Welcome back, <?php echo htmlspecialchars($roll_no); ?>! 👋</h2>
@@ -175,7 +175,7 @@ $roll_no = $_SESSION['roll_no'];
 
             if (res.ok) {
                 alert("Logout successful!");
-                window.location.href = "../";  // redirect after logout
+                window.location.href = "../";  
             } else {
                 alert("Logout failed: " + data.error);
             }

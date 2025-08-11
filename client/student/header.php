@@ -10,7 +10,7 @@
                     <img src="../assets/images/Infinity castle desktop wallpaper.jpg" alt="Profile">
                 </div>
             </a>
-            <a id="logout-btn" href="../" class="logout-link">
+            <a id="logout-btn" href="../register.php" class="logout-link">
                 <i data-lucide="log-out"></i>
             </a>
         </div>
@@ -21,7 +21,7 @@
 <script>
     lucide.createIcons();
 </script>
-
+    
 
 
 
