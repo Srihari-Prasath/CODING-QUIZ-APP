@@ -238,7 +238,7 @@
                 </div>
 
                 <div class="flex items-center justify-between">
-                    <a href="#" class="text-sm font-medium text-[var(--color-primary)] hover:text-[var(--color-primary-hover)]">Forgot password?</a>
+                    <a href="forgot-password.php" class="text-sm font-medium text-[var(--color-primary)] hover:text-[var(--color-primary-hover)]">Forgot password?</a>
                 </div>
 
                 <button type="submit" class="btn-primary w-full py-3 px-4 rounded-lg text-white font-semibold shadow-md transition-all duration-300 hover:-translate-y-1 active:translate-y-0 active:scale-95">
@@ -250,13 +250,6 @@
 
             </form>
         </div>
-
-
-
-
-
-
-
     </div>
     </div>
 

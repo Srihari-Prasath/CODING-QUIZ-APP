@@ -44,6 +44,14 @@ switch ($route) {
         require_once __DIR__ . '/../../controllers/auth/reset_password.php';
         exit;
 
+    case 'verify_otp':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            require_once __DIR__ . '/../../controllers/auth/verify_otp.php';
+            exit;
+        }
+        break;
+
+
 
     default:
         http_response_code(404);

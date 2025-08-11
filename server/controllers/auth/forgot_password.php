@@ -5,8 +5,10 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-class ForgotPasswordController {
-    public static function sendResetLink() {
+class ForgotPasswordController
+{
+    public static function sendOTP()
+    {
         // Accept JSON input
         $input = json_decode(file_get_contents('php://input'), true);
 
@@ -31,35 +33,36 @@ class ForgotPasswordController {
             return;
         }
 
-        // Generate secure token
-        $token = bin2hex(random_bytes(32));
+        // Generate 6-digit OTP
+        $otp = rand(100000, 999999);
         $expires_at = (new DateTime('+15 minutes'))->format('Y-m-d H:i:s');
 
-        // Store token in password_resets table
-        $stmt = $conn->prepare("INSERT INTO password_resets (user_id, otp, expires_at) VALUES (?, ?, ?)");
-        $stmt->execute([$user['user_id'], $token, $expires_at]);
+        // Delete any existing OTPs for this user
+        $stmt = $conn->prepare("DELETE FROM password_resets WHERE user_id = ?");
+        $stmt->execute([$user['user_id']]);
 
-        // Create reset link (change to your frontend URL)
-        $resetLink = "http://localhost/CODING-QUIZ-APP/client/reset-password.html?token=" . urlencode($token);
+        // Store OTP in password_resets table
+        $stmt = $conn->prepare("INSERT INTO password_resets (user_id, otp, expires_at) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE otp = VALUES(otp), expires_at = VALUES(expires_at)");
+        $stmt->execute([$user['user_id'], $otp, $expires_at]);
 
         // Email content
-        $subject = "Recover Your Password - Coding Quiz App";
+        $subject = "Your OTP for Password Reset - Coding Quiz App";
         $body = "
             <p>Hi <b>{$user['name']}</b>,</p>
-            <p>We received a request to reset your password. Click the button below to reset it:</p>
-            <p><a href='{$resetLink}' style='padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none;'>Reset Password</a></p>
-            <p>This link will expire in 15 minutes.</p>
+            <p>We received a request to reset your password. Use the OTP below to proceed:</p>
+            <h2 style='color:blue;'>{$otp}</h2>
+            <p>This OTP will expire in 15 minutes.</p>
             <br><p>Regards,<br>Coding Quiz App Team</p>
         ";
 
-        // Send email
+        // Send email SMTP
         $mail = new PHPMailer(true);
         try {
             $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com'; // ✅ Use 'smtp.gmail.com' if you switch back to Gmail
-            // $mail->SMTPAuth = true;
-            $mail->Username = 'aaswinjs2004@gmail.com'; // 🔁 your Brevo email
-            $mail->Password = 'dqpz haly gvgy grtm';    // 🔁 SMTP key
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'aaswinjs2004@gmail.com'; //  email
+            $mail->Password = 'moey jsfr fqze mpsy';  //  SMTP key
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
 
@@ -70,7 +73,7 @@ class ForgotPasswordController {
             $mail->Body = $body;
 
             $mail->send();
-            echo json_encode(['message' => 'Password reset link sent to your email']);
+            echo json_encode(['message' => 'OTP sent to your email']);
         } catch (Exception $e) {
             http_response_code(500);
             echo json_encode(['error' => 'Mail Error: ' . $mail->ErrorInfo]);
@@ -78,4 +81,4 @@ class ForgotPasswordController {
     }
 }
 
-ForgotPasswordController::sendResetLink();
+ForgotPasswordController::sendOTP();
