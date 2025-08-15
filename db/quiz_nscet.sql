@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 10, 2025 at 06:21 PM
+-- Generation Time: Aug 15, 2025 at 10:07 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -92,56 +92,49 @@ CREATE TABLE `feedback` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `password_resets`
+--
+
+CREATE TABLE `password_resets` (
+  `reset_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `otp` varchar(6) NOT NULL,
+  `expires_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `questions`
 --
 
 CREATE TABLE `questions` (
   `question_id` int(11) NOT NULL,
-  `test_id` int(11) DEFAULT NULL,
-  `question_text` text DEFAULT NULL,
-  `option_a` text DEFAULT NULL,
-  `option_b` text DEFAULT NULL,
-  `option_c` text DEFAULT NULL,
-  `option_d` text DEFAULT NULL,
-  `correct_option` enum('A','B','C','D') DEFAULT NULL,
-  `mark` int(11) DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `topic_id` int(11) NOT NULL,
+  `question_text` text NOT NULL,
+  `option_a` varchar(255) NOT NULL,
+  `option_b` varchar(255) NOT NULL,
+  `option_c` varchar(255) NOT NULL,
+  `option_d` varchar(255) NOT NULL,
+  `correct_option` enum('A','B','C','D') NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `mark` float DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `questions`
 --
 
-INSERT INTO `questions` (`question_id`, `test_id`, `question_text`, `option_a`, `option_b`, `option_c`, `option_d`, `correct_option`, `mark`) VALUES
-(1, 1, 'What is the capital of France?', 'Berlin', 'Madrid', 'Paris', 'Rome', 'C', 1),
-(2, 1, 'Which planet is known as the Red Planet?', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'B', 1),
-(3, 1, 'What is the boiling point of water?', '90°C', '100°C', '110°C', '120°C', 'B', 1),
-(4, 1, 'Who wrote \"Romeo and Juliet\"?', 'Mark Twain', 'William Shakespeare', 'Charles Dickens', 'Leo Tolstoy', 'B', 1),
-(5, 1, 'What is the largest mammal?', 'Elephant', 'Blue Whale', 'Giraffe', 'Hippopotamus', 'B', 1),
-(6, 1, 'Which country hosted the 2016 Summer Olympics?', 'China', 'Brazil', 'UK', 'Russia', 'B', 1),
-(7, 1, 'What is the chemical symbol for gold?', 'Au', 'Ag', 'Fe', 'Pb', 'A', 1),
-(8, 1, 'How many continents are there?', '5', '6', '7', '8', 'C', 1),
-(9, 1, 'Who painted the Mona Lisa?', 'Michelangelo', 'Leonardo da Vinci', 'Raphael', 'Donatello', 'B', 1),
-(10, 1, 'What gas do plants absorb?', 'Oxygen', 'Carbon Dioxide', 'Nitrogen', 'Hydrogen', 'B', 1),
-(11, 2, 'What does CPU stand for?', 'Central Process Unit', 'Central Processing Unit', 'Computer Personal Unit', 'Control Processing Unit', 'B', 1),
-(12, 2, 'Which language is primarily used for web development?', 'Python', 'HTML', 'C++', 'Java', 'B', 1),
-(13, 2, 'What does RAM stand for?', 'Read Access Memory', 'Random Access Memory', 'Run Access Memory', 'Real Application Memory', 'B', 1),
-(14, 2, 'Which company created the Windows OS?', 'Apple', 'Google', 'Microsoft', 'IBM', 'C', 1),
-(15, 2, 'What is an IP address?', 'Internet Provider', 'Internet Protocol Address', 'Internal Protocol Address', 'Internet Public Address', 'B', 1),
-(16, 2, 'Which of these is a programming language?', 'HTTP', 'FTP', 'JavaScript', 'HTML', 'C', 1),
-(17, 2, 'What is the main function of the motherboard?', 'Storage', 'Processing', 'Connectivity', 'Power supply', 'C', 1),
-(18, 2, 'Which is not an operating system?', 'Linux', 'Windows', 'Google Chrome', 'macOS', 'C', 1),
-(19, 2, 'What does URL stand for?', 'Uniform Resource Locator', 'Uniform Reference Locator', 'Unified Resource Locator', 'Universal Resource Locator', 'A', 1),
-(20, 2, 'Which protocol is used to send emails?', 'HTTP', 'FTP', 'SMTP', 'POP3', 'C', 1),
-(21, 3, 'What is 7 x 8?', '54', '56', '58', '60', 'B', 1),
-(22, 3, 'What is the square root of 81?', '7', '8', '9', '10', 'C', 1),
-(23, 3, 'What is 15% of 200?', '20', '25', '30', '35', 'C', 1),
-(24, 3, 'If x + 2 = 7, what is x?', '3', '4', '5', '6', 'C', 1),
-(25, 3, 'What is the next prime number after 7?', '9', '10', '11', '13', 'C', 1),
-(26, 3, 'What is 12 divided by 3?', '3', '4', '5', '6', 'B', 1),
-(27, 3, 'What is the value of pi (approx)?', '3.14', '3.15', '3.16', '3.17', 'A', 1),
-(28, 3, 'What is 5 squared?', '10', '15', '20', '25', 'D', 1),
-(29, 3, 'What is the sum of angles in a triangle?', '90°', '180°', '270°', '360°', 'B', 1),
-(30, 3, 'Solve: 2(3 + 4)', '10', '12', '14', '16', 'C', 1);
+INSERT INTO `questions` (`question_id`, `topic_id`, `question_text`, `option_a`, `option_b`, `option_c`, `option_d`, `correct_option`, `created_by`, `created_at`, `mark`) VALUES
+(4, 1, 'What is the capital of France?', 'Paris', 'London', 'Berlin', 'Madrid', 'A', 1, '2025-08-15 19:20:47', 1),
+(5, 1, '2 + 2 = ?', '3', '4', '5', '6', 'B', 1, '2025-08-15 19:20:47', 1),
+(6, 1, 'Which planet is known as the Red Planet?', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'B', 1, '2025-08-15 19:20:47', 1),
+(7, 1, 'What is H2O commonly known as?', 'Hydrogen', 'Water', 'Oxygen', 'Salt', 'B', 1, '2025-08-15 19:20:47', 1),
+(8, 1, 'What is the capital of France?', 'Paris', 'London', 'Berlin', 'Madrid', 'A', 1, '2025-08-15 19:24:43', 1),
+(9, 1, '2 + 2 = ?', '3', '4', '5', '6', 'B', 1, '2025-08-15 19:24:43', 1),
+(10, 1, 'Which planet is known as the Red Planet?', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'B', 1, '2025-08-15 19:24:43', 1),
+(11, 1, 'What is H2O commonly known as?', 'Hydrogen', 'Water', 'Oxygen', 'Salt', 'B', 1, '2025-08-15 19:24:43', 1);
 
 -- --------------------------------------------------------
 
@@ -233,28 +226,78 @@ CREATE TABLE `student_tests` (
 
 CREATE TABLE `tests` (
   `test_id` int(11) NOT NULL,
-  `title` varchar(255) DEFAULT NULL,
+  `title` varchar(255) NOT NULL,
   `description` text DEFAULT NULL,
-  `domain` varchar(250) DEFAULT NULL,
-  `department` varchar(100) DEFAULT NULL,
-  `year` int(11) DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `start_time` time DEFAULT NULL,
-  `end_time` time DEFAULT NULL,
-  `duration_minutes` int(11) DEFAULT NULL,
-  `total_marks` int(11) DEFAULT NULL,
-  `total_questions` int(11) NOT NULL,
-  `is_active` tinyint(1) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `topic_id` int(11) NOT NULL,
+  `num_questions` int(11) DEFAULT 0,
+  `department_id` int(11) NOT NULL,
+  `year` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `time_slot` enum('morning','evening','full_day') NOT NULL,
+  `duration_minutes` int(11) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `is_active` tinyint(1) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tests`
 --
 
-INSERT INTO `tests` (`test_id`, `title`, `description`, `domain`, `department`, `year`, `created_by`, `start_time`, `end_time`, `duration_minutes`, `total_marks`, `total_questions`, `is_active`) VALUES
-(1, 'General Knowledge Quiz', 'Test your general knowledge with diverse questions.', 'General Knowledge', 'All Departments', 4, 1, '10:00:00', '11:00:00', 60, 10, 10, 1),
-(2, 'Tech Basics Test', 'Assessment on fundamental technology concepts.', 'Technology', 'IT', 4, 2, '14:00:00', '15:00:00', 60, 10, 10, 1),
-(3, 'Math Challenge', 'Mathematics proficiency test for 1st year students.', 'Mathematics', 'Science', 4, 3, '09:00:00', '09:45:00', 45, 10, 10, 1);
+INSERT INTO `tests` (`test_id`, `title`, `description`, `topic_id`, `num_questions`, `department_id`, `year`, `date`, `time_slot`, `duration_minutes`, `created_by`, `created_at`, `is_active`) VALUES
+(1, 'Java Programming', 'Core Java concepts and OOP fundamentals', 1, 5, 3, 3, '2025-08-17', 'morning', 60, 1, '2025-08-15 19:36:35', 1),
+(2, 'Java Programming', 'Core Java concepts and OOP fundamentals', 1, 5, 3, 3, '2025-08-17', 'morning', 60, 1, '2025-08-15 19:48:28', 1),
+(3, 'Java Programming', 'Core Java concepts and OOP fundamentals', 1, 5, 1, 1, '2025-08-16', 'full_day', 60, 1, '2025-08-15 19:54:36', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test_questions`
+--
+
+CREATE TABLE `test_questions` (
+  `test_question_id` int(11) NOT NULL,
+  `test_id` int(11) NOT NULL,
+  `question_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `test_questions`
+--
+
+INSERT INTO `test_questions` (`test_question_id`, `test_id`, `question_id`, `created_at`) VALUES
+(1, 2, 10, '2025-08-15 19:48:28'),
+(2, 2, 9, '2025-08-15 19:48:28'),
+(3, 2, 7, '2025-08-15 19:48:28'),
+(4, 2, 6, '2025-08-15 19:48:28'),
+(5, 2, 8, '2025-08-15 19:48:28'),
+(6, 3, 10, '2025-08-15 19:54:36'),
+(7, 3, 9, '2025-08-15 19:54:36'),
+(8, 3, 11, '2025-08-15 19:54:36'),
+(9, 3, 6, '2025-08-15 19:54:36'),
+(10, 3, 5, '2025-08-15 19:54:36');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `topics`
+--
+
+CREATE TABLE `topics` (
+  `topic_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `created_by` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `topics`
+--
+
+INSERT INTO `topics` (`topic_id`, `title`, `description`, `created_by`, `created_at`) VALUES
+(1, 'Java Programming', 'Core Java concepts and OOP fundamentals', 1, '2025-08-15 18:59:06');
 
 -- --------------------------------------------------------
 
@@ -279,8 +322,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `role_id`, `roll_no`, `name`, `email`, `password`, `year`, `created_at`, `department_id`) VALUES
-(1, 1, '921022205021', 'Hari Prasath', 'hari@example.com', '', 4, '2025-08-10 16:12:34', 7),
-(2, 1, '921022205011', 'Naveen Bharathi', 'Naveen@example.com', '', 4, '2025-08-10 16:12:34', 7),
+(1, 2, '921022205021', 'Hari Prasath', 'hari@example.com', '$2y$10$.XJck47fhN5aCi..iN7mMOEpGCx.FZNm4pI2WUn.s7VnyYJVTXUHC', 1, '2025-08-10 16:12:34', 1),
+(2, 1, '921022205011', 'Naveen Bharathi', 'Naveen@example.com', '$2y$10$dtZFX.H77Xe1AmN4DrqmKOkFuj3NfF4Z8W2Rvg20gsfDWKoK9fmui', 1, '2025-08-10 16:12:34', 1),
 (3, 1, '921022243017', 'Sandhosh', 'sandhosh@example.com', '', 4, '2025-08-10 16:12:34', 6),
 (4, 1, '921022243011', 'Keerthana', 'keerthana@example.com', '', 4, '2025-08-10 16:12:34', 6),
 (5, 1, '921022104033', 'Joshika', 'joshika@example.com', '', 4, '2025-08-10 16:12:34', 1),
@@ -325,7 +368,8 @@ ALTER TABLE `feedback`
 --
 ALTER TABLE `questions`
   ADD PRIMARY KEY (`question_id`),
-  ADD KEY `test_id` (`test_id`);
+  ADD KEY `topic_id` (`topic_id`),
+  ADD KEY `created_by` (`created_by`);
 
 --
 -- Indexes for table `roles`
@@ -372,6 +416,23 @@ ALTER TABLE `student_tests`
 --
 ALTER TABLE `tests`
   ADD PRIMARY KEY (`test_id`),
+  ADD KEY `topic_id` (`topic_id`),
+  ADD KEY `department_id` (`department_id`),
+  ADD KEY `created_by` (`created_by`);
+
+--
+-- Indexes for table `test_questions`
+--
+ALTER TABLE `test_questions`
+  ADD PRIMARY KEY (`test_question_id`),
+  ADD KEY `test_id` (`test_id`),
+  ADD KEY `question_id` (`question_id`);
+
+--
+-- Indexes for table `topics`
+--
+ALTER TABLE `topics`
+  ADD PRIMARY KEY (`topic_id`),
   ADD KEY `created_by` (`created_by`);
 
 --
@@ -415,7 +476,7 @@ ALTER TABLE `feedback`
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -454,6 +515,18 @@ ALTER TABLE `tests`
   MODIFY `test_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `test_questions`
+--
+ALTER TABLE `test_questions`
+  MODIFY `test_question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `topics`
+--
+ALTER TABLE `topics`
+  MODIFY `topic_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
@@ -482,6 +555,34 @@ ALTER TABLE `faculty_test_history`
 ALTER TABLE `feedback`
   ADD CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`student_test_id`) REFERENCES `student_tests` (`student_test_id`),
   ADD CONSTRAINT `feedback_ibfk_2` FOREIGN KEY (`faculty_id`) REFERENCES `users` (`user_id`);
+
+--
+-- Constraints for table `questions`
+--
+ALTER TABLE `questions`
+  ADD CONSTRAINT `questions_ibfk_1` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`topic_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `questions_ibfk_2` FOREIGN KEY (`created_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `tests`
+--
+ALTER TABLE `tests`
+  ADD CONSTRAINT `tests_ibfk_1` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`topic_id`),
+  ADD CONSTRAINT `tests_ibfk_2` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`),
+  ADD CONSTRAINT `tests_ibfk_3` FOREIGN KEY (`created_by`) REFERENCES `users` (`user_id`);
+
+--
+-- Constraints for table `test_questions`
+--
+ALTER TABLE `test_questions`
+  ADD CONSTRAINT `test_questions_ibfk_1` FOREIGN KEY (`test_id`) REFERENCES `tests` (`test_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `test_questions_ibfk_2` FOREIGN KEY (`question_id`) REFERENCES `questions` (`question_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `topics`
+--
+ALTER TABLE `topics`
+  ADD CONSTRAINT `topics_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`user_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

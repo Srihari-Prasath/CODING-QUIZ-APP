@@ -1,30 +1,50 @@
 <?php
 require_once('../../config/db.php');
+session_start(); // To access student info
 
 $database = new Database();
 $conn = $database->connect();
 
-$tests = [];
+// Ensure session variables exist
+if (!isset($_SESSION['user_id'], $_SESSION['department_id'], $_SESSION['year'])) {
+    echo json_encode(['error' => 'Unauthorized: No student session found']);
+    exit;
+}
+
+$student_id = $_SESSION['user_id'];
+$student_dept = $_SESSION['department_id'];
+$student_year = $_SESSION['year'];
+
+// Get today's date to show upcoming tests
+$today = date('Y-m-d');
 
 $sql = "SELECT 
             test_id, 
             title, 
             description, 
-            start_time, 
-            end_time, 
+            date, 
+            time_slot, 
             duration_minutes, 
-            total_marks, 
-            domain, 
-            department, 
+            department_id, 
             year, 
             is_active 
         FROM tests 
-        ORDER BY start_time DESC";
+        WHERE department_id = :dept AND year = :year AND is_active = 1 AND date >= :today
+        ORDER BY date ASC";
 
 $stmt = $conn->prepare($sql);
-$stmt->execute();
+$stmt->execute([
+    ':dept' => $student_dept,
+    ':year' => $student_year,
+    ':today' => $today
+]);
+
 $tests = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Return as JSON (for frontend)
 header('Content-Type: application/json');
-echo json_encode($tests);
+
+if (empty($tests)) {
+    echo json_encode(['message' => 'No tests available right now']);
+} else {
+    echo json_encode($tests);
+}

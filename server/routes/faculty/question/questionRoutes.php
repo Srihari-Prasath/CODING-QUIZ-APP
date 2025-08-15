@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    $result = uploadQuestionsFromExcel($test_id, $file['tmp_name']);
+    // $result = uploadQuestionsFromExcel($test_id, $file['tmp_name']);
 
     if ($result['success']) {
         echo json_encode($result);
