@@ -83,6 +83,7 @@ $roll_no = $_SESSION['roll_no'];
 
         <div id="quiz-grid" class="quiz-grid"></div>
     </main>
+    <?php include('../../footer.php') ?>
 
     <script>
         

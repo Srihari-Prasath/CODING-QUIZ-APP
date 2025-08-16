@@ -1,7 +1,7 @@
 <footer class="footer">
   <div class="footer-container">
     <!-- <img src="your-logo.png" alt="iSpin Logo" class="logo"> -->
-    <p>Developed by iSpin 🤍</p>
+    <p>Developed by iSpin ❤️</p>
   </div>
 </footer>
 
