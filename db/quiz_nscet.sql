@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 15, 2025 at 10:07 PM
+-- Generation Time: Aug 16, 2025 at 07:57 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -157,6 +157,52 @@ INSERT INTO `roles` (`role_id`, `role_name`) VALUES
 (3, 'hod'),
 (4, 'vice_principal'),
 (5, 'principal');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `staff_users`
+--
+
+CREATE TABLE `staff_users` (
+  `staff_id` int(11) NOT NULL,
+  `full_name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `username` varchar(50) DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `role` enum('faculty','hod','vice_principal','principal') NOT NULL,
+  `department_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `students`
+--
+
+CREATE TABLE `students` (
+  `student_id` int(11) NOT NULL,
+  `roll_no` varchar(20) NOT NULL,
+  `full_name` varchar(100) NOT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `department_id` int(11) NOT NULL,
+  `year` int(11) NOT NULL,
+  `phone` varchar(15) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `dob` date DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `students`
+--
+
+INSERT INTO `students` (`student_id`, `roll_no`, `full_name`, `email`, `department_id`, `year`, `phone`, `address`, `dob`, `password`, `created_at`, `updated_at`) VALUES
+(1, '921022205011', 'Mark', 'mark@gmail.com', 1, 1, '8838157966', 'test address', NULL, '$2y$10$.X1ZB0dkZTgWzle76Jmt.uTZopEQWHuI6SnqEYYppuxrc5l9d4IE.', '2025-08-16 17:13:25', '2025-08-16 17:13:55');
 
 -- --------------------------------------------------------
 
@@ -378,6 +424,21 @@ ALTER TABLE `roles`
   ADD PRIMARY KEY (`role_id`);
 
 --
+-- Indexes for table `staff_users`
+--
+ALTER TABLE `staff_users`
+  ADD PRIMARY KEY (`staff_id`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
+-- Indexes for table `students`
+--
+ALTER TABLE `students`
+  ADD PRIMARY KEY (`student_id`),
+  ADD UNIQUE KEY `roll_no` (`roll_no`);
+
+--
 -- Indexes for table `student_answers`
 --
 ALTER TABLE `student_answers`
@@ -483,6 +544,18 @@ ALTER TABLE `questions`
 --
 ALTER TABLE `roles`
   MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `staff_users`
+--
+ALTER TABLE `staff_users`
+  MODIFY `staff_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `students`
+--
+ALTER TABLE `students`
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `student_answers`

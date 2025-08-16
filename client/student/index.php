@@ -9,8 +9,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'student') {
 
 $user_id = $_SESSION['user_id'];
 $roll_no = $_SESSION['roll_no'];
+$full_name = $_SESSION['full_name'];
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,9 +23,10 @@ $roll_no = $_SESSION['roll_no'];
     <link rel="stylesheet" href="../assets/css/main.css">
 </head>
 <body>
-   <?php include('./header.php') ?>
+    <?php include('./header.php'); ?>
 
     <main class="container">
+
         <nav>
             <a href="index.php" class="active">Dashboard</a>
             <a href="test-list.php">Quiz-attend</a>
@@ -35,7 +36,7 @@ $roll_no = $_SESSION['roll_no'];
         </nav>  
 
         <div class="welcome">
-            <h2>Welcome back, <?php echo htmlspecialchars($roll_no); ?>! 👋</h2>
+            <h2>Welcome back, <?php echo htmlspecialchars($roll_no); ?>!</h2>
             <p>Manage your quizzes and monitor student progress.</p>
         </div>
 
@@ -49,6 +50,7 @@ $roll_no = $_SESSION['roll_no'];
                     <p class="trend">+12% from last semester</p>
                 </div>
             </div>
+
             <div class="stats-card">
                 <i data-lucide="users"></i>
                 <div>
@@ -58,6 +60,7 @@ $roll_no = $_SESSION['roll_no'];
                     <p class="trend">+8% from last month</p>
                 </div>
             </div>
+
             <div class="stats-card">
                 <i data-lucide="trending-up"></i>
                 <div>
@@ -67,10 +70,11 @@ $roll_no = $_SESSION['roll_no'];
                     <p class="trend">+3% from last term</p>
                 </div>
             </div>
+
             <div class="stats-card">
-                <i data-lucide="clock"></i> 
+                <i data-lucide="clock"></i>
                 <div>
-                    <h3>More Quiz Have</h3>
+                    <h3>Ongoing Quizzes</h3>
                     <p>3</p>
                     <p class="description">Currently running</p>
                 </div>
@@ -78,28 +82,31 @@ $roll_no = $_SESSION['roll_no'];
         </div>
 
         <div class="filters">
-            <a href="analytics.php" style="text-decoration: none;"><button><i data-lucide="bar-chart-3"></i> Analytics</button></a>
+            <a href="analytics.php" style="text-decoration: none;">
+                <button><i data-lucide="bar-chart-3"></i> Analytics</button>
+            </a>
         </div>
 
         <div id="quiz-grid" class="quiz-grid"></div>
+
     </main>
-    <?php include('../../footer.php') ?>
+
+    <?php include('../../footer.php'); ?>
 
     <script>
-        
-
-        
+        // Theme toggle
         const themeToggle = document.getElementById('theme-toggle');
         const body = document.body;
 
         function setTheme(theme) {
             body.setAttribute('data-theme', theme);
-            themeToggle.innerHTML = theme === 'dark' ? '<i data-lucide="sun"></i>' : '<i data-lucide="moon"></i>';
+            themeToggle.innerHTML = theme === 'dark'
+                ? '<i data-lucide="sun"></i>'
+                : '<i data-lucide="moon"></i>';
             localStorage.setItem('theme', theme);
             lucide.createIcons();
         }
 
-        
         const savedTheme = localStorage.getItem('theme') || 'light';
         setTheme(savedTheme);
 
@@ -108,14 +115,14 @@ $roll_no = $_SESSION['roll_no'];
             setTheme(currentTheme === 'light' ? 'dark' : 'light');
         });
 
-        lucide.createIcons();
-
+        // Quiz rendering
         function renderQuizzes(searchTerm = '', filterStatus = 'all') {
             const quizGrid = document.getElementById('quiz-grid');
             quizGrid.innerHTML = '';
+
             const filteredQuizzes = quizzes.filter(quiz => {
-                const matchesSearch = quiz.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                    quiz.subject.toLowerCase().includes(searchTerm.toLowerCase());
+                const matchesSearch = quiz.title.toLowerCase().includes(searchTerm.toLowerCase())
+                    || quiz.subject.toLowerCase().includes(searchTerm.toLowerCase());
                 const matchesFilter = filterStatus === 'all' || quiz.status === filterStatus;
                 return matchesSearch && matchesFilter;
             });
@@ -150,6 +157,7 @@ $roll_no = $_SESSION['roll_no'];
                 `;
                 quizGrid.appendChild(quizCard);
             });
+
             lucide.createIcons();
         }
 
@@ -158,33 +166,31 @@ $roll_no = $_SESSION['roll_no'];
         }
 
         renderQuizzes();
-    </script>
-    <script>
-    lucide.createIcons();
 
-    document.getElementById("logout-btn").addEventListener("click", async () => {
-        try {
-            const res = await fetch("<?php echo $api; ?>helpers/logout.php", {
-                method: "POST",
-                credentials: "include",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
+        // Logout
+        document.getElementById("logout-btn").addEventListener("click", async () => {
+            try {
+                const res = await fetch("<?php echo $api ?? ''; ?>helpers/logout.php", {
+                    method: "POST",
+                    credentials: "include",
+                    headers: { "Content-Type": "application/json" },
+                });
 
-            const data = await res.json();
+                const data = await res.json();
 
-            if (res.ok) {
-                alert("Logout successful!");
-                window.location.href = "../";  
-            } else {
-                alert("Logout failed: " + data.error);
+                if (res.ok) {
+                    alert("Logout successful!");
+                    window.location.href = "../auth/login.php";
+                } else {
+                    alert("Logout failed: " + data.error);
+                }
+            } catch (err) {
+                alert("Logout error: " + err.message);
             }
-        } catch (err) {
-            alert("Logout error: " + err.message);
-        }
-    });
-</script>
+        });
+
+        lucide.createIcons();
+    </script>
 
 </body>
 </html>

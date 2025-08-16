@@ -1,3 +1,6 @@
+<?php include('./resource/session.php'); ?>
+<?php include('./resource/api.php'); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +10,7 @@
     <title>Student Portal - Login & Register</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
+        <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
         :root {
@@ -201,11 +204,11 @@
                 <h1 class="text-3xl font-bold text-[var(--color-primary)] mb-2">Welcome Back!</h1>
             </div>
 
-            <form class="space-y-6 group">
+            <form id="loginFormElement" class="space-y-6 group">
                 <div>
                     <label for="loginEmail" class="block text-sm font-medium text-gray-700 mb-1">Roll No </label>
                     <div class="relative">
-                        <input type="text" id="loginEmail" class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="921022205011">
+                        <input type="text" id="loginEmail" class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="921022205011" required>
                         <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                             <i class="fas fa-envelope text-gray-400"></i>
                         </div>
@@ -215,13 +218,12 @@
                 <div>
                     <label for="loginPassword" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
                     <div class="relative">
-                        <input type="password" id="loginPassword" class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="••••••••">
+                        <input type="password" id="loginPassword" class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="••••••••" required>
                         <button type="button" class="password-toggle absolute inset-y-0 right-0 flex items-center pr-3" onclick="togglePassword('loginPassword', 'loginEyeIcon')">
                             <i id="loginEyeIcon" class="fas fa-eye text-gray-400 hover:text-[var(--color-primary)]"></i>
                         </button>
                     </div>
                 </div>
-
 
                 <div>
                     <label for="role" class="block text-sm font-medium text-gray-700 mb-1">Select role</label>
@@ -246,27 +248,16 @@
                         Login <i class="fas fa-arrow-right ml-2 transition-all duration-300 opacity-0 group-hover:opacity-100"></i>
                     </span>
                 </button>
-
-
             </form>
         </div>
-    </div>
     </div>
 
     <script src="./assets/js/auth/script.js"></script>
 
-
-
-    <?php include('./resource/api.php') ?>
-    <?php
-
-    include('./resource/session.php') ?>
-
-    <!-- login  -->
     <script>
-        document.querySelector('form').addEventListener('submit', async (e) => {
+        // Direct login integration
+        document.getElementById('loginFormElement').addEventListener('submit', async (e) => {
             e.preventDefault();
-
             const roll_no = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPassword').value;
             const selectedRole = document.getElementById('user_role').value;
@@ -277,23 +268,16 @@
             }
 
             try {
-                const response = await fetch('<?php echo $api; ?>auth/authRoutes.php?route=login', {
+                const res = await fetch('http://localhost/CODING-QUIZ-APP/server/controllers/auth/student/studentLogin.php', {
                     method: 'POST',
                     credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        roll_no,
-                        password
-                    })
-
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ roll_no, password })
                 });
 
-                const data = await response.json();
-                console.log(data)
-                if (response.ok && data.user) {
+                const data = await res.json();
 
+                if (res.ok && data.user) {
                     if (data.user.role !== selectedRole) {
                         alert("Selected role does not match your account role.");
                         return;
@@ -327,11 +311,5 @@
             }
         });
     </script>
-
-
-
-
-
 </body>
-
 </html>
