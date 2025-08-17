@@ -10,12 +10,17 @@
 </head>
 
 <body>
-    <?php include('./header.php') ?>
+    <!-- Header -->
+    <header class="header">
+        <h1>Staff Dashboard</h1>
+        <button id="logout-btn" class="btn-logout">Logout</button>
+    </header>
 
     <main class="container">
         <?php include('./nav.php') ?>
+
         <div class="welcome">
-            <h2>Welcome back, Alex! 👋</h2>
+            <h2>Welcome back, Alex!</h2>
             <p>Manage your quizzes and monitor student progress.</p>
         </div>
 
@@ -58,21 +63,59 @@
         </div>
 
         <div class="filters">
-         
             <button><i data-lucide="bar-chart-3"></i> Analytics</button>
         </div>
 
         <div id="quiz-grid" class="quiz-grid"></div>
     </main>
 
-    
     <?php include('../resource/api.php') ?>
-    <script>
-        
 
+    <script>
+        // Create Lucide icons
         lucide.createIcons();
 
+        // SESSION CHECK
+        async function checkSession() {
+            try {
+                const res = await fetch('<?php echo $api; ?>helpers/sessionStatus.php', {
+                    credentials: 'include'
+                });
+                const data = await res.json();
+                if (!data.logged_in) {
+                    window.location.href = '../'; // redirect to login if not logged in
+                }
+            } catch (err) {
+                console.error("Session check failed", err);
+            }
+        }
 
+        // LOGOUT
+        async function handleLogout() {
+            const logoutBtn = document.getElementById("logout-btn");
+            if (!logoutBtn) return;
+
+            logoutBtn.addEventListener("click", async () => {
+                try {
+                    const res = await fetch('<?php echo $api; ?>helpers/logout.php', {
+                        method: 'POST',
+                        credentials: 'include',
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                    const data = await res.json();
+                    if (data.success) {
+                        alert("Logout successful!");
+                        window.location.href = "../";
+                    } else {
+                        alert("Logout failed!");
+                    }
+                } catch (err) {
+                    alert("Logout error: " + err.message);
+                }
+            });
+        }
+
+        // QUIZZES
         function renderQuizzes(searchTerm = '', filterStatus = 'all') {
             const quizGrid = document.getElementById('quiz-grid');
             quizGrid.innerHTML = '';
@@ -116,30 +159,24 @@
             lucide.createIcons();
         }
 
-
-        document.getElementById('search-input').addEventListener('input', (e) => {
-            renderQuizzes(e.target.value, document.getElementById('filter-status').value);
-        });
-
-        document.getElementById('filter-status').addEventListener('change', (e) => {
-            renderQuizzes(document.getElementById('search-input').value, e.target.value);
-        });
-
-
         function manageQuiz(quizId) {
             alert(`Managing quiz ID: ${quizId}`);
-
         }
 
+        document.getElementById('search-input')?.addEventListener('input', (e) => {
+            renderQuizzes(e.target.value, document.getElementById('filter-status')?.value);
+        });
 
-        renderQuizzes();
+        document.getElementById('filter-status')?.addEventListener('change', (e) => {
+            renderQuizzes(document.getElementById('search-input')?.value, e.target.value);
+        });
+
+        // INITIALIZE
+        window.addEventListener('DOMContentLoaded', () => {
+            checkSession();
+            handleLogout();
+            renderQuizzes();
+        });
     </script>
-
-    <!-- logout  -->
-    <?php include('../resource/logout.php') ?>
-    <!-- session end  -->
-    <?php include('../resource/check_session.php') ?>
-
 </body>
-
 </html>
