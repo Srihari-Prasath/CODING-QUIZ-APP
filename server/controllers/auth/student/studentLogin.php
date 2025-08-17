@@ -18,8 +18,12 @@ try {
     $db = new Database();
     $conn = $db->connect();
 
-    // Fetch student by roll number
-    $stmt = $conn->prepare("SELECT student_id, full_name, roll_no, password FROM students WHERE roll_no = ?");
+    // Fetch student by roll number along with department and year
+    $stmt = $conn->prepare("
+        SELECT student_id, full_name, roll_no, password, department_id, year 
+        FROM students 
+        WHERE roll_no = ?
+    ");
     $stmt->execute([$roll_no]);
     $student = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -34,11 +38,13 @@ try {
         exit;
     }
 
-    // Store session
+    // Store session including department_id and year
     $_SESSION['user_id'] = $student['student_id'];
     $_SESSION['roll_no'] = $student['roll_no'];
     $_SESSION['full_name'] = $student['full_name'];
     $_SESSION['role'] = 'student';
+    $_SESSION['department_id'] = $student['department_id'];
+    $_SESSION['year'] = $student['year'];
 
     echo json_encode([
         'success' => true,
@@ -46,10 +52,13 @@ try {
             'id' => $student['student_id'],
             'full_name' => $student['full_name'],
             'roll_no' => $student['roll_no'],
-            'role' => 'student'
+            'role' => 'student',
+            'department_id' => $student['department_id'],
+            'year' => $student['year']
         ],
         'redirect' => './student/index.php' // frontend can use this to redirect
     ]);
+
 } catch (PDOException $e) {
     echo json_encode(['error' => $e->getMessage()]);
 }

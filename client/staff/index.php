@@ -83,7 +83,7 @@
                 });
                 const data = await res.json();
                 if (!data.logged_in) {
-                    window.location.href = '../'; // redirect to login if not logged in
+                    window.location.href = './'; // redirect to login if not logged in
                 }
             } catch (err) {
                 console.error("Session check failed", err);

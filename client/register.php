@@ -191,7 +191,7 @@
     <div class="w-full max-w-4xl mx-auto relative z-10">
         <!-- Toggle Buttons -->
         <div class="flex mb-8 mt-5 rounded-full bg-white shadow-md overflow-hidden w-fit mx-auto">
-            <a href="./"><button id="loginToggle" class="toggle-btn  px-6 py-2 font-medium rounded-full transition-all duration-300">Login</button></a>
+            <a href="./stu_index.php"><button id="loginToggle" class="toggle-btn  px-6 py-2 font-medium rounded-full transition-all duration-300">Login</button></a>
             <a href="./register.php"><button id="registerToggle" class="toggle-btn active px-6 py-2 font-medium rounded-full transition-all duration-300">Register</button></a>
         </div>
 

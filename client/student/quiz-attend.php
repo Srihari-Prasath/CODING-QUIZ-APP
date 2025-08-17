@@ -34,9 +34,7 @@
     <!-- Quiz Content -->
     <div id="quizContent" class="hidden flex h-screen overflow-hidden">
         <!-- Sidebar -->
-        <div
-            class="sidebar bg-white w-64 border-r border-gray-200 p-4 flex flex-col md:relative"
-        >
+        <div class="sidebar bg-white w-64 border-r border-gray-200 p-4 flex flex-col md:relative">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-xl font-bold text-gray-800">Quiz Navigation</h2>
                 <button
@@ -53,37 +51,22 @@
                 </div>
             </div>
             <div class="flex-1 overflow-y-auto">
-                <h3
-                    class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2"
-                >
+                <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">
                     Questions
                 </h3>
-                <div
-                    class="grid grid-cols-5 gap-2 mb-6"
-                    id="questionNumbers"
-                ></div>
+                <div class="grid grid-cols-5 gap-2 mb-6" id="questionNumbers"></div>
 
                 <div class="space-y-2 text-sm">
                     <div class="flex items-center">
-                        <div
-                            class="w-3 h-3 rounded-full bg-green-500 mr-2"
-                        ></div>
-                        <span
-                            >Answered: <span id="answeredCount">0</span></span
-                        >
+                        <div class="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
+                        <span>Answered: <span id="answeredCount">0</span></span>
                     </div>
                     <div class="flex items-center">
-                        <div
-                            class="w-3 h-3 rounded-full bg-red-500 mr-2"
-                        ></div>
-                        <span
-                            >Not Answered: <span id="notAnsweredCount">0</span></span
-                        >
+                        <div class="w-3 h-3 rounded-full bg-red-500 mr-2"></div>
+                        <span>Not Answered: <span id="notAnsweredCount">0</span></span>
                     </div>
                     <div class="flex items-center">
-                        <div
-                            class="w-3 h-3 rounded-full bg-yellow-500 mr-2"
-                        ></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500 mr-2"></div>
                         <span>Skipped: <span id="skippedCount">0</span></span>
                     </div>
                 </div>
@@ -117,51 +100,30 @@
                 <!-- Header -->
                 <header class="flex justify-between items-center mb-8">
                     <div>
-                        <h1 class="text-2xl font-bold text-gray-800">
-                            General Knowledge Quiz
-                        </h1>
-                        <p class="text-gray-600">
-                            Test your knowledge with these questions
-                        </p>
+                        <h1 class="text-2xl font-bold text-gray-800">General Knowledge Quiz</h1>
+                        <p class="text-gray-600">Test your knowledge with these questions</p>
                     </div>
                     <div class="flex items-center space-x-4">
-                        <div
-                            class="bg-white p-3 rounded-lg shadow-sm flex items-center"
-                        >
-                            <i
-                                class="fas fa-clock text-orange-500 mr-2"
-                            ></i>
-                            <span id="mainTimer" class="font-bold timer"
-                                >10:00</span
-                            >
+                        <div class="bg-white p-3 rounded-lg shadow-sm flex items-center">
+                            <i class="fas fa-clock text-orange-500 mr-2"></i>
+                            <span id="mainTimer" class="font-bold timer">10:00</span>
                         </div>
                     </div>
                 </header>
 
                 <div id="quiz-container" class="mt-10"></div>
-                <div
-                    id="submitModal"
-                    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden"
-                >
-                    <div
-                        class="bg-white p-6 rounded shadow-md text-center max-w-sm mx-auto"
-                    >
+
+                <div id="submitModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+                    <div class="bg-white p-6 rounded shadow-md text-center max-w-sm mx-auto">
                         <h2 class="text-xl font-semibold mb-4">Submit Quiz</h2>
                         <p class="mb-4">
-                            You’ve answered all questions. Do you want to submit
-                            your answers?
+                            You’ve answered all questions. Do you want to submit your answers?
                         </p>
                         <div class="flex justify-center space-x-4">
-                            <button
-                                id="confirmSubmit"
-                                class="bg-green-500 text-white px-4 py-2 rounded"
-                            >
+                            <button id="confirmSubmit" class="bg-green-500 text-white px-4 py-2 rounded">
                                 Submit
                             </button>
-                            <button
-                                id="cancelSubmit"
-                                class="bg-gray-300 px-4 py-2 rounded"
-                            >
+                            <button id="cancelSubmit" class="bg-gray-300 px-4 py-2 rounded">
                                 Cancel
                             </button>
                         </div>
@@ -169,9 +131,7 @@
                 </div>
 
                 <!-- Navigation Buttons -->
-                <div
-                    class="flex justify-between items-center mt-6 max-w-4xl mx-auto"
-                >
+                <div class="flex justify-between items-center mt-6 max-w-4xl mx-auto">
                     <button
                         id="prevBtn"
                         class="bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 px-6 rounded-md transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -205,7 +165,6 @@ let currentQuestionIndex = 0;
 let timeLeft = 0;
 let timerInterval;
 let answers = {}; // { question_id: selectedOption }
-let totalMarks = 0;
 
 const urlParams = new URLSearchParams(window.location.search);
 const testId = urlParams.get('test_id');
@@ -222,27 +181,67 @@ const skipBtn = document.getElementById("skipBtn");
 const nextBtn = document.getElementById("nextBtn");
 const prevBtn = document.getElementById("prevBtn");
 
-// TODO: Replace with actual logged-in user id dynamically (from PHP session or backend)
-const userId = 1; 
+// ================== SECURITY LOCKS ==================
+
+// Prevent back/forward navigation
+history.pushState(null, null, location.href);
+window.addEventListener("popstate", function () {
+    alert("Navigation is disabled during the test!");
+    history.pushState(null, null, location.href);
+});
+
+// Block keyboard shortcuts
+function blockKeys(e) {
+    if (
+        e.key === "F12" ||
+        (e.ctrlKey && e.shiftKey && ["I","J","C"].includes(e.key.toUpperCase())) ||
+        (e.ctrlKey && ["U","S","P"].includes(e.key.toUpperCase()))
+    ) {
+        e.preventDefault();
+        alert("This action is disabled during the test!");
+    }
+}
+
+// Block right-click
+function blockRightClick(e) {
+    e.preventDefault();
+    alert("Right-click is disabled during the test!");
+}
+
+// Detect DevTools open
+const threshold = 160;
+function detectDevTools() {
+    const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+    const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+    if (widthThreshold || heightThreshold) {
+        alert("DevTools is disabled during the test!");
+    }
+}
+setInterval(detectDevTools, 1000);
+
+// Initialize security locks
+window.addEventListener("load", () => {
+    window.addEventListener("keydown", blockKeys);
+    window.addEventListener("contextmenu", blockRightClick);
+});
+
+// Remove locks after submission
+function removeSecurityLocks() {
+    window.removeEventListener("keydown", blockKeys);
+    window.removeEventListener("contextmenu", blockRightClick);
+    window.onbeforeunload = null;
+}
+
+// ================== QUIZ LOGIC ==================
 
 // Prevent reload
-window.onbeforeunload = () =>
-    "Are you sure you want to leave? Your quiz progress will be lost.";
-
-// Auto-submit
-function autoSubmitQuiz() {
-    clearInterval(timerInterval);
-    alert("Time is up! Submitting your answers...");
-    submitAnswers();
-}
+window.onbeforeunload = () => "Are you sure you want to leave? Your quiz progress will be lost.";
 
 // Timer
 function updateTimerDisplay() {
     const minutes = Math.floor(timeLeft / 60);
     const seconds = timeLeft % 60;
-    const formattedTime = `${String(minutes).padStart(2, "0")}:${String(
-        seconds
-    ).padStart(2, "0")}`;
+    const formattedTime = `${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
     document.getElementById("mainTimer").textContent = formattedTime;
     document.getElementById("sidebarTimer").textContent = formattedTime;
 
@@ -258,30 +257,23 @@ function startTimer() {
         if (timeLeft > 0) {
             timeLeft--;
             updateTimerDisplay();
-        } else {
-            autoSubmitQuiz();
         }
     }, 1000);
 }
 
 // Fetch quiz & test details
 if (!testId) {
-    document.getElementById("quiz-container").innerHTML =
-        `<p class="text-red-500">Invalid test ID.</p>`;
+    document.getElementById("quiz-container").innerHTML = `<p class="text-red-500">Invalid test ID.</p>`;
 } else {
-    // Fetch test info (for duration and total marks)
     fetch("../../server/controllers/student/test-list.php")
         .then((res) => res.json())
         .then((tests) => {
             const currentTest = tests.find((test) => test.test_id == testId);
             if (currentTest) {
                 timeLeft = parseInt(currentTest.duration_minutes) * 60;
-                totalMarks = parseInt(currentTest.total_marks);
                 startTimer();
             }
         });
-
-    // Fetch questions
     fetch(`../../server/controllers/student/quiz-questions.php?test_id=${testId}`)
         .then((res) => res.json())
         .then((data) => {
@@ -291,20 +283,17 @@ if (!testId) {
                 initQuiz();
                 renderSingleQuestion();
             } else {
-                document.getElementById("quiz-container").innerHTML =
-                    `<p class="text-red-500">${data.message}</p>`;
+                document.getElementById("quiz-container").innerHTML = `<p class="text-red-500">${data.message}</p>`;
             }
         });
 }
 
-// Render Question
+// ================== QUIZ RENDERING & NAV ==================
 function renderSingleQuestion() {
     const quizContainer = document.getElementById("quiz-container");
     quizContainer.innerHTML = "";
 
-    if (currentQuestionIndex >= questions.length) {
-        currentQuestionIndex = 0;
-    }
+    if (currentQuestionIndex >= questions.length) currentQuestionIndex = 0;
 
     const q = questions[currentQuestionIndex];
     const selectedAnswer = answers[q.question_id] || "";
@@ -314,14 +303,10 @@ function renderSingleQuestion() {
     card.innerHTML = `
         <div class="p-6">
             <div class="flex justify-between items-center mb-4">
-                <span class="text-sm font-medium text-blue-500">Question ${
-                    currentQuestionIndex + 1
-                }/${questions.length}</span>
+                <span class="text-sm font-medium text-blue-500">Question ${currentQuestionIndex + 1}/${questions.length}</span>
                 <span class="text-sm font-medium text-gray-500">1 point</span>
             </div>
-            <h2 class="text-xl font-semibold text-gray-800 mb-6">${
-                q.question_text
-            }</h2>
+            <h2 class="text-xl font-semibold text-gray-800 mb-6">${q.question_text}</h2>
             <div class="space-y-3" id="optionsContainer">
                 ${renderStyledOption("A", q.option_a, q.question_id, selectedAnswer)}
                 ${renderStyledOption("B", q.option_b, q.question_id, selectedAnswer)}
@@ -336,11 +321,7 @@ function renderSingleQuestion() {
         option.addEventListener("click", () => {
             const label = option.getAttribute("data-label");
             const qid = option.getAttribute("data-question-id");
-            if (answers[qid] === label) {
-                delete answers[qid];
-            } else {
-                answers[qid] = label;
-            }
+            answers[qid] = label;
             updateSidebarStatus(qid);
             renderSingleQuestion();
             updateAnsweredCounts();
@@ -350,12 +331,9 @@ function renderSingleQuestion() {
     updateAnsweredCounts();
 }
 
-// Render Option helper
 function renderStyledOption(label, text, questionId, selectedAnswer) {
     const isSelected = selectedAnswer === label;
-    const selectedClass = isSelected
-        ? "border-orange-500 ring-2 ring-orange-300 bg-orange-50"
-        : "";
+    const selectedClass = isSelected ? "border-orange-500 ring-2 ring-orange-300 bg-orange-50" : "";
     return `
         <div class="option border border-gray-200 rounded-lg p-4 cursor-pointer transition duration-300 hover:shadow-md ${selectedClass}" 
              data-label="${label}" data-question-id="${questionId}">
@@ -364,23 +342,17 @@ function renderStyledOption(label, text, questionId, selectedAnswer) {
     `;
 }
 
-// Init Sidebar navigation numbers
 function initQuiz() {
     questionNumbers.innerHTML = "";
     quizData.forEach((_, index) => {
         const questionNumber = document.createElement("div");
-        questionNumber.className =
-            "question-number w-10 h-10 flex items-center justify-center rounded-md border border-gray-300 cursor-pointer transition duration-300 hover:bg-gray-100";
+        questionNumber.className = "question-number w-10 h-10 flex items-center justify-center rounded-md border border-gray-300 cursor-pointer transition duration-300 hover:bg-gray-100";
         questionNumber.textContent = index + 1;
         questionNumber.dataset.index = index;
         questionNumber.id = `qnum-${quizData[index].question_id}`;
         questionNumber.addEventListener("click", () => {
             currentQuestionIndex = index;
             renderSingleQuestion();
-            if (window.innerWidth < 768) {
-                document.querySelector(".sidebar").classList.remove("active");
-                document.getElementById("overlay").classList.remove("active");
-            }
         });
         questionNumbers.appendChild(questionNumber);
         updateSidebarStatus(quizData[index].question_id);
@@ -388,26 +360,19 @@ function initQuiz() {
     updateAnsweredCounts();
 }
 
-// Update sidebar question status colors
 function updateSidebarStatus(questionId) {
     const elem = document.getElementById(`qnum-${questionId}`);
     if (elem) {
         if (answers[questionId]) {
             elem.classList.add("bg-green-200", "text-green-800", "font-semibold");
             elem.classList.remove("bg-yellow-200", "text-yellow-800");
-        } else {
-            elem.classList.remove("bg-green-200", "text-green-800", "font-semibold");
-            elem.classList.remove("bg-yellow-200", "text-yellow-800");
-        }
+        } else elem.classList.remove("bg-green-200", "text-green-800", "font-semibold");
     }
 }
 
-// Update answered / not answered / skipped counts display
 function updateAnsweredCounts() {
     const total = questions.length;
-    const answered = Object.keys(answers).filter(
-        (qid) => answers[qid] !== undefined && answers[qid] !== ""
-    ).length;
+    const answered = Object.keys(answers).filter((qid) => answers[qid] !== undefined && answers[qid] !== "").length;
     const skipped = Object.keys(answers).filter((qid) => answers[qid] === "").length;
     const notAnswered = total - answered - skipped;
 
@@ -416,40 +381,29 @@ function updateAnsweredCounts() {
     document.getElementById("skippedCount").textContent = skipped;
 }
 
-// Start Quiz Button
+// ================== BUTTON EVENTS ==================
 startQuiz.addEventListener("click", () => {
     landingPage.classList.add("hidden");
     quizContent.classList.remove("hidden");
 });
 
-// Skip Button
 skipBtn.addEventListener("click", () => {
     const q = questions[currentQuestionIndex];
-    if (!answers[q.question_id]) {
-        answers[q.question_id] = ""; // mark as skipped
-        updateSidebarStatus(q.question_id);
-    }
+    if (!answers[q.question_id]) answers[q.question_id] = "";
+    updateSidebarStatus(q.question_id);
     currentQuestionIndex++;
     if (currentQuestionIndex >= questions.length) currentQuestionIndex = 0;
     renderSingleQuestion();
 });
 
-// Next Button
 nextBtn.addEventListener("click", () => {
     currentQuestionIndex++;
     if (currentQuestionIndex >= questions.length) currentQuestionIndex = 0;
     renderSingleQuestion();
-
-    // Show submit modal if all answered or skipped
-    const allAnsweredOrSkipped = questions.every(
-        (q) => answers.hasOwnProperty(q.question_id)
-    );
-    if (allAnsweredOrSkipped) {
-        submitModal.classList.remove("hidden");
-    }
+    const allAnsweredOrSkipped = questions.every((q) => answers.hasOwnProperty(q.question_id));
+    if (allAnsweredOrSkipped) submitModal.classList.remove("hidden");
 });
 
-// Previous Button
 prevBtn.addEventListener("click", () => {
     if (currentQuestionIndex > 0) {
         currentQuestionIndex--;
@@ -457,7 +411,6 @@ prevBtn.addEventListener("click", () => {
     }
 });
 
-// Manual Submit Button in Sidebar
 submitQuiz.addEventListener("click", () => {
     if (confirm("Are you sure you want to submit the quiz?")) {
         clearInterval(timerInterval);
@@ -465,74 +418,73 @@ submitQuiz.addEventListener("click", () => {
     }
 });
 
-// Submit Modal Buttons
 confirmSubmit.addEventListener("click", () => {
     clearInterval(timerInterval);
     submitModal.classList.add("hidden");
     submitAnswers();
 });
+cancelSubmit.addEventListener("click", () => submitModal.classList.add("hidden"));
 
-cancelSubmit.addEventListener("click", () => {
-    submitModal.classList.add("hidden");
-});
-
-// Function to submit answers and save score
+// ================== SUBMIT ==================
 async function submitAnswers() {
     try {
-        const response = await fetch(
-            "../../server/controllers/student/submit_quiz.php",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    test_id: testId,
-                    user_id: userId,
-                    answers: answers,
-                }),
-                credentials: "include",
-            }
-        );
+        const response = await fetch("../../server/controllers/student/submit_quiz.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ answers }),
+            credentials: "include",
+        });
         const result = await response.json();
 
         if (result.status === "success") {
-            document.getElementById(
-                "quiz-container"
-            ).innerHTML = `<p class="text-green-500 text-center">Quiz submitted successfully! Your test ID: ${result.student_test_id}</p>`;
-
-            // Save the score now with totalMarks
-            const saveScoreResponse = await fetch(
-                "../../server/controllers/student/save_quiz_result.php",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        user_id: userId,
-                        test_id: testId,
-                        score: result.score,
-                        total_marks: totalMarks,
-                    }),
-                }
-            );
-            const saveScoreResult = await saveScoreResponse.json();
-
-            if (saveScoreResult.status !== "success") {
-                console.error("Failed to save score:", saveScoreResult.message);
-            } else {
-                // Redirect to congrats.php page after successful submission
-                window.location.href = "/CODING-QUIZ-APP/client/student/congrats.php";
-            }
-
-        } else {
-            alert("Submission failed: " + result.message);
-        }
+            removeSecurityLocks();
+            window.location.href = `/CODING-QUIZ-APP/client/student/congrats.php?score=${result.score}&total=${result.total_marks}`;
+        } else alert("Submission failed: " + result.message);
     } catch (error) {
         alert("Error submitting quiz: " + error.message);
     }
 }
+
+// ================== FULLSCREEN CONTROL ==================
+
+// Enter fullscreen mode
+function enterFullScreen() {
+    const elem = document.documentElement;
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) { // Safari
+        elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { // IE/Edge
+        elem.msRequestFullscreen();
+    }
+}
+
+// Exit fullscreen mode
+function exitFullScreen() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) { // Safari
+        document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) { // IE/Edge
+        document.msExitFullscreen();
+    }
+}
+
+// Call enterFullScreen on page load
+window.addEventListener("load", () => {
+    enterFullScreen();
+});
+
+// Optionally exit fullscreen on quiz submission
+function removeSecurityLocks() {
+    exitFullScreen();
+    window.removeEventListener("keydown", blockKeys);
+    window.removeEventListener("contextmenu", blockRightClick);
+    window.onbeforeunload = null;
+}
+
 </script>
+
+
 </body>
 </html>
