@@ -7,16 +7,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
-            --color-primary: #F97316; /* Main orange color */
+            --color-primary: #F97316;  
             --color-primary-hover: #EA580C;
-            --color-secondary: #FF8C00; /* Darker orange shade */
-            --color-accent: #FFA500; /* Lighter orange accent */
-            --color-background: #1A120B; /* Darker background to complement orange */
-            --color-surface: #2C1A0E; /* Surface color with orange undertone */
-            --text: #F1F5F9;
-            --text-secondary: #D4A373; /* Orange-tinted secondary text */
-            --card-border: #4A2F1A;
-            --shadow: rgba(0, 0, 0, 0.3);
+            --color-secondary: #FF8C00;  
+            --color-accent: #FFA500; 
+            --color-background: #FFFFFF; 
+            --color-surface: #F3F4F6; 
+            --text: #1F2937; 
+            --text-secondary: #D4A373; 
+            --card-border: #D1D5DB; 
+            --shadow: rgba(209, 213, 219, 0.3); 
             --gradient-primary: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
             --gradient-secondary: linear-gradient(135deg, #FF8C00 0%, #E67700 100%);
             --gradient-accent: linear-gradient(135deg, #FFA500 0%, #FF7F00 100%);
@@ -39,7 +39,7 @@
             position: relative;
         }
 
-        /* Animated background particles */
+        
         .bg-particles {
             position: fixed;
             top: 0;
@@ -151,7 +151,7 @@
         .card:hover {
             transform: translateY(-10px);
             box-shadow: 
-                0 25px 50px rgba(0, 0, 0, 0.4),
+                0 25px 50px rgba(209, 213, 219, 0.4),
                 0 0 0 1px rgba(255, 255, 255, 0.1);
         }
 
@@ -309,7 +309,7 @@
             z-index: 20;
         }
 
-        /* Lightness effect styles */
+         
         .overlay {
             position: absolute;
             bottom: 0;
@@ -319,10 +319,10 @@
             z-index: 100;
             background: linear-gradient(
                 0deg,
-                rgba(26, 18, 11, 1) 75%,
-                rgba(26, 18, 11, 0.9) 80%,
-                rgba(26, 18, 11, 0.25) 95%,
-                rgba(26, 18, 11, 0) 100%
+                rgba(255, 255, 255, 1) 75%,
+                rgba(255, 255, 255, 0.9) 80%,
+                rgba(255, 255, 255, 0.25) 95%,
+                rgba(255, 255, 255, 0) 100%
             );
         }
 
@@ -354,7 +354,7 @@
             transform: translateY(-200%);
         }
 
-        /* Responsive enhancements */
+         
         @media (max-width: 768px) {
             .text {
                 font-size: 50px;
@@ -369,7 +369,7 @@
             }
         }
 
-        /* Loading animation overlay */
+         
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -383,7 +383,7 @@
             z-index: 1000;
             animation: fadeOut 1s ease-out 2s forwards;
         }
-
+  
         .loading-spinner {
             width: 60px;
             height: 60px;
@@ -402,7 +402,7 @@
             to {
                 opacity: 0;
                 visibility: hidden;
-            }
+            }                                      
         }
     </style>
 </head>
@@ -475,10 +475,10 @@
     <main class="flex flex-col items-center justify-center flex-grow w-full max-w-6xl px-4 mx-auto relative z-10">
         <!-- Welcome Section -->
         <section class="welcome-card card rounded-xl p-10 text-center w-full mb-8">
-            <h2 class="text-3xl font-bold mb-6 text-white">
-                Welcome to the NSCET Quiz App
+            <h2 class="text-3xl font-bold mb-6 text-gray-900">
+                Welcome to the NSCET CampusCoder
             </h2>
-            <p class="text-xl mb-10 text-gray-300 leading-relaxed max-w-2xl mx-auto">
+            <p class="text-xl mb-10 text-gray-600 leading-relaxed max-w-2xl mx-auto">
                 Test your coding skills or manage quizzes with our interactive platform.
                 Choose your role below to get started!
             </p>
@@ -496,7 +496,7 @@
     <?php include('./footer.php') ?>
 
     <script>
-        // Add smooth scrolling and additional interactivity
+
         document.addEventListener('DOMContentLoaded', function() {
             // Smooth scroll for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -532,7 +532,6 @@
                 observer.observe(card);
             });
 
-            // Parallax effect for background elements
             window.addEventListener('scroll', () => {
                 const scrolled = window.pageYOffset;
                 const particles = document.querySelectorAll('.particle');

@@ -1,28 +1,27 @@
+ body {
+      background: var(--color-surface);
+      font-family: "Inter", sans-serif;
+      color: var(--text);
+    }
 
+    
+    .custom-card {
+      background: var(--color-background);
+      border: 1px solid var(--card-border);
+      border-radius: 1rem;
+      transition: all 0.3s ease;
+    }
 
-        body {
-            background-color: var(--color-background);
-            color: var(--text);
-        }
+    .custom-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px var(--shadow);
+    }
 
-        .custom-card {
-            background-color: var(--color-surface);
-            border: 1px solid var(--card-border);
-            box-shadow: 0 2px 4px var(--shadow);
-        }
+    
+    .status-active {
+      background: #22c55e; 
+    }
 
-        .custom-button {
-            background-color: var(--color-primary);
-        }
-
-        .custom-button:hover {
-            background-color: var(--color-primary-hover);
-        }
-
-        .status-active {
-            background-color: #10B981; 
-        }
-
-        .status-inactive {
-            background-color: #EF4444;
-        }
+    .status-inactive {
+      background: #ef4444; /* red */
+    }
