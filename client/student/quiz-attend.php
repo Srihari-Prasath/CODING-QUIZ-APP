@@ -16,7 +16,7 @@
     <div id="landingPage" class="flex h-screen items-center justify-center">
         <div class="bg-white p-8 rounded-xl shadow-md text-center">
             <h1 class="text-3xl font-bold text-gray-800 mb-4">
-                Welcome to the General Knowledge Quiz
+                Welcome to the NSCET Quiz
             </h1>
             <p class="text-gray-600 mb-6">
                 Test your knowledge with 10 exciting questions. Click below to
@@ -24,7 +24,7 @@
             </p>
             <button
                 id="startQuiz"
-                class="bg-blue-500 hover:bg-blue-600 text-white py-3 px-8 rounded-md transition duration-300 text-lg"
+                class="bg-orange-600 hover:bg-orange-600 text-white py-3 px-8 rounded-md transition duration-300 text-lg"
             >
                 Start Test
             </button>

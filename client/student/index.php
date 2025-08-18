@@ -35,10 +35,19 @@ $full_name = $_SESSION['full_name'];
             <a href="reports.php">Reports</a>
         </nav>  
 
-        <div class="welcome">
-            <h2>Welcome back, <?php echo htmlspecialchars($roll_no); ?>!</h2>
-            <p>Manage your quizzes and monitor student progress.</p>
-        </div>
+        <div style="background: linear-gradient(135deg, #f5d692ff, #ffffffff); 
+            color: black; 
+            padding: 20px 30px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+            width:350px;
+            margin: 20px 0; 
+            font-family: Arial, sans-serif; 
+            ">
+    <h2 style="margin: 0; font-size: 24px; font-weight: 600;">
+        Welcome back, <?php echo htmlspecialchars($full_name); ?>!
+    </h2>
+</div>
 
         <div class="stats-grid">
             <div class="stats-card">
@@ -47,7 +56,7 @@ $full_name = $_SESSION['full_name'];
                     <h3>Quizzes Attended</h3>
                     <p>8</p>
                     <p class="description">This semester</p>
-                    <p class="trend">+12% from last semester</p>
+                    
                 </div>
             </div>
 
@@ -57,7 +66,7 @@ $full_name = $_SESSION['full_name'];
                     <h3>Students percentage</h3>
                     <p>156</p>
                     <p class="description">Total this month</p>
-                    <p class="trend">+8% from last month</p>
+                    
                 </div>
             </div>
 
@@ -67,7 +76,7 @@ $full_name = $_SESSION['full_name'];
                     <h3>Avg. Performance</h3>
                     <p>78%</p>
                     <p class="description">Class average</p>
-                    <p class="trend">+3% from last term</p>
+                    
                 </div>
             </div>
 
@@ -76,16 +85,35 @@ $full_name = $_SESSION['full_name'];
                 <div>
                     <h3>Ongoing Quizzes</h3>
                     <p>3</p>
-                    <p class="description">Currently running</p>
+                    
                 </div>
             </div>
         </div>
 
-        <div class="filters">
-            <a href="analytics.php" style="text-decoration: none;">
-                <button><i data-lucide="bar-chart-3"></i> Analytics</button>
-            </a>
-        </div>
+        <div class="filters" style="margin: 1rem 0; text-align: right;">
+    <a href="analytics.php" style="text-decoration: none;">
+        <button style="
+            background: linear-gradient(135deg, #f97316, #ea580c);
+            color: #fff;
+            border: none;
+            padding: 0.7rem 1.4rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        " 
+        onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 14px rgba(0,0,0,0.2)';"
+        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 10px rgba(0,0,0,0.15)';">
+            <i data-lucide="bar-chart-3"></i> Analytics
+        </button>
+    </a>
+</div>
+
 
         <div id="quiz-grid" class="quiz-grid"></div>
 
