@@ -1,29 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reports</title>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="../assets/css/staff/reports.css">
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <?php include('./header.php') ?>
 
-    <main class="container">
-        <?php include('./nav.php') ?>
-        <h2><i data-lucide="bar-chart-2"></i> Reports</h2>
-        <div class="reports">
-            <div class="report-controls">
-                <select id="report-type">
+<body class="bg-gray-100 min-h-screen font-sans">
+
+    <section id="header-section">
+        <?php include('./header.php') ?>
+    </section>
+
+    <main class="container mx-auto p-6 flex flex-col gap-8">
+        <section id="nav-section">
+            <?php include('./nav.php') ?>
+        </section>
+        <section id="title-section">
+            <h2 class="text-3xl font-bold text-gray-800 flex items-center gap-2 mb-2">
+                <i data-lucide="bar-chart-2"></i> Reports
+            </h2>
+        </section>
+
+        <section id="report-controls-section" class="bg-white p-6 rounded-3xl shadow-md">
+            <div class="flex flex-col md:flex-row gap-4 items-center">
+                <select id="report-type"
+                    class="p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none w-full md:w-1/3 cursor-pointer">
                     <option value="quiz">Quiz Performance</option>
                     <option value="student">Student Progress</option>
                     <option value="class">Class Overview</option>
                 </select>
-                <button id="generate-report" class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 flex items-center"><i data-lucide="play" class="mr-2"></i> Generate Report</button>
+                <button id="generate-report"
+                    class="bg-orange-500 text-white px-4 py-3 rounded-xl hover:bg-orange-600 flex items-center justify-center w-full md:w-auto">
+                    <i data-lucide="play" class="mr-2"></i> Generate Report
+                </button>
             </div>
-            <div id="report-content" class="mt-6"></div>
-        </div>
+        </section>
+
+        <section id="report-content-section" class="mt-6">
+            <div id="report-content"></div>
+        </section>
+
     </main>
 
     <script>
@@ -144,5 +165,6 @@
             reportContent.innerHTML = tableHTML;
         });
     </script>
+
 </body>
 </html>

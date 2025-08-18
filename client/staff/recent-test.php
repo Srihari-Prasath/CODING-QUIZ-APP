@@ -6,143 +6,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Test</title>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/staff/create-test.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-<style>
-  .quiz-list-container {
-  max-width: 1200px;
-  margin: 30px auto;
-  padding: 24px;
-  background: #f0f4f8;
-  border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-  font-family: 'Segoe UI', sans-serif;
-}
-
-.quiz-list-container h2 {
-  font-size: 24px;
-  margin-bottom: 8px;
-  color: #333;
-}
-
-.quiz-list-container .description {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 16px;
-}
-
-.quiz-info-list {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.quiz-info-list li {
-  background: #fff;
-  padding: 10px 14px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  font-size: 15px;
-  color: #444;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
-
-.status {
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-weight: bold;
-}
-
-.status.active {
-  background-color: #d4edda;
-  color: #155724;
-}
-
-.quiz-list-container{
-  display: flex;
-  gap: 3rem;
-  flex-direction: column;
-}
-
-
-</style>    
-
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-50 text-gray-800">
-      <?php include('./header.php') ?>
+<body class="bg-gray-100 min-h-screen font-sans">
+    <?php include('./header.php') ?>
 
-    <main class="container mx-auto px-4 py-6">
-        <?php include('./nav.php') ?>
-        
-  <div class="quiz-list-container">
-  <div>
-    <h2>Data Structures Quiz</h2>
-  <p class="description">Covers Linked Lists, Trees, and Graphs fundamentals.</p>
+  <main class="container mx-auto p-6 flex flex-col gap-8">
+    <section id="nav-section">
+      <?php include('./nav.php') ?>
+    </section>
 
-  <ul class="quiz-info-list">
-    <li><strong>Domain:</strong> Programming</li>
-    <li><strong>Department:</strong> CSE</li>
-    <li><strong>Year:</strong> II</li>
-    <li><strong>Start Time:</strong> 10:00 AM</li>
-    <li><strong>End Time:</strong> 11:00 AM</li>
-    <li><strong>Duration:</strong> 60 mins</li>
-    <li><strong>Total Questions:</strong> 25</li>
-    <li><strong>Total Marks:</strong> 50</li>
-    <li><strong>Status:</strong> <span class="status active">Active</span></li>
-  </ul>
+<section id="quiz-list-section" class="container mx-auto mt-8">
+  <div class="bg-white rounded-3xl shadow-lg p-8 flex flex-col md:flex-row md:justify-between md:items-center gap-6">
+
+    <div class="flex-1">
+      <h2 class="text-2xl font-bold text-gray-800 mb-2">Data Structures Quiz</h2>
+      <p class="text-gray-600 mb-4">Covers Linked Lists, Trees, and Graphs fundamentals.</p>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm text-gray-700">
+        <div><span class="font-semibold">Domain:</span> Programming</div>
+        <div><span class="font-semibold">Department:</span> CSE</div>
+        <div><span class="font-semibold">Year:</span> II</div>
+        <div><span class="font-semibold">Start Time:</span> 10:00 AM</div>
+        <div><span class="font-semibold">End Time:</span> 11:00 AM</div>
+        <div><span class="font-semibold">Duration:</span> 60 mins</div>
+        <div><span class="font-semibold">Total Questions:</span> 25</div>
+        <div><span class="font-semibold">Total Marks:</span> 50</div>
+        <div><span class="font-semibold">Status:</span> <span class="px-3 py-1 rounded-full bg-green-100 text-green-800 font-semibold">Active</span></div>
+      </div>
+    </div>
+
+    <div class="flex md:flex-col gap-4 items-center md:items-end">
+      <button class="px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500 text-white rounded-xl shadow-md font-semibold transition duration-200">
+        View Quiz
+      </button>
+      <button class="px-6 py-3 border border-gray-300 hover:border-gray-400 text-gray-700 rounded-xl shadow-sm font-medium transition duration-200">
+        Edit Quiz
+      </button>
+    </div>
+
   </div>
-  <div>
-    <h2>Data Structures Quiz</h2>
-  <p class="description">Covers Linked Lists, Trees, and Graphs fundamentals.</p>
+</section>
 
-  <ul class="quiz-info-list">
-    <li><strong>Domain:</strong> Programming</li>
-    <li><strong>Department:</strong> CSE</li>
-    <li><strong>Year:</strong> II</li>
-    <li><strong>Start Time:</strong> 10:00 AM</li>
-    <li><strong>End Time:</strong> 11:00 AM</li>
-    <li><strong>Duration:</strong> 60 mins</li>
-    <li><strong>Total Questions:</strong> 25</li>
-    <li><strong>Total Marks:</strong> 50</li>
-    <li><strong>Status:</strong> <span class="status active">Active</span></li>
-  </ul>
-  </div>
-</div>
+</main>
 
+    <section id="api-section" class="container mt-6">
+        <?php include('../resource/api.php') ?>
+    </section>
 
-<script>
-
-const quizData = {
-  title: "Data Structures Quiz",
-  description: "Covers Linked Lists, Trees, and Graphs fundamentals.",
-  details: {
-    domain: "Programming",
-    department: "CSE",
-    year: "II",
-    startTime: "10:00 AM",
-    endTime: "11:00 AM",
-    duration: "60 mins",
-    totalQuestions: "25",
-    totalMarks: "50",
-    status: "Active"
-  }
-};
-
-
-
-
-</script>
-    </main>
-
-    <?php include('../resource/api.php') ?>
 
     <script>
         window.addEventListener('DOMContentLoaded', async () => {
@@ -151,32 +63,27 @@ const quizData = {
                 const result = await response.json();
 
                 if (result.success) {
-                    const container = document.getElementById('recent-tests-container');
+                    const container = document.querySelector('#quiz-list-section .quiz-list');
+                    container.innerHTML = ''; 
 
                     result.data.forEach(test => {
                         const div = document.createElement('div');
-                        div.className = "bg-white border border-gray-200 rounded-xl shadow-md p-5";
+                        div.className = "quiz-card bg-white rounded-xl shadow-md p-6";
 
                         div.innerHTML = `
-                            <h3 class="text-xl font-semibold text-gray-800 mb-1">${test.title}</h3>
-                            <p class="text-gray-600 mb-2">${test.description}</p>
-                            <div class="text-sm text-gray-500 mb-2">
-                                <span>Domain: ${test.domain}</span><br>
-                                <span>Dept: ${test.department} | Year: ${test.year}</span>
-                            </div>
-                            <div class="text-sm text-gray-600 mb-2">
-                                <span>Created by: ${test.created_by}</span><br>
-                                <span>Start: ${test.start_time}</span><br>
-                                <span>End: ${test.end_time}</span>
-                            </div>
-                            <div class="flex justify-between text-sm text-gray-700 mb-2">
-                                <span>Duration: ${test.duration_minutes} mins</span>
-                                <span>Qs: ${test.total_questions}</span>
-                                <span>Marks: ${test.total_marks}</span>
-                            </div>
-                            <div class="${test.is_active == 1 ? 'text-green-600' : 'text-red-600'} font-semibold text-sm">
-                                Active: ${test.is_active == 1 ? 'Yes' : 'No'}
-                            </div>
+                            <h2>${test.title}</h2>
+                            <p class="description">${test.description}</p>
+                            <ul class="quiz-info-list">
+                                <li><span>Domain:</span> <span>${test.domain}</span></li>
+                                <li><span>Department:</span> <span>${test.department}</span></li>
+                                <li><span>Year:</span> <span>${test.year}</span></li>
+                                <li><span>Start:</span> <span>${test.start_time}</span></li>
+                                <li><span>End:</span> <span>${test.end_time}</span></li>
+                                <li><span>Duration:</span> <span>${test.duration_minutes} mins</span></li>
+                                <li><span>Qs:</span> <span>${test.total_questions}</span></li>
+                                <li><span>Marks:</span> <span>${test.total_marks}</span></li>
+                                <li><span>Status:</span> <span class="status ${test.is_active == 1 ? 'active' : 'inactive'}">${test.is_active == 1 ? 'Active' : 'Inactive'}</span></li>
+                            </ul>
                         `;
                         container.appendChild(div);
                     });
@@ -184,16 +91,11 @@ const quizData = {
                     console.error('Failed to load tests:', result.message);
                 }
             } catch (err) {
-                console.error('Error fetching recent tests:', err);
+                console.error('Error fetching tests:', err);
             }
         });
-        
     </script>
-
-
-    <!-- logout  -->
     <?php include('../resource/logout.php') ?>
-    <!-- session end  -->
     <?php include('../resource/check_session.php') ?>
 </body>
 </html>
