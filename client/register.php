@@ -280,9 +280,10 @@
                 });
 
                 const result = await response.json();
-
+console.log(result)
                 if (result && result.full_name) {
                     document.getElementById('firstName').value = result.full_name || '';
+                    document.getElementById('user_id').value = result.id || '';
 
                     document.getElementById('registerEmail').value = result.email || '';
 

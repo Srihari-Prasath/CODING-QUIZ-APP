@@ -150,7 +150,7 @@
   </form>
 </section>
 
-
+~
   </main>
 
   <?php include('../resource/api.php') ?>

@@ -28,30 +28,34 @@ class LoginController {
         $db = new Database();
         $conn = $db->connect();
 
-        // Fetch user_id as well
-        $stmt = $conn->prepare("
-            SELECT u.user_id, u.roll_no, u.password, r.role_name
-            FROM users u
-            JOIN roles r ON u.role_id = r.role_id
-            WHERE u.roll_no = ?
-        ");
-        $stmt->execute([$roll_no]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+            $stmt = $conn->prepare("
+                SELECT u.id, u.roll_no, u.password, u.full_name, u.email, r.role_name
+                FROM faculty_users u
+                JOIN roles r ON u.role_id = r.role_id
+                WHERE u.roll_no = ?
+            ");
+            $stmt->execute([$roll_no]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user && password_verify($password, $user['password'])) {
             session_regenerate_id(true);
 
-            $_SESSION['user_id'] = $user['user_id']; // store in session
+            $_SESSION['id'] = $user['id']; 
             $_SESSION['roll_no'] = $user['roll_no'];
             $_SESSION['role'] = $user['role_name'];
+                $_SESSION['full_name'] = $user['full_name'];
+                $_SESSION['email'] = $user['email'];
 
             echo json_encode([
                 "message" => "Login successful",
-                "user" => [
-                    "user_id" => $user['user_id'], // return to frontend if needed
-                    "roll_no" => $user['roll_no'],
-                    "role" => $user['role_name']
-                ]
+                    "user" => [
+                        "id" => $user['id'], 
+                        "roll_no" => $user['roll_no'],
+                        "role" => $user['role_name'],
+                        "full_name" => $user['full_name'],
+                        "email" => $user['email']
+                    ]
             ]);
         } else {
             http_response_code(401);

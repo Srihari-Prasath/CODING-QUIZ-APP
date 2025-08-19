@@ -187,19 +187,20 @@
 
     lucide.createIcons();
 
-        async function checkSession() {
+ window.addEventListener('DOMContentLoaded', async () => {
             try {
-                const res = await fetch('<?php echo $api; ?>helpers/sessionStatus.php', {
-                    credentials: 'include'
-                });
+                const res = await fetch('<?php echo $api ?>helpers/check_session.php', 
+                { credentials: 'include' });
                 const data = await res.json();
+               
                 if (!data.logged_in) {
-                    window.location.href = './'; 
+                   
+                    window.location.href = '../';
                 }
             } catch (err) {
-                console.error("Session check failed", err);
+                console.error('Session check failed', err);
             }
-        }
+        });
 
     async function handleLogout() {
       document.getElementById("logout-btn")?.addEventListener("click", async () => {

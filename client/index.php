@@ -104,7 +104,7 @@
             <form id="loginFormElement" class="space-y-6 group" onsubmit="return false;">
                <div>
                     <label for="registerDepartment" class="block text-sm font-medium text-gray-700 mb-1">Department ID</label>
-                    <input type="number" id="registerDepartment" class="input-field w-full px-4 py-3 rounded-lg focus:outline-none"
+                    <input type="number" id="departmentId" class="input-field w-full px-4 py-3 rounded-lg focus:outline-none"
                         placeholder="Department ID" required>
                 </div>
 
@@ -158,13 +158,15 @@
             loginForm.style.display = 'none';
         });
 
-        // Check if session exists
+        // Check session
         window.addEventListener('DOMContentLoaded', async () => {
             try {
-                const res = await fetch('<?php echo $api ?>/resource/check_session.php', { credentials: 'include' });
+                const res = await fetch('<?php echo $api ?>helpers/check_session.php', 
+                { credentials: 'include' });
                 const data = await res.json();
+                console.log(data)
                 if (data.logged_in) {
-                    let redirectUrl = '';
+                    let redirectUrl = '';   
                     switch (data.role) {
                         case 'faculty': redirectUrl = './staff/'; break;
                         case 'hod': redirectUrl = './hod/panel.html'; break;
@@ -181,21 +183,21 @@
 
         // Login
         loginBtn.addEventListener('click', async () => {
-            const email = document.getElementById('loginEmail').value.trim();
+            const roll_no = document.getElementById('departmentId').value.trim();
             const password = document.getElementById('loginPassword').value;
             const role = document.getElementById('user_role').value;
 
-            if (!email || !password || !role) {
+            if (!roll_no || !password || !role) {
                 alert("Please fill all fields including role.");
                 return;
             }
 
             try {
-                const response = await fetch('<?php echo $api ?>auth/authRoutes.php', {
+                const response = await fetch('<?php echo $api ?>auth/authRoutes.php?route=login', {
                     method: 'POST',
                     credentials: 'include',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password })
+                    body: JSON.stringify({ roll_no, password })
                 });
                 const data = await response.json();
                 if (data.user) {

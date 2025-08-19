@@ -19,7 +19,7 @@ class PasswordController {
 
         try {
            
-            $checkStmt = $conn->prepare("SELECT password FROM users WHERE user_id = ?");
+            $checkStmt = $conn->prepare("SELECT password FROM faculty_users WHERE id = ?");
             $checkStmt->execute([$input['user_id']]);
             $user = $checkStmt->fetch(PDO::FETCH_ASSOC);
 
@@ -37,7 +37,7 @@ class PasswordController {
 
           
             $hashedPassword = password_hash($input['new_password'], PASSWORD_DEFAULT);
-            $updateStmt = $conn->prepare("UPDATE users SET password = ? WHERE user_id = ?");
+            $updateStmt = $conn->prepare("UPDATE faculty_users SET password = ? WHERE id = ?");
             $updateStmt->execute([$hashedPassword, $input['user_id']]);
 
             if ($updateStmt->rowCount() > 0) {

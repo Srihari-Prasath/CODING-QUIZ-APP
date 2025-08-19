@@ -1,11 +1,10 @@
 <?php
+session_start();
 header('Content-Type: application/json');
 
-require_once '../../helpers/logoutController.php';
+// Destroy all session data
+session_unset();
+session_destroy();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    handleLogout();
-} else {
-    http_response_code(405);
-    echo json_encode(["error" => "Only POST method allowed"]);
-}
+echo json_encode(['success' => true]);
+?>

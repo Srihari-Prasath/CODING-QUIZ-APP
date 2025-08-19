@@ -1,15 +1,13 @@
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+
 $route = $_GET['route'] ?? '';
 
 switch ($route) {
 
     case 'register':
         if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
-            require_once __DIR__ . '/../../controllers/auth/updatePassword.php';
+            require_once '../../controllers/auth/updatePassword.php';
             exit;
         }
         break;
