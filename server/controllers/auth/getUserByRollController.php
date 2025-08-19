@@ -1,8 +1,10 @@
 <?php
 require_once '../../config/db.php';
 
+header('Content-Type: application/json');
+
 class GetUserByRollController
-{
+{   
     public static function getUserByRoll()
     {
         $input = json_decode(file_get_contents("php://input"), true);
@@ -19,7 +21,7 @@ class GetUserByRollController
 
         $stmt = $conn->prepare("
             SELECT 
-                u.name, 
+                u.full_name, 
                 u.email, 
                 d.full_name AS department_name, 
                 u.id, 

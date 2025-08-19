@@ -161,7 +161,7 @@
         // Check if session exists
         window.addEventListener('DOMContentLoaded', async () => {
             try {
-                const res = await fetch('<?php ehco $api ?>/resource/check_session.php', { credentials: 'include' });
+                const res = await fetch('<?php echo $api ?>/resource/check_session.php', { credentials: 'include' });
                 const data = await res.json();
                 if (data.logged_in) {
                     let redirectUrl = '';
@@ -191,7 +191,7 @@
             }
 
             try {
-                const response = await fetch('../server/controllers/auth/authRoutes.php', {
+                const response = await fetch('<?php echo $api ?>auth/authRoutes.php', {
                     method: 'POST',
                     credentials: 'include',
                     headers: { 'Content-Type': 'application/json' },
