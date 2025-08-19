@@ -22,14 +22,14 @@ class GetUserByRollController
                 u.name, 
                 u.email, 
                 d.full_name AS department_name, 
-                u.user_id, 
+                u.id, 
                 u.year
-            FROM users u
+            FROM faculty_users u
             JOIN departments d ON u.department_id = d.id
             WHERE u.roll_no = ?
         ");
         $stmt->execute([$roll_no]);
-
+        
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user) {

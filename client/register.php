@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Portal - Login & Register</title>
+    <title>Faculty Portal - Login & Register</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -12,17 +12,14 @@
 
         :root {
             --primary-orange: #FF6B35;
-            --secondary-orange: #FF9A3C;
-            --dark-orange: #E05D2E;
             --light-orange: #FFB347;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
-
-            background-blend-mode: overlay;
             position: relative;
             overflow-x: hidden;
+            background-color: #f3f4f6;
         }
 
         .form-container {
@@ -63,53 +60,6 @@
             box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
         }
 
-        .grid-form {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .avatar-container {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background-color: #f3f4f6;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            margin: 0 auto;
-            border: 3px solid var(--primary-orange);
-            position: relative;
-            cursor: pointer;
-        }
-
-        .avatar-preview {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .avatar-placeholder {
-            font-size: 2.5rem;
-            color: var(--primary-orange);
-        }
-
-        .avatar-upload {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            background: var(--primary-orange);
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-        }
-
         .animate-fade {
             animation: fadeIn 0.5s ease-in-out;
         }
@@ -119,86 +69,35 @@
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes fadeInUp {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .input-field {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .input-field:focus {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px -1px rgba(255, 107, 53, 0.2), 0 2px 4px -1px rgba(255, 107, 53, 0.1);
-        }
-
-        .password-strength {
-            height: 4px;
-            background: #e5e7eb;
-            margin-top: 0.5rem;
-            border-radius: 2px;
-            overflow: hidden;
-        }
-
-        .strength-bar {
-            height: 100%;
-            width: 0%;
-            transition: all 0.3s ease;
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         @media (max-width: 768px) {
-            .grid-form {
-                grid-template-columns: 1fr;
-            }
-
-            .toggle-btn {
-                padding: 0.75rem 1rem;
-                font-size: 0.875rem;
-            }
+            .toggle-btn { padding: 0.75rem 1rem; font-size: 0.875rem; }
         }
     </style>
 </head>
 
 <body>
-    <!-- Wave Background Section -->
-    <section>
-        <div class="wave">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </section>
-
-    <div class="w-full max-w-4xl mx-auto relative z-10">
+    <div class="w-full max-w-4xl mx-auto relative z-10 mt-10">
         <!-- Toggle Buttons -->
         <div class="flex mb-8 mt-5 rounded-full bg-white shadow-md overflow-hidden w-fit mx-auto">
             <a href="./stu_index.php"><button id="loginToggle" class="toggle-btn  px-6 py-2 font-medium rounded-full transition-all duration-300">Login</button></a>
             <a href="./register.php"><button id="registerToggle" class="toggle-btn active px-6 py-2 font-medium rounded-full transition-all duration-300">Register</button></a>
         </div>
 
-        <!-- Register Form  -->
-        <div id="registerForm" class="form-container rounded-2xl shadow-xl p-8 animate-fade">
-            <div class="text-center mb-8">
-                <h1 class="text-3xl font-bold text-[var(--color-primary)] mb-2">Create Account</h1>
+      
+
+        <!-- Register Form -->
+        <div id="registerForm" class="form-container rounded-2xl shadow-xl p-8 animate-fade w-full max-w-md mx-auto">
+            <div class="text-center mb-8 animate-fade-in">
+                <h1 class="text-3xl font-bold text-[var(--primary-orange)] mb-2">Register Faculty</h1>
             </div>
 
 
@@ -230,18 +129,9 @@
             </form>
             <form id="updatePasswordForm">
                 <div>
-                    <label for="registerPassword" class="block text-sm font-medium text-gray-700 mb-1">Password*</label>
-                    <div class="relative">
-                        <input type="hidden" name="user_id" id="user_id" value="">
-                        <input type="password" id="registerPassword" class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="••••••••" required oninput="checkPasswordStrength()">
-                        <button type="button" class="password-toggle absolute inset-y-0 right-0 flex items-center pr-3" onclick="togglePassword('registerPassword', 'registerEyeIcon')">
-                            <i id="registerEyeIcon" class="fas fa-eye text-gray-400 hover:text-[var(--color-primary)]"></i>
-                        </button>
-                    </div>
-                    <div class="password-strength">
-                        <div id="strengthBar" class="strength-bar"></div>
-                    </div>
-                    <p id="passwordHint" class="text-xs text-gray-500 mt-1"></p>
+                    <label for="registerPassword" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <input type="password" id="registerPassword" class="input-field w-full px-4 py-3 rounded-lg focus:outline-none"
+                        placeholder="••••••••" required>
                 </div>
 
 
@@ -272,14 +162,11 @@
             if (!rollNo) return;
 
             try {
-                const response = await fetch('<?php echo $api; ?>auth/authRoutes.php?route=get-user-by-roll', {
+                const response = await fetch('<?php echo $api; ?>faculty/auth/register.php', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        roll_no: rollNo
-                    })
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ full_name, email, password, role: 'faculty', department_id })
                 });
 
                 const result = await response.json();
@@ -291,38 +178,11 @@
                     document.getElementById('year').value = result.year || '';
                     document.getElementById('department').value = result.department_name || '';
                 } else {
-                    alert("No user found for this roll number.");
+                    alert(data.error || "Registration failed.");
                 }
-            } catch (error) {
-                console.error(error);
-                alert("Error fetching user details.");
-            }
-        });
-    </script>
-    <!-- update password -->
-    <script>
-        document.getElementById('updatePasswordForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const userId = document.getElementById('user_id').value;
-            const newPassword = document.getElementById('registerPassword').value;
-
-            const response = await fetch('<?php echo $api; ?>auth/authRoutes.php?route=register', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    user_id: userId,
-                    new_password: newPassword
-                })
-            });
-
-            const result = await response.json();
-            if (result.success) {
-                alert('Password updated successfully');
-                window.location.href = "./";
-            } else {
-                alert('Failed to update password: ');
+            } catch (err) {
+                console.error(err);
+                alert("Unexpected error occurred.");
             }
         });
     </script>

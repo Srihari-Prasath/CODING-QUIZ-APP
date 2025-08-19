@@ -21,8 +21,7 @@ switch ($route) {
 
     case 'get-user-by-roll':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            require_once __DIR__ . '/../../controllers/auth/getUserByRollController.php';
-            exit;
+            require_once '../../controllers/auth/getUserByRollController.php';
         }
         break;
 

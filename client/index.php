@@ -88,8 +88,12 @@
     <div class="w-full max-w-4xl mx-auto relative z-10 mt-10">
         <!-- Toggle Buttons -->
         <div class="flex mb-8 mt-5 rounded-full bg-white shadow-md overflow-hidden w-fit mx-auto">
-            <button id="loginToggle" class="toggle-btn active px-6 py-2 font-medium rounded-full transition-all duration-300">Login</button>
-            <button id="registerToggle" class="toggle-btn px-6 py-2 font-medium rounded-full transition-all duration-300">Register</button>
+             <a href="./">
+             <button id="loginToggle" class="toggle-btn active px-6 py-2 font-medium rounded-full transition-all duration-300">Login</button>
+           </a>
+            <a href="./register.php">
+                <button id="registerToggle" class="toggle-btn px-6 py-2 font-medium rounded-full transition-all duration-300">Register</button>
+            </a>
         </div>
 
         <!-- Login Form -->
@@ -98,10 +102,10 @@
                 <h1 class="text-3xl font-bold text-[var(--primary-orange)] mb-2">Welcome Back!</h1>
             </div>
             <form id="loginFormElement" class="space-y-6 group" onsubmit="return false;">
-                <div>
-                    <label for="loginEmail" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                    <input type="email" id="loginEmail" class="input-field w-full px-4 py-3 rounded-lg focus:outline-none"
-                        placeholder="example@domain.com" required>
+               <div>
+                    <label for="registerDepartment" class="block text-sm font-medium text-gray-700 mb-1">Department ID</label>
+                    <input type="number" id="registerDepartment" class="input-field w-full px-4 py-3 rounded-lg focus:outline-none"
+                        placeholder="Department ID" required>
                 </div>
 
                 <div>
@@ -125,40 +129,11 @@
             </form>
         </div>
 
-        <!-- Register Form -->
-        <div id="registerForm" class="form-container rounded-2xl shadow-xl p-8 animate-fade w-full max-w-md mx-auto" style="display: none;">
-            <div class="text-center mb-8 animate-fade-in">
-                <h1 class="text-3xl font-bold text-[var(--primary-orange)] mb-2">Register Faculty</h1>
-            </div>
-            <form id="registerFormElement" class="space-y-6 group" onsubmit="return false;">
-                <div>
-                    <label for="registerFullName" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                    <input type="text" id="registerFullName" class="input-field w-full px-4 py-3 rounded-lg focus:outline-none"
-                        placeholder="John Doe" required>
-                </div>
-
-                <div>
-                    <label for="registerEmail" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                    <input type="email" id="registerEmail" class="input-field w-full px-4 py-3 rounded-lg focus:outline-none"
-                        placeholder="example@domain.com" required>
-                </div>
-
-                <div>
-                    <label for="registerPassword" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                    <input type="password" id="registerPassword" class="input-field w-full px-4 py-3 rounded-lg focus:outline-none"
-                        placeholder="••••••••" required>
-                </div>
-
-                <div>
-                    <label for="registerDepartment" class="block text-sm font-medium text-gray-700 mb-1">Department ID</label>
-                    <input type="number" id="registerDepartment" class="input-field w-full px-4 py-3 rounded-lg focus:outline-none"
-                        placeholder="Department ID" required>
-                </div>
-
-                <button type="button" id="registerBtn" class="btn-primary w-full py-3 px-4 rounded-lg text-white font-semibold shadow-md">Register</button>
-            </form>
-        </div>
+        
     </div>
+
+
+<?php include('./resource/api.php') ?>
 
     <script>
         const loginToggle = document.getElementById('loginToggle');
@@ -186,7 +161,7 @@
         // Check if session exists
         window.addEventListener('DOMContentLoaded', async () => {
             try {
-                const res = await fetch('/resource/check_session.php', { credentials: 'include' });
+                const res = await fetch('<?php ehco $api ?>/resource/check_session.php', { credentials: 'include' });
                 const data = await res.json();
                 if (data.logged_in) {
                     let redirectUrl = '';
@@ -216,7 +191,7 @@
             }
 
             try {
-                const response = await fetch('../server/controllers/auth/faculty/staffLogin.php', {
+                const response = await fetch('../server/controllers/auth/authRoutes.php', {
                     method: 'POST',
                     credentials: 'include',
                     headers: { 'Content-Type': 'application/json' },
@@ -228,7 +203,7 @@
                         alert("Selected role does not match your account role.");
                         return;
                     }
-                    // Redirect based on role
+          
                     let redirectUrl = '';
                     switch (data.user.role) {
                         case 'faculty': redirectUrl = './staff/'; break;
@@ -247,40 +222,7 @@
             }
         });
 
-        // Register
-        registerBtn.addEventListener('click', async () => {
-            const full_name = document.getElementById('registerFullName').value.trim();
-            const email = document.getElementById('registerEmail').value.trim();
-            const password = document.getElementById('registerPassword').value;
-            const department_id = document.getElementById('registerDepartment').value;
-
-            if (!full_name || !email || !password || !department_id) {
-                alert("Please fill all fields.");
-                return;
-            }
-
-            try {
-                const response = await fetch('../server/controllers/auth/faculty/staffRegister.php', {
-                    method: 'POST',
-                    credentials: 'include',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ full_name, email, password, role: 'faculty', department_id })
-                });
-                const data = await response.json();
-                if (data.success) {
-                    alert("Registration successful! Please login.");
-                    registerToggle.classList.remove('active');
-                    loginToggle.classList.add('active');
-                    registerForm.style.display = 'none';
-                    loginForm.style.display = 'block';
-                } else {
-                    alert(data.error || "Registration failed.");
-                }
-            } catch (err) {
-                console.error(err);
-                alert("Unexpected error occurred.");
-            }
-        });
+       
     </script>
 </body>
 

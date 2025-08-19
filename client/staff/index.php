@@ -187,15 +187,19 @@
 
     lucide.createIcons();
 
-    async function checkSession() {
-      try {
-        const res = await fetch('<?php echo $api; ?>helpers/sessionStatus.php', { credentials: 'include' });
-        const data = await res.json();
-        if (!data.logged_in) window.location.href = './';
-      } catch (err) {
-        console.error("Session check failed", err);
-      }
-    }
+        async function checkSession() {
+            try {
+                const res = await fetch('<?php echo $api; ?>helpers/sessionStatus.php', {
+                    credentials: 'include'
+                });
+                const data = await res.json();
+                if (!data.logged_in) {
+                    window.location.href = './'; 
+                }
+            } catch (err) {
+                console.error("Session check failed", err);
+            }
+        }
 
     async function handleLogout() {
       document.getElementById("logout-btn")?.addEventListener("click", async () => {
