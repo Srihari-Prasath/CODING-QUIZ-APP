@@ -39,7 +39,38 @@
 
     <section id="form-section" class="bg-white p-8 rounded-3xl shadow-xl w-full max-w-[95%] mx-auto">
       <form id="create-test-form" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+ <div class="flex flex-col md:col-span-2 relative">
+          <label class="font-semibold text-gray-700 mb-2">Select Topic</label>
+          <div class="relative">
+            <select
+              name="topic"
+              id="topicSelect"
+              required
+              class="w-full p-3 md:p-4 border border-gray-300 rounded-xl shadow-sm bg-white text-gray-700 text-lg 
+           focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-200">
+              <option value="">--Select Topic--</option>
 
+
+            </select>
+
+
+          </div>
+        </div>
+         <div class="flex flex-col md:col-span-2 relative">
+          <label class="font-semibold text-gray-700 mb-2">Sub Topic</label>
+          <div class="relative">
+            <select
+              name="topic"
+              id="topicSelect"
+              required
+              class="w-full p-3 md:p-4 border border-gray-300 rounded-xl shadow-sm bg-white text-gray-700 text-lg 
+           focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-200">
+              <option value="">--Select Topic--</option>
+
+
+            </select> 
+          </div>
+        </div>
         <!-- Test Title -->
         <div class="flex flex-col md:col-span-2">
           <label for="title" class="font-semibold text-gray-700 mb-2">Test Title</label>
@@ -98,23 +129,7 @@
         </div>
 
         <!-- Select Topic -->
-        <div class="flex flex-col md:col-span-2 relative">
-          <label class="font-semibold text-gray-700 mb-2">Select Topic</label>
-          <div class="relative">
-            <select
-              name="topic"
-              id="topicSelect"
-              required
-              class="w-full p-3 md:p-4 border border-gray-300 rounded-xl shadow-sm bg-white text-gray-700 text-lg 
-           focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-200">
-              <option value="">--Select Topic--</option>
-
-
-            </select>
-
-
-          </div>
-        </div>
+       
 
         <!-- Year & Department -->
         <div class="flex flex-col md:flex-row gap-4 md:col-span-2">
