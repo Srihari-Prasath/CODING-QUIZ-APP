@@ -265,7 +265,7 @@
     <script>
         document.getElementById('departmentId').addEventListener('blur', async () => {
             const rollNo = document.getElementById('departmentId').value.trim();
-            console.log(rollNo)
+            
             if (!rollNo) return;
 
             try {
@@ -280,7 +280,7 @@
                 });
 
                 const result = await response.json();
-console.log(result)
+
                 if (result && result.full_name) {
                     document.getElementById('firstName').value = result.full_name || '';
                     document.getElementById('user_id').value = result.id || '';

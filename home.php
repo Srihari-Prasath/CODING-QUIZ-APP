@@ -470,6 +470,7 @@
             </div>
         </div>
         <div class="section-divider max-w-md mx-auto"></div>
+        
     </header>
 
     <main class="flex flex-col items-center justify-center flex-grow w-full max-w-6xl px-4 mx-auto relative z-10">

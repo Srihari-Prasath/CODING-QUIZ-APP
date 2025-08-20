@@ -1,6 +1,6 @@
 <?php
 
-$api='http://localhost/coding-quiz-app/server/routes/';
+$api='http://localhost/CODING-QUIZ-APP/server/routes/';
 
 
 ?>

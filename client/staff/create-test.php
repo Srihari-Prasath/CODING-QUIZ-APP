@@ -72,8 +72,7 @@
               <option value="afternoon">Afternoon</option>
               <option value="evening">Evening</option>
               <option value="full_day">Full Day</option>
-            </select>
-
+            </select> 
 
           </div>
         </div>
@@ -94,7 +93,7 @@
         <!-- Total Questions -->
         <div class="flex flex-col md:col-span-1">
           <label for="totalQuestion" class="font-semibold text-gray-700 mb-2">Total Questions</label>
-          <input type="number" name="total_questions" id="totalQuestion" placeholder="Enter total questions" required
+          <input type="number" name="num_questions" id="totalQuestion" placeholder="Enter total questions" required
             class="p-3 md:p-4 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-200 w-full" />
         </div>
 
@@ -167,7 +166,7 @@
           <textarea name="description" id="description" rows="4" placeholder="Enter description..."
             class="p-3 md:p-4 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-200 w-full"></textarea>
         </div>
-
+       <input type="id" id="userId" value="">
         <div class="md:col-span-2 flex justify-center mt-6">
           <button type="submit"
             class="px-8 py-3 bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500 text-white rounded-2xl shadow-lg font-semibold transition duration-200">
@@ -187,6 +186,7 @@
     let name = document.querySelector('.name-text');
     let main_name = document.querySelector('.main-name');
     let role = document.querySelector('.role-text');
+    var userId = document.querySelector('#userId').value;
     // session
     async function checkSession() {
       try {
@@ -199,7 +199,8 @@
         name.textContent = data.full_name || 'error';
         main_name.textContent = data.full_name || 'error';
         role.textContent = data.role || 'error';
-
+        userId=data.id
+        
         if (!data.logged_in) {
 
           window.location.href = '../';
@@ -212,8 +213,9 @@
     // fetch topics
 
    async function fetchTopics() {
-  try {
-    let userId = 1;
+       
+
+  try { 
 
     if (!userId) {
       try {
@@ -222,7 +224,8 @@
         });
         const data = await res.json();
         userId = data.id;
-        window.currentUserId = userId;
+        window.currentUserId = userId; 
+        
       } catch (err) {
         console.error('Could not get user id from session:', err);
       }
@@ -238,13 +241,11 @@
     if (result.success && Array.isArray(result.topics)) {
       const topicSelect = document.getElementById('topicSelect');
       if (topicSelect) {
-        
-        topicSelect.innerHTML = '<option value="">--Select Topic--</option>';
-        
-   
+        topicSelect.innerHTML = '<option value="">--Select Topic--</option>';   
         result.topics.forEach(topic => {
           const opt = document.createElement('option');
           opt.value = topic.topic_id;
+      
           opt.textContent = topic.title;
           topicSelect.appendChild(opt);
         });
@@ -255,27 +256,37 @@
   }
 }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      checkSession();
-      fetchTopics()
 
-    });
-  </script>
-  <script>
     document.getElementById('create-test-form').addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const form = e.target;
+       
+      let userId = window.currentUserId || document.querySelector('#userId').value; 
+      
+      if (!userId) {
+        try {
+          const res = await fetch('<?php echo $api ?>helpers/check_session.php', { credentials: 'include' });
+          const data = await res.json();
+          userId = data.id;
+          
+        } catch (err) {
+          console.error('Could not get user id from session:', err);
+        }
+      }
       const jsonObject = {
         title: form.title.value,
-        description: form.description.value,
         domain: form.domain.value,
-        year: parseInt(form.year.value),
-        start_time: form.startTime.value,
-        end_time: form.endTime.value,
-        duration_minutes: parseInt(form.duration.value),
-        total_marks: parseInt(form.totalMarks.value),
-        total_questions: parseInt(form.totalQuestion.value),
+        timing:form.timing.value, 
+        duration_minutes: parseInt(form.Duration.value), 
+        year: parseInt(form.year.value), 
+        total_marks: parseInt(form.total_marks.value),
+        num_questions: parseInt(form.num_questions.value),
+        topic_id: form.topic.value,
+        department: form.department.value,
+        description: form.description.value,
+        created_by: userId 
+
       };
 
       try {
@@ -296,7 +307,16 @@
         alert("Request failed: " + error.message);
       }
     });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      checkSession();
+      fetchTopics()
+
+    });
+
+
   </script>
+
 </body>
 
 </html>

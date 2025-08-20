@@ -2,10 +2,6 @@
 session_start();
 error_log("Session at dashboard: " . print_r($_SESSION, true));
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'student') {
-    header("Location: ../auth/login.php");
-    exit;
-}
 
 $user_id = $_SESSION['user_id'];
 $roll_no = $_SESSION['roll_no'];
@@ -167,27 +163,7 @@ $full_name = $_SESSION['full_name'];
 
         renderQuizzes();
 
-        // Logout
-        document.getElementById("logout-btn").addEventListener("click", async () => {
-            try {
-                const res = await fetch("<?php echo $api ?? ''; ?>helpers/logout.php", {
-                    method: "POST",
-                    credentials: "include",
-                    headers: { "Content-Type": "application/json" },
-                });
-
-                const data = await res.json();
-
-                if (res.ok) {
-                    alert("Logout successful!");
-                    window.location.href = "../auth/login.php";
-                } else {
-                    alert("Logout failed: " + data.error);
-                }
-            } catch (err) {
-                alert("Logout error: " + err.message);
-            }
-        });
+        
 
         lucide.createIcons();
     </script>

@@ -225,26 +225,38 @@ window.addEventListener("load", () => {
     window.addEventListener("contextmenu", blockRightClick);
 });
 
-// Remove locks after submission
-function removeSecurityLocks() {
-    window.removeEventListener("keydown", blockKeys);
-    window.removeEventListener("contextmenu", blockRightClick);
-    window.onbeforeunload = null;
-}
+let quizData = [];
+let questions = [];
+let currentQuestionIndex = 0;
+let timeLeft = 600; // Default 10 minutes
+let timerInterval;
+let answers = {};
+
+const submitModal = document.getElementById("submitModal");
+const confirmSubmit = document.getElementById("confirmSubmit");
+const cancelSubmit = document.getElementById("cancelSubmit");
+const startQuiz = document.getElementById("startQuiz");
+const landingPage = document.getElementById("landingPage");
+const quizContent = document.getElementById("quizContent");
+const questionNumbers = document.getElementById("questionNumbers");
+const submitQuiz = document.getElementById("submitQuiz");
+const skipBtn = document.getElementById("skipBtn");
+const nextBtn = document.getElementById("nextBtn");
+const prevBtn = document.getElementById("prevBtn");
+
+// ================== SECURITY LOCKS ==================
+// ...existing code...
 
 // ================== QUIZ LOGIC ==================
 
-// Prevent reload
 window.onbeforeunload = () => "Are you sure you want to leave? Your quiz progress will be lost.";
 
-// Timer
 function updateTimerDisplay() {
     const minutes = Math.floor(timeLeft / 60);
     const seconds = timeLeft % 60;
     const formattedTime = `${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
     document.getElementById("mainTimer").textContent = formattedTime;
     document.getElementById("sidebarTimer").textContent = formattedTime;
-
     if (timeLeft <= 60) {
         document.getElementById("mainTimer").classList.add("text-red-500");
         document.getElementById("sidebarTimer").classList.add("text-red-500");
@@ -261,50 +273,38 @@ function startTimer() {
     }, 1000);
 }
 
-// Fetch quiz & test details
-if (!testId) {
-    document.getElementById("quiz-container").innerHTML = `<p class="text-red-500">Invalid test ID.</p>`;
-} else {
-    fetch("../../server/controllers/student/test-list.php")
-        .then((res) => res.json())
-        .then((tests) => {
-            const currentTest = tests.find((test) => test.test_id == testId);
-            if (currentTest) {
-                timeLeft = parseInt(currentTest.duration_minutes) * 60;
-                startTimer();
-            }
-        });
-    fetch(`../../server/controllers/student/quiz-questions.php?test_id=${testId}`)
-        .then((res) => res.json())
-        .then((data) => {
-            if (data.status === "success") {
-                questions = data.questions;
-                quizData = questions;
-                initQuiz();
-                renderSingleQuestion();
-            } else {
-                document.getElementById("quiz-container").innerHTML = `<p class="text-red-500">${data.message}</p>`;
-            }
-        });
-}
-
-// ================== QUIZ RENDERING & NAV ==================
-function renderSingleQuestion() {
-    const quizContainer = document.getElementById("quiz-container");
-    quizContainer.innerHTML = "";
-
-    if (currentQuestionIndex >= questions.length) currentQuestionIndex = 0;
-
-    const q = questions[currentQuestionIndex];
-    const selectedAnswer = answers[q.question_id] || "";
-
-    const card = document.createElement("div");
-    card.className = "bg-white rounded-xl shadow-md overflow-hidden mb-6";
-    card.innerHTML = `
-        <div class="p-6">
-            <div class="flex justify-between items-center mb-4">
-                <span class="text-sm font-medium text-blue-500">Question ${currentQuestionIndex + 1}/${questions.length}</span>
-                <span class="text-sm font-medium text-gray-500">1 point</span>
+// Provide static questions for frontend-only demo
+questions = [
+    {
+        question_id: 1,
+        question_text: "What is the capital of France?",
+        option_a: "Berlin",
+        option_b: "Madrid",
+        option_c: "Paris",
+        option_d: "Rome"
+    },
+    {
+        question_id: 2,
+        question_text: "Which planet is known as the Red Planet?",
+        option_a: "Earth",
+        option_b: "Mars",
+        option_c: "Jupiter",
+        option_d: "Saturn"
+    },
+    {
+        question_id: 3,
+        question_text: "Who wrote 'Hamlet'?",
+        option_a: "Charles Dickens",
+        option_b: "William Shakespeare",
+        option_c: "Jane Austen",
+        option_d: "Mark Twain"
+    }
+    // Add more questions as needed
+];
+quizData = questions;
+startTimer();
+initQuiz();
+renderSingleQuestion();
             </div>
             <h2 class="text-xl font-semibold text-gray-800 mb-6">${q.question_text}</h2>
             <div class="space-y-3" id="optionsContainer">

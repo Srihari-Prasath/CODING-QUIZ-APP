@@ -24,6 +24,12 @@ switch ($route) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require_once '../../controllers/auth/getUserByRollController.php';
         }
+        break; 
+
+         case 'get-user-by-roll-login':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            require_once '../../controllers/auth/getuserbylogin.php';
+        }
         break;
 
 

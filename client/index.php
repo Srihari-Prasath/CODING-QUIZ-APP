@@ -115,14 +115,9 @@
                 </div>
 
                 <div>
-                    <label for="user_role" class="block text-sm font-medium text-gray-700 mb-1">Select Role</label>
-                    <select id="user_role" class="input-field w-full px-4 py-3 rounded-lg focus:outline-none" required>
-                        <option value="" selected disabled>-- Select Role --</option>
-                        <option value="faculty">Faculty</option>
-                        <option value="hod">HOD</option>
-                        <option value="vice_principal">Vice Principal</option>
-                        <option value="principal">Principal</option>
-                    </select>
+                    <label for="user_role" class="block text-sm font-medium text-gray-700 mb-1">Role</label>
+                     <input type="text" id="role_name" class="input-field w-full px-4 py-3 rounded-lg focus:outline-none"
+                        placeholder="your role" required disabled>
                 </div>
 
                 <button type="button" id="loginBtn" class="btn-primary w-full py-3 px-4 rounded-lg text-white font-semibold shadow-md">Login</button>
@@ -164,7 +159,7 @@
                 const res = await fetch('<?php echo $api ?>helpers/check_session.php', 
                 { credentials: 'include' });
                 const data = await res.json();
-                console.log(data)
+               
                 if (data.logged_in) {
                     let redirectUrl = '';   
                     switch (data.role) {
@@ -185,7 +180,7 @@
         loginBtn.addEventListener('click', async () => {
             const roll_no = document.getElementById('departmentId').value.trim();
             const password = document.getElementById('loginPassword').value;
-            const role = document.getElementById('user_role').value;
+            const role = document.getElementById('role_name').value;
 
             if (!roll_no || !password || !role) {
                 alert("Please fill all fields including role.");
@@ -225,6 +220,38 @@
         });
 
        
+    </script>
+
+    <script>
+        document.getElementById('departmentId').addEventListener('blur', async () => {
+            const rollNo = document.getElementById('departmentId').value.trim();
+          console.log(rollNo)
+            if (!rollNo) return;
+
+            try {
+                const response = await fetch('<?php echo $api; ?>auth/authRoutes.php?route=get-user-by-roll-login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        roll_no: rollNo
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result && result.role_name) {
+                    document.getElementById('role_name').value = result.role_name || '';
+                   
+                } else {
+                    alert("No user found for this roll number.");
+                }
+            } catch (error) {
+                console.error(error);
+                alert("Error fetching user details.");
+            }
+        });
     </script>
 </body>
 

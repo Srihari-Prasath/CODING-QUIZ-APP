@@ -1,31 +1,26 @@
 <?php
+require_once __DIR__ . '/../controllers/TestController.php';
 
-require_once '../../../helpers/auth.php';
-
-require_role(['faculty']);
-
-require_once '../../../controllers/faculty/test/testController.php';
-
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json");
+header('Content-Type: application/json');
 
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 
 $controller = new TestController();
 
-$method = $_SERVER['REQUEST_METHOD'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $input = json_decode(file_get_contents('php://input'), true);
+    if (!$input) {
+        echo json_encode(['success' => false, 'error' => 'Invalid or missing JSON input']);
+        exit;
+    }
 
-if ($method == 'GET') {
-    $controller->getAllTests();
-    exit;
+    $result = $controller->create($input);
+    echo json_encode($result);
+
+} else {
+    echo json_encode(['success' => false, 'error' => 'Invalid request method']);
 }
-
-if ($method == 'POST') {
-    $data = json_decode(file_get_contents("php://input"), true);
-    $controller->createTest($data);
-    exit;
-}
-
-http_response_code(405);
-echo json_encode(["error" => "Method Not Allowed"]);
