@@ -60,36 +60,43 @@
 
     </main>
     <?php include('../resource/api.php') ?>
-    <?php include('../resource/logout.php') ?>
-    <?php include('../resource/check_session.php') ?>
+   
 
-    <script>
-        document.getElementById('create-topic-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
+     <?php include('./sessionHandle.php') ?>
 
-            const form = e.target;
-            const formData = {
-                topicName: form.topicName.value.trim(),
-                description: form.description.value.trim()
-            };
 
-            try {
-                const response = await fetch('<?php echo $api; ?>faculty/topic/topicRoutes.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    credentials: 'include',
-                    body: JSON.stringify(formData)
-                });
-
-                const result = await response.json();
-                alert(result.message || result.error);
-                if(result.message) form.reset();
-            } catch (error) {
-                console.error('Request failed:', error);
-                alert("Request failed: " + error.message);
-            }
-        });
-    </script>
+     <!-- insert topics -->
+     <script>
+      
+     document.getElementById('create-topic-form').addEventListener('submit', async function(e) {
+         e.preventDefault();
+         const topicName = document.getElementById('topicName').value.trim();
+         const topicDescription = document.getElementById('topicDescription').value.trim();
+         let added_by = localStorage.getItem("roll_id"); 
+         console.log(added_by)
+         const payload = {
+             title: topicName,
+             description: topicDescription,
+             added_by: added_by
+         };
+         try {
+             const res = await fetch('<?php echo $api; ?>faculty/topics/topicRoutes.php', {
+                 method: 'POST',
+                 headers: { 'Content-Type': 'application/json' },
+                 body: JSON.stringify(payload)
+             });
+             const result = await res.json();
+             if (result.success) {
+                 alert('Topic created successfully!');
+                 document.getElementById('create-topic-form').reset();
+             } else {
+                 alert('Error: ' + (result.error || 'Failed to create topic'));
+             }
+         } catch (err) {
+             alert('Network error: ' + err.message);
+         }
+     });
+     </script>
 
 </body>
 </html>

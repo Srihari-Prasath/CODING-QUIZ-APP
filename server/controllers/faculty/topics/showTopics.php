@@ -18,7 +18,7 @@ function getTopics($conn, $user_id = null) {
             WHERE 1";
 
     if (!is_null($user_id)) {
-         $sql .= " AND ( `by_admin` = 1 AND `added_by` = :user_id OR `added_by` IS NULL )";
+         $sql .= " AND ( `by_admin` = 1 OR `by_admin`= 0  AND `added_by` = :user_id OR `added_by` IS NULL )";
     }
 
     $stmt = $conn->prepare($sql);

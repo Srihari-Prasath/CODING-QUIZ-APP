@@ -40,12 +40,12 @@ $current_page = basename($_SERVER['PHP_SELF']);
          Recent Test
       </a>
 
-      <a href="create-topic.php" <?php if ($current_page == "create-topic.php") echo 'aria-current="page"'; ?>
+      <a href="topic.php" <?php if ($current_page == "topic.php") echo 'aria-current="page"'; ?>
          class="relative px-3 py-2 rounded-xl transition-all duration-300 
                 hover:text-orange-600 hover:bg-orange-50
                 aria-[current=page]:bg-orange-400 aria-[current=page]:text-white 
                 aria-[current=page]:shadow-md">
-         Create Topic
+         Topics
       </a>
 
       <a href="upload-questions.php" <?php if ($current_page == "upload-questions.php") echo 'aria-current="page"'; ?>
