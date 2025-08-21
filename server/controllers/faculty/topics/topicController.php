@@ -1,12 +1,19 @@
 <?php
 require_once '../../../config/db.php';
 
-function getAllTopics() {
+function getAllTopics($user_id = null) {
     try {
         $db = new Database();
         $pdo = $db->connect();
-        $stmt = $pdo->prepare("SELECT topic_id, title, description, added_by, by_admin, created_at, updated_at FROM topics WHERE 1");
-        $stmt->execute();
+        $sql = "SELECT topic_id, title, description, added_by, by_admin, created_at, updated_at FROM topics ";
+        $params = [];
+        if (!is_null($user_id)) {
+            // Only show topics added by this user or by admin
+            $sql .= " AND (by_admin = 1 OR added_by = :user_id)";
+            $params[':user_id'] = $user_id;
+        }
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
         $topics = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $topics;
     } catch (Exception $e) {
