@@ -10,6 +10,14 @@ switch ($route) {
             require_once '../../controllers/auth/updatePassword.php';
             exit;
         }
+        break; 
+
+
+          case 'register-student':
+        if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+            require_once '../../controllers/auth/student/studentRegister.php';
+            exit;
+        }
         break;
 
     case 'login':
@@ -23,6 +31,12 @@ switch ($route) {
     case 'get-user-by-roll':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require_once '../../controllers/auth/getUserByRollController.php';
+        }
+        break; 
+
+          case 'get-user-by-roll-student':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            require_once '../../controllers/auth/student/getUserByRollController.php';
         }
         break; 
 

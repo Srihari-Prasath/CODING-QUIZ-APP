@@ -1,5 +1,5 @@
 <?php
-require_once('../../../config/db.php'); // DB connection
+require_once('../../../config/db.php');
 
 header('Content-Type: application/json');
 
@@ -13,15 +13,13 @@ if (!isset($data['roll_no'], $data['password'])) {
 $roll_no = trim($data['roll_no']);
 $password = trim($data['password']);
 
-// Hash the password
 $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
 try {
     $db = new Database();
     $conn = $db->connect();
 
-    // Check if student exists
-    $stmt = $conn->prepare("SELECT student_id, password FROM students WHERE roll_no = ?");
+    $stmt = $conn->prepare("SELECT user_id, password FROM student_users WHERE roll_no = ?");
     $stmt->execute([$roll_no]);
     $student = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -35,8 +33,7 @@ try {
         exit;
     }
 
-    // Update the password
-    $updateStmt = $conn->prepare("UPDATE students SET password = ? WHERE roll_no = ?");
+    $updateStmt = $conn->prepare("UPDATE student_users SET password = ? WHERE roll_no = ?");
     $updateStmt->execute([$hashedPassword, $roll_no]);
 
     echo json_encode(['success' => true, 'message' => 'Password set successfully. You can now login.']);

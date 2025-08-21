@@ -272,7 +272,7 @@
             if (!rollNo) return;
 
             try {
-                const response = await fetch('<?php echo $api; ?>auth/authRoutes.php?route=get-user-by-roll', {
+                const response = await fetch('<?php echo $api; ?>auth/authRoutes.php?route=get-user-by-roll-student', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -306,7 +306,7 @@
             const userId = document.getElementById('user_id').value;
             const newPassword = document.getElementById('registerPassword').value;
 
-            const response = await fetch('<?php echo $api; ?>auth/authRoutes.php?route=register', {
+            const response = await fetch('<?php echo $api; ?>auth/authRoutes.php?route=register-student', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
