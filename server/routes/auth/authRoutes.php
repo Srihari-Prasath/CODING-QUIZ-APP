@@ -26,7 +26,12 @@ switch ($route) {
             exit;
         }
         break;
-
+case 'student-login':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            require_once  '../../controllers/auth/student/studentLogin.php';
+            exit;
+        }
+        break;
 
     case 'get-user-by-roll':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {

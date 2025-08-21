@@ -1,12 +1,4 @@
-<?php
-session_start();
-error_log("Session at dashboard: " . print_r($_SESSION, true));
 
-
-$user_id = $_SESSION['user_id'];
-$roll_no = $_SESSION['roll_no'];
-$full_name = $_SESSION['full_name'];
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -88,6 +80,7 @@ $full_name = $_SESSION['full_name'];
     </main>
 
     <?php include('../../footer.php'); ?>
+    <?php include('./sessionHandle.php'); ?>
 
     <script>
         // Theme toggle

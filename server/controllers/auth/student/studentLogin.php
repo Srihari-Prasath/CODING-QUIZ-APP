@@ -1,65 +1,56 @@
 <?php
-require_once('../../../config/db.php');
+require_once '../../config/db.php';
+
 session_start();
 
-header('Content-Type: application/json');
+class LoginController {
+    public static function login() {
+        $input = json_decode(file_get_contents("php://input"), true);
 
-$data = json_decode(file_get_contents('php://input'), true);
+        if (!$input || !isset($input['roll_no'], $input['password'])) {
+            http_response_code(400);
+            echo json_encode(["error" => "Roll number and password are required"]);
+            return;
+        }
 
-if (!isset($data['roll_no'], $data['password'])) {
-    echo json_encode(['error' => 'Roll number and password are required']);
-    exit;
+        $roll_no = $input['roll_no'];
+        $password = $input['password'];
+
+        $db = new Database();
+        $conn = $db->connect();
+
+        $stmt = $conn->prepare("
+            SELECT u.user_id, u.roll_no, u.password, u.name, u.email
+            FROM student_users u
+            WHERE u.roll_no = ?
+        ");
+        $stmt->execute([$roll_no]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($user && password_verify($password, $user['password'])) {
+            session_regenerate_id(true);
+
+            $_SESSION['id'] = $user['user_id']; 
+            $_SESSION['roll_no'] = $user['roll_no'];
+            $_SESSION['role'] = "student";
+            $_SESSION['name'] = $user['name'];
+            $_SESSION['email'] = $user['email'];
+
+            echo json_encode([
+                "message" => "Login successful",
+                "user" => [
+                    "id" => $user['user_id'], 
+                    "roll_no" => $user['roll_no'],
+                    "role" => "student",
+                    "name" => $user['name'],
+                    "email" => $user['email']
+                ]
+            ]);
+        } else {
+            http_response_code(401);
+            echo json_encode(["error" => "Invalid roll number or password"]);
+        }
+    }
 }
 
-$roll_no = trim($data['roll_no']);
-$password = trim($data['password']);
-
-try {
-    $db = new Database();
-    $conn = $db->connect();
-
-    // Fetch student by roll number along with department and year
-    $stmt = $conn->prepare("
-        SELECT student_id, full_name, roll_no, password, department_id, year 
-        FROM students 
-        WHERE roll_no = ?
-    ");
-    $stmt->execute([$roll_no]);
-    $student = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!$student || empty($student['password'])) {
-        echo json_encode(['error' => 'Invalid roll number or password']);
-        exit;
-    }
-
-    // Verify password
-    if (!password_verify($password, $student['password'])) {
-        echo json_encode(['error' => 'Invalid roll number or password']);
-        exit;
-    }
-
-    // Store session including department_id and year
-    $_SESSION['user_id'] = $student['student_id'];
-    $_SESSION['roll_no'] = $student['roll_no'];
-    $_SESSION['full_name'] = $student['full_name'];
-    $_SESSION['role'] = 'student';
-    $_SESSION['department_id'] = $student['department_id'];
-    $_SESSION['year'] = $student['year'];
-
-    echo json_encode([
-        'success' => true,
-        'user' => [
-            'id' => $student['student_id'],
-            'full_name' => $student['full_name'],
-            'roll_no' => $student['roll_no'],
-            'role' => 'student',
-            'department_id' => $student['department_id'],
-            'year' => $student['year']
-        ],
-        'redirect' => './student/index.php' // frontend can use this to redirect
-    ]);
-
-} catch (PDOException $e) {
-    echo json_encode(['error' => $e->getMessage()]);
-}
-?>
+LoginController::login();

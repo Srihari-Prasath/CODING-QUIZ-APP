@@ -13,9 +13,9 @@
           <img src="../assets/images/Infinity castle desktop wallpaper.jpg" alt="Profile">
         </div>
       </a>
-      <a id="logout-btn" href="../register.php" class="logout-link">
-        <i data-lucide="log-out"></i>
-      </a>
+    
+       <button id="logout-btn" class="logout-link"> <i data-lucide="log-out"></i></button>
+      
     </div>
   </div>
 </header>

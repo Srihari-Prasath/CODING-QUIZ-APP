@@ -1,6 +1,3 @@
-<?php include('./resource/session.php'); ?>
-<?php include('./resource/api.php'); ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -152,9 +149,30 @@
         </div>
     </div>
 
-    <script src="./assets/js/auth/script.js"></script>
+<?php include("../resource/api.php") ?>
+
 
     <script>
+  window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const res = await fetch('<?php echo $api ?>helpers/student_session.php', 
+                { credentials: 'include' });
+                const data = await res.json();
+               
+                if (data.logged_in) {
+                    let redirectUrl = '';   
+                    switch (data.role) {
+                        case 'student': redirectUrl = './dashboard.php'; break;
+                        default: return;
+                    }
+                    window.location.href = redirectUrl;
+                }
+            } catch (err) {
+                console.error('Session check failed', err);
+            }
+        });
+
+
         function togglePassword(inputId, iconId) {
             const input = document.getElementById(inputId);
             const icon = document.getElementById(iconId);
@@ -168,7 +186,7 @@
                 icon.classList.add("fa-eye");
             }
         }
-
+// login 
         document.getElementById('loginFormElement').addEventListener('submit', async (e) => {
             e.preventDefault();
             const roll_no = document.getElementById('loginEmail').value.trim();
@@ -180,7 +198,7 @@
             }
 
             try {
-                const res = await fetch('http://localhost/CODING-QUIZ-APP/server/controllers/auth/student/studentLogin.php', {
+                const res = await fetch('<?php echo $api; ?>auth/authRoutes.php?route=student-login', {
                     method: 'POST',
                     credentials: 'include',
                     headers: { 'Content-Type': 'application/json' },
@@ -188,6 +206,7 @@
                 });
 
                 const data = await res.json();
+                
 
                 if (res.ok && data.user) {
                     window.location.href = './dashboard.php';
