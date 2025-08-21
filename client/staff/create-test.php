@@ -162,10 +162,6 @@
                 class="w-full p-3 md:p-4 border border-gray-300 rounded-xl shadow-sm bg-white text-gray-700 text-lg 
          focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-200">
                 <option value="" class="py-3">--Select Department--</option>
-                <option value="cse" class="py-3">CSE</option>
-                <option value="ece" class="py-3">ECE</option>
-                <option value="mech" class="py-3">MECH</option>
-                <option value="civil" class="py-3">CIVIL</option>
               </select>
 
             </div>
@@ -194,56 +190,18 @@
   </main>
 
   <?php include('../resource/api.php') ?>
-
+<?php include('./sessionHandle.php') ?>
   <script>
-    let name = document.querySelector('.name-text');
-    let main_name = document.querySelector('.main-name');
-    let role = document.querySelector('.role-text');
-    var userId = document.querySelector('#userId').value;
-    // session
-    async function checkSession() {
-      try {
-        const res = await fetch('<?php echo $api ?>helpers/check_session.php', {
-          credentials: 'include'
-        });
 
-        const data = await res.json();
-
-        name.textContent = data.full_name || 'error';
-        main_name.textContent = data.full_name || 'error';
-        role.textContent = data.role || 'error';
-        userId=data.id
-        
-        if (!data.logged_in) {
-
-          window.location.href = '../';
-        }
-      } catch (err) {
-        console.error('Session check failed', err);
-      }
-    };
-
+   
     // fetch topics
 
    async function fetchTopics() {
        
 
   try { 
-
-    if (!userId) {
-      try {
-        const res = await fetch('<?php echo $api ?>helpers/check_session.php', {
-          credentials: 'include'
-        });
-        const data = await res.json();
-        userId = data.id;
-        window.currentUserId = userId; 
-        
-      } catch (err) {
-        console.error('Could not get user id from session:', err);
-      }
-    }
-
+      let userId = localStorage.getItem('roll_id'); 
+    
     const url = userId 
       ? `<?php echo $api; ?>faculty/topics/getTopics.php?user_id=${userId}` 
       : `<?php echo $api; ?>faculty/topics/getTopics.php`;
@@ -268,23 +226,17 @@
     console.error('Failed to fetch topics:', err);
   }
 } 
+
+
+
     document.getElementById('create-test-form').addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const form = e.target;
        
-      let userId = window.currentUserId || document.querySelector('#userId').value; 
-      
-      if (!userId) {
-        try {
-          const res = await fetch('<?php echo $api ?>helpers/check_session.php', { credentials: 'include' });
-          const data = await res.json();
-          userId = data.id;
-          
-        } catch (err) {
-          console.error('Could not get user id from session:', err);
-        }
-      }
+      let userId = localStorage.getItem('roll_id'); 
+
+    
       const jsonObject = {
         title: form.title.value,
         description: form.description.value,
@@ -302,7 +254,7 @@
       };
 
       try {
-        const response = await fetch('<?php echo $api; ?>faculty/test/testRoutes.php', {
+        const response = await fetch(`<?php echo $api; ?>faculty/test/testRoutes.php?user_id=${userId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -312,8 +264,14 @@
         });
 
         const result = await response.json();
-        alert(result.message || result.error);
-        form.reset();
+        if(result.success){
+          alert('Test Create successfully.')
+        }else{
+          alert('Test Creation Failed.')
+        }
+        
+       
+    
       } catch (error) {
         console.error('Request failed:', error);
         alert("Request failed: " + error.message);
@@ -357,6 +315,31 @@ if (topicSelect && subTopicSelect) {
 }
 </script>
 
+<script>
+  async function fetchDepartments() {
+  try {
+    const response = await fetch('<?php echo $api; ?>dept/deptRoutes.php');
+    const result = await response.json();
+    const departmentSelect = document.getElementById('departmentSelect');
+    if (result.success && Array.isArray(result.departments)) {
+      departmentSelect.innerHTML = '<option value="">--Select Department--</option>';
+      result.departments.forEach(dept => {
+        const opt = document.createElement('option');
+        opt.value = dept.id;
+        opt.textContent = dept.full_name;
+        departmentSelect.appendChild(opt);
+      });
+    }
+  } catch (err) {
+    console.error('Failed to fetch departments:', err);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  fetchDepartments();
+});
+
+</script>
 </body>
 
 </html>
