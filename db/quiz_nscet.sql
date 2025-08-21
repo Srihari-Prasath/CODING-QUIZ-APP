@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 19, 2025 at 01:07 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Aug 21, 2025 at 01:07 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.0.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -99,7 +99,8 @@ CREATE TABLE `faculty_users` (
 --
 
 INSERT INTO `faculty_users` (`id`, `roll_no`, `full_name`, `email`, `password`, `year`, `role_id`, `department_id`, `created_at`, `updated_at`) VALUES
-(1, '921022205011', 'NAVEEN', 'naveen@gmail.com', '$2y$10$PnYRz2lbAii6ncCVLeiAC.a904gttmIyYlaelU62bg1wA0EEfg.n2', 0, 2, 1, '2025-08-18 06:16:30', '2025-08-19 06:23:13');
+(1, '921022205011', 'NAVEEN', 'naveen@gmail.com', '$2y$10$PnYRz2lbAii6ncCVLeiAC.a904gttmIyYlaelU62bg1wA0EEfg.n2', 0, 2, 1, '2025-08-18 06:16:30', '2025-08-20 10:33:25'),
+(2, '921022205012', 'NAVEEN', 'naveenb@gmail.com', '$2y$10$PnYRz2lbAii6ncCVLeiAC.a904gttmIyYlaelU62bg1wA0EEfg.n2', 0, 2, 1, '2025-08-18 06:16:30', '2025-08-20 01:12:05');
 
 -- --------------------------------------------------------
 
@@ -182,34 +183,6 @@ INSERT INTO `roles` (`role_id`, `role_name`) VALUES
 (3, 'hod'),
 (4, 'vice_principal'),
 (5, 'principal');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `students`
---
-
-CREATE TABLE `students` (
-  `student_id` int(11) NOT NULL,
-  `roll_no` varchar(20) NOT NULL,
-  `full_name` varchar(100) NOT NULL,
-  `email` varchar(100) DEFAULT NULL,
-  `department_id` int(11) NOT NULL,
-  `year` int(11) NOT NULL,
-  `phone` varchar(15) DEFAULT NULL,
-  `address` varchar(255) DEFAULT NULL,
-  `dob` date DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `students`
---
-
-INSERT INTO `students` (`student_id`, `roll_no`, `full_name`, `email`, `department_id`, `year`, `phone`, `address`, `dob`, `password`, `created_at`, `updated_at`) VALUES
-(1, '921022205021', 'Mark', 'mark@gmail.com', 1, 2, '8838157966', 'test address', NULL, '$2y$10$.X1ZB0dkZTgWzle76Jmt.uTZopEQWHuI6SnqEYYppuxrc5l9d4IE.', '2025-08-16 17:13:25', '2025-08-17 06:48:27');
 
 -- --------------------------------------------------------
 
@@ -547,6 +520,57 @@ INSERT INTO `student_tests` (`student_test_id`, `student_id`, `test_id`, `starte
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `student_users`
+--
+
+CREATE TABLE `student_users` (
+  `user_id` int(11) NOT NULL,
+  `roll_no` varchar(50) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `year` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `department_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `student_users`
+--
+
+INSERT INTO `student_users` (`user_id`, `roll_no`, `name`, `email`, `password`, `year`, `created_at`, `department_id`) VALUES
+(1, '921022205011', 'Naveen', 'naveenbharathi5050@gmail.com', '$2y$10$dJoybMfdQzeC/f5oygXJlO8zl2zJWUNyC3GzbN7ITJBkPz78qh80e', 4, '2025-08-21 04:31:22', 7);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sub_topics`
+--
+
+CREATE TABLE `sub_topics` (
+  `sub_topic_id` int(11) NOT NULL,
+  `topic_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `added_by` int(11) NOT NULL,
+  `by_admin` tinyint(1) DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `sub_topics`
+--
+
+INSERT INTO `sub_topics` (`sub_topic_id`, `topic_id`, `title`, `description`, `added_by`, `by_admin`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Variables & Data Types', 'Understanding variables and types', 1, 0, '2025-08-20 10:57:44', '2025-08-20 15:56:39'),
+(2, 1, 'Control Structures', 'If, loops, and switch statements', 1, 0, '2025-08-20 10:57:44', '2025-08-20 10:57:44'),
+(3, 7, 'in fully oops', 'oops based', 1, 0, '2025-08-20 16:20:53', '2025-08-20 16:21:20'),
+(4, 4, 'we', 'we', 1, 0, '2025-08-20 16:29:04', '2025-08-20 16:29:04');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tests`
 --
 
@@ -554,7 +578,9 @@ CREATE TABLE `tests` (
   `test_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` text DEFAULT NULL,
-  `topic_id` int(11) NOT NULL,
+  `subject` text NOT NULL,
+  `topic_id` int(11) DEFAULT NULL,
+  `sub_topic_id` int(11) DEFAULT NULL,
   `num_questions` int(11) DEFAULT 0,
   `department_id` int(11) NOT NULL,
   `year` int(11) NOT NULL,
@@ -570,10 +596,15 @@ CREATE TABLE `tests` (
 -- Dumping data for table `tests`
 --
 
-INSERT INTO `tests` (`test_id`, `title`, `description`, `topic_id`, `num_questions`, `department_id`, `year`, `date`, `time_slot`, `duration_minutes`, `created_by`, `created_at`, `is_active`) VALUES
-(1, 'Java Programming', 'Core Java concepts and OOP fundamentals', 1, 5, 1, 1, '2025-08-17', 'morning', 60, 1, '2025-08-15 19:36:35', 1),
-(2, 'Java Programming', 'Core Java concepts and OOP fundamentals', 1, 5, 1, 1, '2025-08-18', 'morning', 60, 1, '2025-08-15 19:48:28', 1),
-(3, 'Java Programming', 'Core Java concepts and OOP fundamentals', 1, 5, 1, 2, '2025-08-17', 'full_day', 60, 1, '2025-08-15 19:54:36', 1);
+INSERT INTO `tests` (`test_id`, `title`, `description`, `subject`, `topic_id`, `sub_topic_id`, `num_questions`, `department_id`, `year`, `date`, `time_slot`, `duration_minutes`, `created_by`, `created_at`, `is_active`) VALUES
+(1, 'Java Programming', 'Core Java concepts and OOP fundamentals', '', 1, 1, 5, 1, 1, '2025-08-17', 'morning', 60, 1, '2025-08-15 19:36:35', 1),
+(2, 'Java Programming', 'Core Java concepts and OOP fundamentals', '', NULL, NULL, 5, 1, 1, '2025-08-18', 'morning', 60, 1, '2025-08-15 19:48:28', 1),
+(3, 'Java Programming', 'Core Java concepts and OOP fundamentals', '', NULL, NULL, 5, 1, 2, '2025-08-17', 'full_day', 60, 1, '2025-08-15 19:54:36', 1),
+(6, 'Sample Test', 'Test Description', 'Math', 1, 2, 10, 1, 2025, '2025-08-21', 'morning', 60, 1, '2025-08-21 01:42:44', 1),
+(11, 'Sample Test', 'Test Description', 'Math', 1, 2, 10, 1, 2025, '2025-08-21', 'morning', 60, 1, '2025-08-21 01:51:51', 1),
+(13, 'Sample Test', 'Test Description', 'Math', 1, 2, 10, 1, 2025, '2025-08-21', 'morning', 60, 1, '2025-08-21 01:52:35', 1),
+(18, 'Mark', 'welcome', 'its python', 1, 1, 90, 1, 1, '2025-08-21', 'morning', 90, 1, '2025-08-21 02:10:14', 1),
+(19, 'its test new', 'its test', 'new test', 1, 1, 90, 1, 1, '2025-08-21', 'morning', 90, 1, '2025-08-21 02:12:24', 1);
 
 -- --------------------------------------------------------
 
@@ -614,7 +645,8 @@ CREATE TABLE `topics` (
   `topic_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` text DEFAULT NULL,
-  `added_by` int(11) NOT NULL,
+  `added_by` int(11) DEFAULT NULL,
+  `by_admin` tinyint(1) DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -623,37 +655,16 @@ CREATE TABLE `topics` (
 -- Dumping data for table `topics`
 --
 
-INSERT INTO `topics` (`topic_id`, `title`, `description`, `added_by`, `created_at`, `updated_at`) VALUES
-(1, 'Python', 'its test', 1, '2025-08-19 07:46:38', '2025-08-19 07:46:38');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
-
-CREATE TABLE `users` (
-  `user_id` int(11) NOT NULL,
-  `roll_no` varchar(20) DEFAULT NULL,
-  `name` varchar(100) DEFAULT NULL,
-  `email` varchar(100) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `year` int(11) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `department_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`user_id`, `roll_no`, `name`, `email`, `password`, `year`, `created_at`, `department_id`) VALUES
-(1, '921022205021', 'Hari Prasath', 'hari@example.com', '$2y$10$.XJck47fhN5aCi..iN7mMOEpGCx.FZNm4pI2WUn.s7VnyYJVTXUHC', 1, '2025-08-10 16:12:34', 1),
-(2, '921022205011', 'Naveen Bharathi', 'Naveen@example.com', NULL, 1, '2025-08-10 16:12:34', 1),
-(3, '921022243017', 'Sandhosh', 'sandhosh@example.com', '', 4, '2025-08-10 16:12:34', 6),
-(4, '921022243011', 'Keerthana', 'keerthana@example.com', '', 4, '2025-08-10 16:12:34', 6),
-(5, '921022104033', 'Joshika', 'joshika@example.com', '', 4, '2025-08-10 16:12:34', 1),
-(6, '921022104041', 'Sachin', 'sachin@example.com', '', 4, '2025-08-10 16:12:34', 1);
+INSERT INTO `topics` (`topic_id`, `title`, `description`, `added_by`, `by_admin`, `created_at`, `updated_at`) VALUES
+(1, 'Python', 'its test', 1, 0, '2025-08-19 07:46:38', '2025-08-20 15:49:19'),
+(2, 'python 2', 'its test', 1, 0, '2025-08-19 07:46:38', '2025-08-20 15:49:17'),
+(3, 'python 2', 'its test', NULL, 1, '2025-08-19 07:46:38', '2025-08-20 01:11:13'),
+(4, 'another', 'its test', 2, 0, '2025-08-19 07:46:38', '2025-08-20 16:23:24'),
+(5, 'python 2', 'its test', NULL, 1, '2025-08-19 07:46:38', '2025-08-20 01:11:13'),
+(6, 'Programming Basics', 'Covers intro programming concepts', 1, 0, '2025-08-20 10:57:44', '2025-08-20 15:49:22'),
+(7, 'java', 'its java', 1, 0, '2025-08-20 15:47:12', '2025-08-20 15:48:57'),
+(8, 'Programming in C', 'Its programmer', 1, 0, '2025-08-20 16:08:26', '2025-08-20 16:08:26'),
+(9, 'mark', 'mark', 1, 0, '2025-08-20 16:09:56', '2025-08-20 16:09:56');
 
 --
 -- Indexes for dumped tables
@@ -713,13 +724,6 @@ ALTER TABLE `roles`
   ADD PRIMARY KEY (`role_id`);
 
 --
--- Indexes for table `students`
---
-ALTER TABLE `students`
-  ADD PRIMARY KEY (`student_id`),
-  ADD UNIQUE KEY `roll_no` (`roll_no`);
-
---
 -- Indexes for table `student_answers`
 --
 ALTER TABLE `student_answers`
@@ -754,13 +758,31 @@ ALTER TABLE `student_tests`
   ADD KEY `test_id` (`test_id`);
 
 --
+-- Indexes for table `student_users`
+--
+ALTER TABLE `student_users`
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `unique_roll_no` (`roll_no`),
+  ADD UNIQUE KEY `unique_email` (`email`),
+  ADD KEY `idx_department_id` (`department_id`);
+
+--
+-- Indexes for table `sub_topics`
+--
+ALTER TABLE `sub_topics`
+  ADD PRIMARY KEY (`sub_topic_id`),
+  ADD KEY `fk_topic` (`topic_id`),
+  ADD KEY `fk_subtopic_added_by` (`added_by`);
+
+--
 -- Indexes for table `tests`
 --
 ALTER TABLE `tests`
   ADD PRIMARY KEY (`test_id`),
-  ADD KEY `topic_id` (`topic_id`),
   ADD KEY `department_id` (`department_id`),
-  ADD KEY `created_by` (`created_by`);
+  ADD KEY `created_by` (`created_by`),
+  ADD KEY `fk_tests_topic` (`topic_id`),
+  ADD KEY `fk_tests_sub_topic` (`sub_topic_id`);
 
 --
 -- Indexes for table `test_questions`
@@ -776,14 +798,6 @@ ALTER TABLE `test_questions`
 ALTER TABLE `topics`
   ADD PRIMARY KEY (`topic_id`),
   ADD KEY `fk_added_by` (`added_by`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`user_id`),
-  ADD KEY `email` (`email`),
-  ADD KEY `department_id` (`department_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -811,7 +825,7 @@ ALTER TABLE `faculty_test_history`
 -- AUTO_INCREMENT for table `faculty_users`
 --
 ALTER TABLE `faculty_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `feedback`
@@ -830,12 +844,6 @@ ALTER TABLE `questions`
 --
 ALTER TABLE `roles`
   MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `students`
---
-ALTER TABLE `students`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `student_answers`
@@ -862,10 +870,22 @@ ALTER TABLE `student_tests`
   MODIFY `student_test_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
+-- AUTO_INCREMENT for table `student_users`
+--
+ALTER TABLE `student_users`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `sub_topics`
+--
+ALTER TABLE `sub_topics`
+  MODIFY `sub_topic_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `tests`
 --
 ALTER TABLE `tests`
-  MODIFY `test_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `test_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `test_questions`
@@ -877,13 +897,7 @@ ALTER TABLE `test_questions`
 -- AUTO_INCREMENT for table `topics`
 --
 ALTER TABLE `topics`
-  MODIFY `topic_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `topic_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
@@ -893,13 +907,13 @@ ALTER TABLE `users`
 -- Constraints for table `admin_activity`
 --
 ALTER TABLE `admin_activity`
-  ADD CONSTRAINT `admin_activity_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `users` (`user_id`);
+  ADD CONSTRAINT `admin_activity_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `student_users` (`user_id`);
 
 --
 -- Constraints for table `faculty_test_history`
 --
 ALTER TABLE `faculty_test_history`
-  ADD CONSTRAINT `faculty_test_history_ibfk_1` FOREIGN KEY (`faculty_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `faculty_test_history_ibfk_1` FOREIGN KEY (`faculty_id`) REFERENCES `student_users` (`user_id`),
   ADD CONSTRAINT `faculty_test_history_ibfk_2` FOREIGN KEY (`test_id`) REFERENCES `tests` (`test_id`);
 
 --
@@ -914,22 +928,37 @@ ALTER TABLE `faculty_users`
 --
 ALTER TABLE `feedback`
   ADD CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`student_test_id`) REFERENCES `student_tests` (`student_test_id`),
-  ADD CONSTRAINT `feedback_ibfk_2` FOREIGN KEY (`faculty_id`) REFERENCES `users` (`user_id`);
+  ADD CONSTRAINT `feedback_ibfk_2` FOREIGN KEY (`faculty_id`) REFERENCES `student_users` (`user_id`);
 
 --
 -- Constraints for table `questions`
 --
 ALTER TABLE `questions`
   ADD CONSTRAINT `questions_ibfk_1` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`topic_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `questions_ibfk_2` FOREIGN KEY (`created_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `questions_ibfk_2` FOREIGN KEY (`created_by`) REFERENCES `student_users` (`user_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `student_users`
+--
+ALTER TABLE `student_users`
+  ADD CONSTRAINT `fk_student_department` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `sub_topics`
+--
+ALTER TABLE `sub_topics`
+  ADD CONSTRAINT `fk_subtopic_added_by` FOREIGN KEY (`added_by`) REFERENCES `faculty_users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_topic` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`topic_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `tests`
 --
 ALTER TABLE `tests`
+  ADD CONSTRAINT `fk_tests_sub_topic` FOREIGN KEY (`sub_topic_id`) REFERENCES `sub_topics` (`sub_topic_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_tests_topic` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`topic_id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `tests_ibfk_1` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`topic_id`),
   ADD CONSTRAINT `tests_ibfk_2` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`),
-  ADD CONSTRAINT `tests_ibfk_3` FOREIGN KEY (`created_by`) REFERENCES `users` (`user_id`);
+  ADD CONSTRAINT `tests_ibfk_3` FOREIGN KEY (`created_by`) REFERENCES `student_users` (`user_id`);
 
 --
 -- Constraints for table `test_questions`
