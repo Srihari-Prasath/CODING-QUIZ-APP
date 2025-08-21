@@ -258,13 +258,10 @@
         </form>
 
     </div>
-    </div>
-
-    <script src="./assets/js/auth/script.js"></script>
+    </div> 
 
 
-
-    <?php include('./resource/api.php') ?>
+    <?php include('../resource/api.php') ?>
     <!-- fetch students -->
     <script>
         document.getElementById('studentId').addEventListener('blur', async () => {
@@ -283,6 +280,7 @@
                 });
 
                 const result = await response.json();
+              
 
                 if (result && result.name) {
                     document.getElementById('firstName').value = result.name || '';
@@ -318,6 +316,7 @@
             });
 
             const result = await response.json();
+           
             if (result.success) {
                 alert('Password updated successfully');
                 window.location.href = "./";

@@ -1,9 +1,12 @@
 <?php
-require_once '../../../config/db.php';
+
+require_once( "../../config/db.php");
 
 header('Content-Type: application/json');
 
-   
+   ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
 
 class GetUserByRollController
 {   
@@ -26,7 +29,7 @@ class GetUserByRollController
                 u.name, 
                 u.email, 
                 d.full_name AS department_name, 
-                u.id, 
+                u.user_id, 
                 u.year
             FROM student_users u
             JOIN departments d ON u.department_id = d.id
