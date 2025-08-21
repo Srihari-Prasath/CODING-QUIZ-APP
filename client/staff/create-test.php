@@ -39,7 +39,7 @@
 
     <section id="form-section" class="bg-white p-8 rounded-3xl shadow-xl w-full max-w-[95%] mx-auto">
       <form id="create-test-form" class="grid grid-cols-1 md:grid-cols-2 gap-6">
- <div class="flex flex-col md:col-span-2 relative">
+        <div class="flex flex-col md:col-span-2 relative">
           <label class="font-semibold text-gray-700 mb-2">Select Topic</label>
           <div class="relative">
             <select
@@ -60,14 +60,12 @@
           <label class="font-semibold text-gray-700 mb-2">Sub Topic</label>
           <div class="relative">
             <select
-              name="topic"
-              id="topicSelect"
+              name="sub_topic"
+              id="subTopicSelect"
               required
               class="w-full p-3 md:p-4 border border-gray-300 rounded-xl shadow-sm bg-white text-gray-700 text-lg 
            focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-200">
-              <option value="">--Select Topic--</option>
-
-
+              <option value="">--Select Sub Topic--</option>
             </select> 
           </div>
         </div>
@@ -269,9 +267,7 @@
   } catch (err) {
     console.error('Failed to fetch topics:', err);
   }
-}
-
-
+} 
     document.getElementById('create-test-form').addEventListener('submit', async (e) => {
       e.preventDefault();
 
@@ -291,17 +287,18 @@
       }
       const jsonObject = {
         title: form.title.value,
-        domain: form.domain.value,
-        timing:form.timing.value, 
-        duration_minutes: parseInt(form.Duration.value), 
-        year: parseInt(form.year.value), 
-        total_marks: parseInt(form.total_marks.value),
-        num_questions: parseInt(form.num_questions.value),
-        topic_id: form.topic.value,
-        department: form.department.value,
         description: form.description.value,
-        created_by: userId 
-
+        subject: form.domain.value,
+        topic_id: form.topic.value,
+        sub_topic_id: form.sub_topic.value,
+        num_questions: parseInt(form.num_questions.value),
+        department: form.department.value,
+        department_id: form.department.value,
+        year: parseInt(form.year.value),
+        date: new Date().toISOString().slice(0,10),
+        time_slot: form.timing.value,
+        duration_minutes: parseInt(form.Duration.value),
+        created_by: userId
       };
 
       try {
@@ -331,6 +328,34 @@
 
 
   </script>
+
+
+<!-- sub topics fetch -->
+  <script> 
+
+var topicSelect = document.getElementById('topicSelect');
+var subTopicSelect = document.getElementById('subTopicSelect');
+if (topicSelect && subTopicSelect) {
+    topicSelect.addEventListener('change', function() {
+        const topicId = this.value;
+        subTopicSelect.innerHTML = '<option value="">--Select Sub Topic--</option>';
+        if (topicId) {
+            fetch('<?php echo $api; ?>faculty/topics/subTopicRoutes.php?parent_topic_id=' + topicId)
+                .then(res => res.json())
+                .then(subtopics => {
+                    if (Array.isArray(subtopics) && subtopics.length > 0) {
+                        subtopics.forEach(st => {
+                            const opt = document.createElement('option');
+                            opt.value = st.sub_topic_id;
+                            opt.textContent = st.title;
+                            subTopicSelect.appendChild(opt);
+                        });
+                    }
+                });
+        }
+    });
+}
+</script>
 
 </body>
 

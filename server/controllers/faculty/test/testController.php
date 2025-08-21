@@ -2,13 +2,35 @@
 require_once __DIR__ . '/../../config/db.php';
 
 class TestController {
+    public function getTestsByUser($userId = null) {
+        try {
+            $db = new Database();
+            $pdo = $db->connect();
+
+            if ($userId !== null) {
+                $stmt = $pdo->prepare("SELECT * FROM tests WHERE created_by = :userId");
+                $stmt->execute([':userId' => $userId]);
+            } else {
+                $stmt = $pdo->query("SELECT * FROM tests");
+            }
+
+            $tests = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return ['success' => true, 'tests' => $tests];
+        } catch (Exception $e) {
+            return ['success' => false, 'error' => 'Failed to fetch tests', 'details' => $e->getMessage()];
+        }
+    }
     public function create($params) {
-        $topic_id = (int)$params['topic_id'];
-        $num_questions = (int)$params['num_questions'];
-        $department_id = (int)($params['department_id'] ?? 0);
+        $title = $params['title'] ?? '';
+        $description = $params['description'] ?? '';
+        $subject = $params['subject'] ?? ($params['domain'] ?? '');
+        $topic_id = (int)($params['topic_id'] ?? 0);
+        $sub_topic_id = (int)($params['sub_topic_id'] ?? null);
+        $num_questions = (int)($params['num_questions'] ?? 0);
+        $department_id = (int)($params['department_id'] ?? ($params['department'] ?? 0));
         $year = (int)($params['year'] ?? 0);
         $date = $params['date'] ?? date('Y-m-d');
-        $time_slot = $params['time_slot'] ?? 'morning';
+        $time_slot = $params['time_slot'] ?? ($params['timing'] ?? 'morning');
         $duration_minutes = (int)($params['duration_minutes'] ?? 30);
         $created_by = isset($params['created_by']) ? (int)$params['created_by'] : null;
 
@@ -20,27 +42,19 @@ class TestController {
             $db = new Database();
             $pdo = $db->connect();
 
-          
-            $topicStmt = $pdo->prepare("SELECT title, description FROM topics WHERE topic_id = :topic_id");
-            $topicStmt->execute([':topic_id' => $topic_id]);
-            $topic = $topicStmt->fetch(PDO::FETCH_ASSOC);
-
-            if (!$topic) {
-                return ['success' => false, 'error' => 'Topic not found'];
-            }
-
-           
             $stmt = $pdo->prepare("
                 INSERT INTO tests 
-                (title, description, topic_id, num_questions, department_id, year, date, time_slot, duration_minutes, created_by) 
+                (title, description, subject, topic_id, sub_topic_id, num_questions, department_id, year, date, time_slot, duration_minutes, created_by) 
                 VALUES 
-                (:title, :description, :topic_id, :num_questions, :department_id, :year, :date, :time_slot, :duration_minutes, :created_by)
+                (:title, :description, :subject, :topic_id, :sub_topic_id, :num_questions, :department_id, :year, :date, :time_slot, :duration_minutes, :created_by)
             ");
 
             $stmt->execute([
-                ':title' => $topic['title'],
-                ':description' => $topic['description'],
+                ':title' => $title,
+                ':description' => $description,
+                ':subject' => $subject,
                 ':topic_id' => $topic_id,
+                ':sub_topic_id' => $sub_topic_id,
                 ':num_questions' => $num_questions,
                 ':department_id' => $department_id,
                 ':year' => $year,

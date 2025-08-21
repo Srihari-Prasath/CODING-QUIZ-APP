@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $parent_topic_id = $_GET['parent_topic_id'] ?? null;
-    $result = getTopics($parent_topic_id);
+    $result = getSubTopics($parent_topic_id);
     echo json_encode($result);
     exit;
 }
