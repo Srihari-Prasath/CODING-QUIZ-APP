@@ -40,6 +40,7 @@
           });
           const data = await res.json();
           if (data.success) {
+              localStorage.clear();
             alert("Logout successful!");
             window.location.href = "../";
           } else {

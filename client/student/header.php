@@ -14,7 +14,7 @@
         </div>
       </a>
     
-       <button id="logout-btn" class="logout-link"> <i data-lucide="log-out"></i></button>
+       <button id="logout-btn" > <i data-lucide="log-out"></i></button>
       
     </div>
   </div>

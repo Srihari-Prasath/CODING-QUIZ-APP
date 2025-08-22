@@ -9,7 +9,8 @@
                 const res = await fetch('<?php echo $api ?>helpers/student_session.php', 
                 { credentials: 'include' });
                 const data = await res.json(); 
-
+              
+          localStorage.setItem("user_id", data.id);
                 if (!data.logged_in) {
                     
                     window.location.href = './';
@@ -23,7 +24,7 @@
     // handle logout
     async function handleLogout() {
       document.getElementById("logout-btn")?.addEventListener("click", async () => {
-        try {32
+        try {
           const res = await fetch('<?php echo $api; ?>helpers/logout.php', {
             method: 'POST',
             credentials: 'include',
@@ -32,7 +33,9 @@
             }
           });
           const data = await res.json();
+        
           if (data.success) {
+            localStorage.clear();
             alert("Logout successful!");
             window.location.href = "./";
           } else {
@@ -46,7 +49,7 @@
 
 
     window.addEventListener('DOMContentLoaded', () => {
-      checkSession();
+     
       handleLogout();
 
     });

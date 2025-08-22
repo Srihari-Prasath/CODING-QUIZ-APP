@@ -80,9 +80,11 @@
     </main>
 
     <?php include('../../footer.php'); ?>
+     <?php include('../resource/api.php'); ?>
     <?php include('./sessionHandle.php'); ?>
 
     <script>
+    
         // Theme toggle
         const themeToggle = document.getElementById('theme-toggle');
         const body = document.body;

@@ -158,8 +158,10 @@
                 const res = await fetch('<?php echo $api ?>helpers/student_session.php', 
                 { credentials: 'include' });
                 const data = await res.json();
-               
+          
+                   
                 if (data.logged_in) {
+                  
                     let redirectUrl = '';   
                     switch (data.role) {
                         case 'student': redirectUrl = './dashboard.php'; break;
@@ -207,8 +209,9 @@
 
                 const data = await res.json();
                 
-
+       
                 if (res.ok && data.user) {
+                   
                     window.location.href = './dashboard.php';
                 } else {
                     alert(data.error || "Login failed.");
