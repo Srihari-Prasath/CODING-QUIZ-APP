@@ -1,52 +1,39 @@
+
 <footer class="footer">
   <div class="footer-container">
-    <!-- <img src="your-logo.png" alt="iSpin Logo" class="logo"> -->
-    <p>Developed by iSpin ❤️</p>
+    <p>
+      Developed By <a href="https://www.nscet.org/ispin" class="footer-link">      Innovative Software Product Industry of NSCET
+</a>
+    </p>
   </div>
 </footer>
 
 <style>
-    p{
-
-        font-family: Georgia, 'Times New Roman', Times, serif;
-        font-size: 20px;
-    }
+.footer-link{
+  color: white;
+  text-decoration: none;
+}
   .footer {
-    background-color: #f85312ff; 
+    background: linear-gradient(135deg, #ff9800, #ff5722);
     color: white;
-    padding: 1rem 0;
-    border-top: 1px solid #f0530aff;
+    padding: 1.5rem 0;
+    border-top: 2px solid #ff9800;
+    position: relative;
+    overflow: hidden;
   }
-
   .footer-container {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.75rem; 
+    gap: 0.75rem;
   }
-
-  .logo {
-    width: 32px; 
-    height: 32px; 
-    border-radius: 50%; 
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); 
-    border: 1px solid #4b5563; 
-    object-fit: cover;
-  }
-
-  .footer p {
-    font-size: 0.9rem;
-  }
-
-  .highlight {
-    font-weight: 600; 
-    color: #60a5fa; 
-    transition: color 0.3s ease;
-  }
-
-  .highlight:hover {
-    color: #93c5fd; 
-  }
-</style>
+  p {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 18px;
+    text-align: center;
+    margin: 0;
+    font-weight: 700;
+    letter-spacing:

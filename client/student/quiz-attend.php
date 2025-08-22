@@ -162,75 +162,12 @@
 let quizData = [];
 let questions = [];
 let currentQuestionIndex = 0;
-let timeLeft = 0;
-let timerInterval;
-let answers = {}; // { question_id: selectedOption }
-
-const urlParams = new URLSearchParams(window.location.search);
-const testId = urlParams.get('test_id');
-
-const submitModal = document.getElementById("submitModal");
-const confirmSubmit = document.getElementById("confirmSubmit");
-const cancelSubmit = document.getElementById("cancelSubmit");
-const startQuiz = document.getElementById("startQuiz");
-const landingPage = document.getElementById("landingPage");
-const quizContent = document.getElementById("quizContent");
-const questionNumbers = document.getElementById("questionNumbers");
-const submitQuiz = document.getElementById("submitQuiz");
-const skipBtn = document.getElementById("skipBtn");
-const nextBtn = document.getElementById("nextBtn");
-const prevBtn = document.getElementById("prevBtn");
-
-// ================== SECURITY LOCKS ==================
-
-// Prevent back/forward navigation
-history.pushState(null, null, location.href);
-window.addEventListener("popstate", function () {
-    alert("Navigation is disabled during the test!");
-    history.pushState(null, null, location.href);
-});
-
-// Block keyboard shortcuts
-function blockKeys(e) {
-    if (
-        e.key === "F12" ||
-        (e.ctrlKey && e.shiftKey && ["I","J","C"].includes(e.key.toUpperCase())) ||
-        (e.ctrlKey && ["U","S","P"].includes(e.key.toUpperCase()))
-    ) {
-        e.preventDefault();
-        alert("This action is disabled during the test!");
-    }
-}
-
-// Block right-click
-function blockRightClick(e) {
-    e.preventDefault();
-    alert("Right-click is disabled during the test!");
-}
-
-// Detect DevTools open
-const threshold = 160;
-function detectDevTools() {
-    const widthThreshold = window.outerWidth - window.innerWidth > threshold;
-    const heightThreshold = window.outerHeight - window.innerHeight > threshold;
-    if (widthThreshold || heightThreshold) {
-        alert("DevTools is disabled during the test!");
-    }
-}
-setInterval(detectDevTools, 1000);
-
-// Initialize security locks
-window.addEventListener("load", () => {
-    window.addEventListener("keydown", blockKeys);
-    window.addEventListener("contextmenu", blockRightClick);
-});
-
-let quizData = [];
-let questions = [];
-let currentQuestionIndex = 0;
 let timeLeft = 600; // Default 10 minutes
 let timerInterval;
 let answers = {};
+
+const urlParams = new URLSearchParams(window.location.search);
+const testId = urlParams.get('test_id');
 
 const submitModal = document.getElementById("submitModal");
 const confirmSubmit = document.getElementById("confirmSubmit");
@@ -273,38 +210,94 @@ function startTimer() {
     }, 1000);
 }
 
-// Provide static questions for frontend-only demo
-questions = [
-    {
-        question_id: 1,
-        question_text: "What is the capital of France?",
-        option_a: "Berlin",
-        option_b: "Madrid",
-        option_c: "Paris",
-        option_d: "Rome"
-    },
-    {
-        question_id: 2,
-        question_text: "Which planet is known as the Red Planet?",
-        option_a: "Earth",
-        option_b: "Mars",
-        option_c: "Jupiter",
-        option_d: "Saturn"
-    },
-    {
-        question_id: 3,
-        question_text: "Who wrote 'Hamlet'?",
-        option_a: "Charles Dickens",
-        option_b: "William Shakespeare",
-        option_c: "Jane Austen",
-        option_d: "Mark Twain"
+// Fetch questions dynamically from backend
+function fetchQuestionsAndStart() {
+    fetch(`../../server/routes/student/test/fetch-questions?test_id=${testId}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === "success" && Array.isArray(data.questions) && data.questions.length > 0) {
+                questions = data.questions;
+                quizData = questions;
+                startTimer();
+                initQuiz();
+                renderSingleQuestion();
+            } else {
+                alert("No questions found for this test.");
+            }
+        })
+        .catch(err => {
+            alert("Error fetching questions: " + err.message);
+        });
+}
+
+// Call fetchQuestionsAndStart when quiz starts
+startQuiz.addEventListener("click", () => {
+    landingPage.classList.add("hidden");
+    quizContent.classList.remove("hidden");
+    fetchQuestionsAndStart();
+});
+
+// ================== BUTTON EVENTS ==================
+skipBtn.addEventListener("click", () => {
+    const q = questions[currentQuestionIndex];
+    if (!answers[q.question_id]) answers[q.question_id] = "";
+    updateSidebarStatus(q.question_id);
+    currentQuestionIndex++;
+    if (currentQuestionIndex >= questions.length) currentQuestionIndex = 0;
+    renderSingleQuestion();
+});
+
+nextBtn.addEventListener("click", () => {
+    currentQuestionIndex++;
+    if (currentQuestionIndex >= questions.length) currentQuestionIndex = 0;
+    renderSingleQuestion();
+    const allAnsweredOrSkipped = questions.every((q) => answers.hasOwnProperty(q.question_id));
+    if (allAnsweredOrSkipped) submitModal.classList.remove("hidden");
+});
+
+prevBtn.addEventListener("click", () => {
+    if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        renderSingleQuestion();
     }
-    // Add more questions as needed
-];
-quizData = questions;
-startTimer();
-initQuiz();
-renderSingleQuestion();
+});
+
+submitQuiz.addEventListener("click", () => {
+    if (confirm("Are you sure you want to submit the quiz?")) {
+        clearInterval(timerInterval);
+        submitAnswers();
+    }
+});
+
+confirmSubmit.addEventListener("click", () => {
+    clearInterval(timerInterval);
+    submitModal.classList.add("hidden");
+    submitAnswers();
+});
+cancelSubmit.addEventListener("click", () => submitModal.classList.add("hidden"));
+
+// ================== SUBMIT ==================
+async function submitAnswers() {
+    try {
+        const response = await fetch("../../server/controllers/student/submit_quiz.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ answers, test_id: testId }),
+            credentials: "include",
+        });
+        const result = await response.json();
+
+        if (result.status === "success") {
+            removeSecurityLocks();
+            window.location.href = `/CODING-QUIZ-APP/client/student/congrats.php?score=${result.score}&total=${result.total_marks}`;
+        } else alert("Submission failed: " + result.message);
+    } catch (error) {
+        alert("Error submitting quiz: " + error.message);
+    }
+}
+
+// ================== FULLSCREEN CONTROL ==================
+// ...existing code...
             </div>
             <h2 class="text-xl font-semibold text-gray-800 mb-6">${q.question_text}</h2>
             <div class="space-y-3" id="optionsContainer">
@@ -342,51 +335,45 @@ function renderStyledOption(label, text, questionId, selectedAnswer) {
     `;
 }
 
-function initQuiz() {
-    questionNumbers.innerHTML = "";
-    quizData.forEach((_, index) => {
-        const questionNumber = document.createElement("div");
-        questionNumber.className = "question-number w-10 h-10 flex items-center justify-center rounded-md border border-gray-300 cursor-pointer transition duration-300 hover:bg-gray-100";
-        questionNumber.textContent = index + 1;
-        questionNumber.dataset.index = index;
-        questionNumber.id = `qnum-${quizData[index].question_id}`;
-        questionNumber.addEventListener("click", () => {
-            currentQuestionIndex = index;
+function renderSingleQuestion() {
+    const quizContainer = document.getElementById("quiz-container");
+    quizContainer.innerHTML = "";
+    if (questions.length === 0) return;
+    const q = questions[currentQuestionIndex];
+    const selectedAnswer = answers[q.question_id];
+    const card = document.createElement("div");
+    card.className = "bg-white rounded-lg shadow-md p-6 mb-4";
+    let optionsHtml = '';
+    optionsHtml += renderStyledOption('A', q.option_a, q.question_id, selectedAnswer);
+    optionsHtml += renderStyledOption('B', q.option_b, q.question_id, selectedAnswer);
+    optionsHtml += renderStyledOption('C', q.option_c, q.question_id, selectedAnswer);
+    optionsHtml += renderStyledOption('D', q.option_d, q.question_id, selectedAnswer);
+    card.innerHTML = '<h2 class="text-xl font-semibold text-gray-800 mb-6">' + q.question_text + '</h2>' +
+        '<div class="space-y-3" id="optionsContainer">' + optionsHtml + '</div>';
+    quizContainer.appendChild(card);
+
+    card.querySelectorAll(".option").forEach((option) => {
+        option.addEventListener("click", () => {
+            const label = option.getAttribute("data-label");
+            const qid = option.getAttribute("data-question-id");
+            answers[qid] = label;
+            updateSidebarStatus(qid);
             renderSingleQuestion();
+            updateAnsweredCounts();
         });
-        questionNumbers.appendChild(questionNumber);
-        updateSidebarStatus(quizData[index].question_id);
     });
+
     updateAnsweredCounts();
 }
 
-function updateSidebarStatus(questionId) {
-    const elem = document.getElementById(`qnum-${questionId}`);
-    if (elem) {
-        if (answers[questionId]) {
-            elem.classList.add("bg-green-200", "text-green-800", "font-semibold");
-            elem.classList.remove("bg-yellow-200", "text-yellow-800");
-        } else elem.classList.remove("bg-green-200", "text-green-800", "font-semibold");
-    }
+function renderStyledOption(label, text, questionId, selectedAnswer) {
+    const isSelected = selectedAnswer === label;
+    const selectedClass = isSelected ? "border-orange-500 ring-2 ring-orange-300 bg-orange-50" : "";
+    return '<div class="option border border-gray-200 rounded-lg p-4 cursor-pointer transition duration-300 hover:shadow-md ' + selectedClass + '" ' +
+        'data-label="' + label + '" data-question-id="' + questionId + '">' +
+        '<span class="font-medium mr-3">' + label + '.</span><span>' + text + '</span>' +
+        '</div>';
 }
-
-function updateAnsweredCounts() {
-    const total = questions.length;
-    const answered = Object.keys(answers).filter((qid) => answers[qid] !== undefined && answers[qid] !== "").length;
-    const skipped = Object.keys(answers).filter((qid) => answers[qid] === "").length;
-    const notAnswered = total - answered - skipped;
-
-    document.getElementById("answeredCount").textContent = answered;
-    document.getElementById("notAnsweredCount").textContent = notAnswered;
-    document.getElementById("skippedCount").textContent = skipped;
-}
-
-// ================== BUTTON EVENTS ==================
-startQuiz.addEventListener("click", () => {
-    landingPage.classList.add("hidden");
-    quizContent.classList.remove("hidden");
-});
-
 skipBtn.addEventListener("click", () => {
     const q = questions[currentQuestionIndex];
     if (!answers[q.question_id]) answers[q.question_id] = "";
@@ -438,7 +425,7 @@ async function submitAnswers() {
 
         if (result.status === "success") {
             removeSecurityLocks();
-            window.location.href = `/CODING-QUIZ-APP/client/student/congrats.php?score=${result.score}&total=${result.total_marks}`;
+            window.location.href = '/CODING-QUIZ-APP/client/student/congrats.php?score=' + result.score + '&total=' + result.total_marks;
         } else alert("Submission failed: " + result.message);
     } catch (error) {
         alert("Error submitting quiz: " + error.message);

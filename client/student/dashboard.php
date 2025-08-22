@@ -84,7 +84,7 @@
     <?php include('./sessionHandle.php'); ?>
 
     <script>
-    
+     
         // Theme toggle
         const themeToggle = document.getElementById('theme-toggle');
         const body = document.body;

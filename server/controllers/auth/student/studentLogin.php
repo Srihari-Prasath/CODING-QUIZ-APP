@@ -20,7 +20,7 @@ class LoginController {
         $conn = $db->connect();
 
         $stmt = $conn->prepare("
-            SELECT u.user_id, u.roll_no, u.password, u.name, u.email
+            SELECT u.user_id, u.roll_no, u.password, u.name, u.email , u.year,u.department_id
             FROM student_users u
             WHERE u.roll_no = ?
         ");
@@ -35,6 +35,9 @@ class LoginController {
             $_SESSION['role'] = "student";
             $_SESSION['name'] = $user['name'];
             $_SESSION['email'] = $user['email'];
+            $_SESSION['year'] = $user['year'];
+            $_SESSION['department'] = $user['department_id'];
+
 
             echo json_encode([
                 "message" => "Login successful",
@@ -43,7 +46,9 @@ class LoginController {
                     "roll_no" => $user['roll_no'],
                     "role" => "student",
                     "name" => $user['name'],
-                    "email" => $user['email']
+                    "email" => $user['email'],
+                    "year" => $user['year'],
+                    "department" => $user['department_id']
                 ]
             ]);
         } else {

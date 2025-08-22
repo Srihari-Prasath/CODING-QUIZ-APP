@@ -11,6 +11,9 @@
                 const data = await res.json(); 
               
           localStorage.setItem("user_id", data.id);
+          localStorage.setItem("year", data.year);
+          localStorage.setItem("department", data.id);
+     
                 if (!data.logged_in) {
                     
                     window.location.href = './';
@@ -23,7 +26,7 @@
 
     // handle logout
     async function handleLogout() {
-      document.getElementById("logout-btn")?.addEventListener("click", async () => {
+      document.getElementById("logout-btn").addEventListener("click", async () => {
         try {
           const res = await fetch('<?php echo $api; ?>helpers/logout.php', {
             method: 'POST',

@@ -51,18 +51,21 @@
     <!-- Test Grid -->
     <div id="testContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
   </div>
-
+ <?php include('../resource/api.php'); ?> 
+ <?php include('./sessionHandle.php'); ?>
 <script>
-async function fetchTests() {
+  async function fetchTests() {
   try {
-    const res = await fetch('../../server/controllers/student/test-list.php', {
+    const res = await fetch('<?php echo $api; ?>student/test/testRoutes.php?test_list=1', {
       method: 'GET',
       credentials: 'include'
     });
 
-    const data = await res.json();
+    const result = await res.json();
+    const data = result.tests || [];
     const container = document.getElementById('testContainer');
     container.innerHTML = "";
+    container.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"; // responsive grid
 
     if (!data || data.length === 0) {
       container.innerHTML = "<p class='text-gray-500 text-center col-span-3'>No available tests at the moment.</p>";
@@ -71,11 +74,12 @@ async function fetchTests() {
 
     data.forEach(test => {
       const card = document.createElement('div');
-      card.className = "relative p-6 custom-card shadow";
+      card.className = "bg-white shadow-lg rounded-lg p-6 hover:shadow-xl transition relative";
 
-      const statusColor = test.is_active == 1 ? 'status-active' : 'status-inactive';
+      const statusColor = test.is_active == 1 ? 'bg-green-500' : 'bg-gray-400';
 
       function getSlotLabel(start, end) {
+        if (!start || !end) return "N/A";
         const startH = new Date(start).getHours();
         const endH = new Date(end).getHours();
         if (startH === 9 && endH === 21) return 'Full Day';
@@ -92,10 +96,10 @@ async function fetchTests() {
               title="${test.is_active == 1 ? 'Active' : 'Inactive'}"></span>
         <h2 class="text-xl font-semibold mb-2 text-gray-900">${test.title}</h2>
         <p class="text-gray-600 mb-3">${test.description || "No description available."}</p>
-        <p class="text-sm text-gray-500 mb-1"><strong>Domain:</strong> ${test.domain || "N/A"}</p>
-        <p class="text-sm text-gray-500 mb-1"><strong>Department:</strong> ${test.department || "N/A"} | <strong>Year:</strong> ${test.year || "N/A"}</p>
+        <p class="text-sm text-gray-500 mb-1"><strong>Subject:</strong> ${test.subject || "N/A"}</p>
+        <p class="text-sm text-gray-500 mb-1"><strong>Department:</strong> ${test.department_id || "N/A"} | <strong>Year:</strong> ${test.year || "N/A"}</p>
         <p class="text-sm text-gray-500 mb-1"><strong>Time Slot:</strong> ${slotLabel}</p>
-        <p class="text-sm text-gray-500 mb-4"><strong>Duration:</strong> ${test.duration_minutes} mins | <strong>Marks:</strong> ${test.total_marks}</p>
+        <p class="text-sm text-gray-500 mb-4"><strong>Duration:</strong> ${test.duration_minutes} mins | <strong>Marks:</strong> ${test.total_marks || "N/A"}</p>
         <button onclick="window.location.href='quiz-attend.php?test_id=${test.test_id}'" 
                 class="w-full px-4 py-2 bg-orange-600 text-white font-medium rounded-lg hover:bg-orange-700 transition">
           Start Test
@@ -107,11 +111,13 @@ async function fetchTests() {
 
   } catch (error) {
     console.error("Error fetching tests:", error);
-    document.getElementById('testContainer').innerHTML = "<p class='text-red-500 text-center col-span-3'>Failed to fetch tests.</p>";
+    const container = document.getElementById('testContainer');
+    container.innerHTML = "<p class='text-red-500 text-center col-span-3'>Failed to fetch tests.</p>";
   }
 }
 
 window.addEventListener('DOMContentLoaded', fetchTests);
+
 </script>
 </body>
 </html>
