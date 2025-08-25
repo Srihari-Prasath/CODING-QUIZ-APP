@@ -1,10 +1,7 @@
 <?php
 include("../resource/session.php");
 
-include("../resource/conn.php");
-
-
-
+include("../resource/conn.php"); 
 
 
 // fetch topics
