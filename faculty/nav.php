@@ -48,13 +48,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
          Topics
       </a>
 
-      <a href="upload-questions.php" <?php if ($current_page == "upload-questions.php") echo 'aria-current="page"'; ?>
-         class="relative px-3 py-2 rounded-xl transition-all duration-300 
-                hover:text-orange-600 hover:bg-orange-50
-                aria-[current=page]:bg-orange-400 aria-[current=page]:text-white 
-                aria-[current=page]:shadow-md">
-         Upload Questions
-      </a>
 
       <a href="leaderboard.php" <?php if ($current_page == "leaderboard.php") echo 'aria-current="page"'; ?>
          class="relative px-3 py-2 rounded-xl transition-all duration-300 

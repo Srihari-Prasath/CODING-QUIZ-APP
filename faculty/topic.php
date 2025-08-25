@@ -1,7 +1,8 @@
 <?php
-include("../resource/session.php");
 
 include("../resource/conn.php");
+
+include("../resource/session.php"); 
 
 include("../backend/faculty/Createtopic.php");
 
@@ -40,7 +41,7 @@ $topicResult = $topicStmt->get_result();
             <?php include('./nav.php') ?>
         </section>
 
-        <div class="flex gap-3">
+        <div class="flex gap-3 justify-end max-w-7xl">
             <div>
                 <button id="open-topic-popup" class="px-3 py-2 bg-orange-200 border-white border-2">
                     Add Topics
@@ -51,8 +52,21 @@ $topicResult = $topicStmt->get_result();
                     Add Sub Topics
                 </button>
             </div>
+            <div>
+                <button id="open-subtopic-popup" class="px-3 py-2 bg-orange-200 border-white border-2">
+                    Upload Questions
+                </button>
+            </div>
+
+             
         </div>
 
+        <div class="max-w-7xl">
+             <main >
+        
+        </main>
+
+        </div>
         <!-- Topic Popup Modal -->
         <div id="topic-popup" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
             <div class="bg-white p-10 rounded-3xl shadow-xl max-w-3xl w-full relative">
@@ -60,7 +74,7 @@ $topicResult = $topicStmt->get_result();
                 <h2 class="text-3xl font-bold text-gray-800 mb-2 text-center">Create New Topic</h2>
                 <p class="text-gray-500 mb-6 text-center">Add a topic with a descriptive summary for students.</p>
                 <form id="create-topic-form" class="flex flex-col gap-8" action="./topic.php" method="post">
-                   
+
                     <div class="flex flex-col">
                         <label for="topicName" class="mb-2 font-semibold text-gray-700">Topic Name</label>
                         <input type="text" id="topicName" name="topicName" placeholder="Enter topic name" required
@@ -120,7 +134,11 @@ $topicResult = $topicStmt->get_result();
                 </form>
             </div>
         </div>
+      
     </main>
+
+
+
 
     <script>
         document.getElementById('open-topic-popup').addEventListener('click', function() {

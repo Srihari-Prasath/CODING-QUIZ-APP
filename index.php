@@ -12,6 +12,8 @@
 
 </head>
 <body class="min-h-screen flex flex-col font-sans relative">
+      <?php include('./launch-overlay.php') ?>
+
     <div style="position: absolute;left:30px;top:30px;width:180px;height:100px">
         <img src="./assets/img/main/logo.png" alt="">
     </div>
