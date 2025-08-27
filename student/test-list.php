@@ -85,35 +85,56 @@ $conn->close();
             <a href="Result.php">Result</a>
             <a href="reports.php">Reports</a>
         </nav>
-
 <div id="quiz-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
     <?php if (count($tests) > 0): ?>
         <?php foreach ($tests as $test): ?>
-            <div class="quiz-card bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-5 text-left">
-                <h3 class="text-xl font-semibold text-gray-800 mb-2">
-                    <?php echo htmlspecialchars($test['title']); ?>
-                </h3>
-                <p class="text-gray-600 mb-3"><?php echo htmlspecialchars($test['description']); ?></p>
+            <div class="quiz-card relative bg-white rounded-3xl shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 p-6 flex flex-col justify-between border-l-8 border-orange-400">
 
-                <div class="text-sm text-gray-500 space-y-1 mb-4">
-                    <p><strong class="text-gray-700">Subject:</strong> <?php echo htmlspecialchars($test['subject']); ?></p>
-                    <p><strong class="text-gray-700">Topic:</strong> <?php echo htmlspecialchars($test['topic_name'] ?? 'N/A'); ?></p>
-                    <p><strong class="text-gray-700">Sub Topic:</strong> <?php echo htmlspecialchars($test['sub_topic_name'] ?? 'N/A'); ?></p>
-                    <p><strong class="text-gray-700">Date:</strong> <?php echo htmlspecialchars($test['date']); ?></p>
-                    <p><strong class="text-gray-700">Time Slot:</strong> <?php echo htmlspecialchars($test['time_slot']); ?></p>
-                    <p><strong class="text-gray-700">Duration:</strong> <?php echo htmlspecialchars($test['duration_minutes']); ?> mins</p>
+                <!-- Status Badge -->
+                <?php if(isset($test['status'])): ?>
+                    <span class="absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-semibold 
+                        <?php echo $test['status'] == 1 ? 'bg-green-200 text-green-800' : 'bg-gray-200 text-gray-600'; ?>">
+                        <?php echo $test['status'] == 1 ? 'Active' : 'Inactive'; ?>
+                    </span>
+                <?php endif; ?>
+
+                <!-- Card Header / Title -->
+                <div class="mb-4">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-1"><?php echo htmlspecialchars($test['title']); ?></h3>
+                    <p class="text-gray-500 text-sm"><?php echo htmlspecialchars($test['description']); ?></p>
                 </div>
 
-                <a href="./test.php?id=<?php echo $test['test_id']; ?>"
-                   class="mt-auto inline-block bg-orange-500 hover:bg-orange-600 text-white font-medium px-4 py-2 rounded-lg transition duration-300">
-                    Start Test
-                </a>
+                <!-- Info Section -->
+                <div class="bg-orange-50 text-xl text-gray-600 space-y-1 mb-6 bg-gray-50 p-4  rounded-xl">
+                    <p><span class="font-semibold text-gray-700">Subject:</span> <?php echo htmlspecialchars($test['subject']); ?></p>
+                    <p><span class="font-semibold text-gray-700">Topic:</span> <?php echo htmlspecialchars($test['topic_name'] ?? 'N/A'); ?></p>
+                    <p><span class="font-semibold text-gray-700">Sub Topic:</span> <?php echo htmlspecialchars($test['sub_topic_name'] ?? 'N/A'); ?></p>
+                    <p><span class="font-semibold text-gray-700">Date:</span> <?php echo htmlspecialchars($test['date']); ?></p>
+                    <p><span class="font-semibold text-gray-700">Time Slot:</span> <?php echo htmlspecialchars($test['time_slot']); ?></p>
+                    <p><span class="font-semibold text-gray-700">Duration:</span> <?php echo htmlspecialchars($test['duration_minutes']); ?> mins</p>
+                </div>
+
+                <!-- Action Button -->
+                <?php if($test['is_active'] == 1): ?>
+                    <a href="./test.php?id=<?php echo $test['test_id']; ?>"
+                       class="mt-auto inline-block text-center bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500 text-white font-semibold px-5 py-3 rounded-2xl shadow-lg transition-all duration-300">
+                        Start Test
+                    </a>
+                <?php else: ?>
+                    <button disabled
+                        class="mt-auto inline-block text-center bg-gray-300 text-gray-600 font-semibold px-5 py-3 rounded-2xl shadow-lg cursor-not-allowed">
+                        Inactive
+                    </button>
+                <?php endif; ?>
+
             </div>
         <?php endforeach; ?>
     <?php else: ?>
         <p class="col-span-3 text-gray-500 text-lg">No tests available for your year and department.</p>
     <?php endif; ?>
 </div>
+
+
 
 
 

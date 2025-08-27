@@ -3,10 +3,14 @@
  <div>
   <img src="../assets/img/main/logo.png" alt="" width="180px" height="120px">
  </div>
-    <div class="text-center">
+    <div class="text-center flex flex-col justify-center items-center uppercase">
       <h1>
-        <i data-lucide="graduation-cap" class="student-icon"></i>
-        Student Dashboard
+        
+        Theni Melapettai Hindu Nadargal Uravinmurai 
+      </h1>
+      <h1 class="">
+        NADAR SARASWATHI COLLEGE OF ENGINEERING & TECHNOLOGY
+
       </h1>
   <h2>Welcome back, <?php echo $_SESSION['name'] ?></h2>
     </div>

@@ -2,6 +2,11 @@
 include("../resource/conn.php");
 session_start();
 
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
+
 if (!isset($_SESSION['id']) || !isset($_GET['id'])) {
     header("Location: test-list.php");
     die("Unauthorized");
@@ -50,6 +55,9 @@ while ($row = $result->fetch_assoc()) {
 $stmt->close();
 
 $questions_json = json_encode($questions, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -117,7 +125,9 @@ $questions_json = json_encode($questions, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HE
 </div>
 
 <script>
+
 const QUESTIONS = <?= $questions_json ?>;
+
 let answers = {};
 let currentQuestionIndex = 0;
 const quizContent = document.getElementById("quizContent");
@@ -248,7 +258,7 @@ function onSubmit() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      test_id:  <?= htmlspecialchars($test_id) ?>,
+  test_id:  <?= htmlspecialchars($test_id) ?>,
       answers: answers,
       score: result.score
     })
@@ -277,7 +287,7 @@ function showResult(precomputed) {
   const data = precomputed || computeScore();
   quizContent.classList.add("hidden");
   resultPage.classList.remove("hidden");
-  document.getElementById("resultText").textContent = `You scored ${data.score} out of ${data.total}`;
+  document.getElementById("resultText").textContent = `You scored 3 out of ${data.total}`;
 }
 
 function clearAll() { answers = {}; currentQuestionIndex=0; resultPage.classList.add("hidden"); }

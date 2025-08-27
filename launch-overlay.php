@@ -1,340 +1,633 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Collector Launch Overlay – Demo</title>
-  <style>
-    /* ======= Base & Layout ======= */
-    :root{
-      --red-deep: #7a0610;       /* deep crimson */
-      --red-velvet: #b10e1e;    /* velvet mid */
-      --red-ribbon: #e0162c;    /* highlight */
-      --orange: #ff6b00;        /* button base */
-      --gold: #ffb84d;          /* warm gold */
-      --gold-bright: #ffd36e;   /* bright gold */
-      --shadow: rgba(0,0,0,.55);
-      --edge-glow: rgba(255, 140, 0, .55);
-      --overlay-bg: #0b0b0c;    /* stage background */
-      --transition: 1100ms cubic-bezier(.22,.8,.26,1);
-    }
-
-    /* Prevent scroll while overlay is active */
-    html.overlay-active, body.overlay-active { overflow: hidden; }
-
-    /* Page filler behind overlay for demo */
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;}
-    .page-content{min-height:120vh;display:grid;place-items:center;background: radial-gradient(1200px 600px at 50% 20%, #1b1b1f 0%, #0f1115 60%, #0a0b0d 100%);color:#eaeef7}
-
-    /* ======= Overlay ======= */
-    #collector-launch-overlay{
-      position:fixed;inset:0;z-index:9999;background:var(--overlay-bg);
-      display:grid;place-items:center;overflow:hidden;opacity:1;transition: opacity 600ms ease 300ms;
-    }
-    #collector-launch-overlay.hidden{opacity:0;pointer-events:none;}
-
-    .curtain-stage{position:absolute;inset:0;}
-
-    .curtain{position:absolute;top:0;height:100%;width:50%;
-      background:
-        radial-gradient(120% 140% at 0% 50%, rgba(0,0,0,.35) 0 40%, transparent 41%),
-        radial-gradient(120% 140% at 100% 50%, rgba(0,0,0,.35) 0 40%, transparent 41%),
-        repeating-linear-gradient(90deg,
-          var(--red-velvet) 0 26px,
-          var(--red-ribbon) 26px 46px,
-          var(--red-velvet) 46px 72px
-        );
-      box-shadow: inset 0 0 50px 20px rgba(0,0,0,.45), 0 10px 40px var(--shadow);
-      background-blend-mode: multiply, multiply, normal;
-      transform: translateX(0); transition: transform var(--transition);
-    }
-    .curtain.left{left:0;border-right:1px solid rgba(255,255,255,.06)}
-    .curtain.right{right:0;border-left:1px solid rgba(255,255,255,.06)}
-
-    /* Edge glow + sparkle trail */
-    .curtain::after{content:"";position:absolute;top:0;bottom:0;width:6px;pointer-events:none;opacity:.85;
-      background:linear-gradient(to bottom, rgba(255,255,255,.0) 0%, var(--gold) 25%, var(--gold-bright) 50%, var(--gold) 75%, rgba(255,255,255,.0) 100%);
-      filter: drop-shadow(0 0 6px var(--edge-glow));
-      animation: glow-pulse 2.2s ease-in-out infinite;
-    }
-    .curtain.left::after{right:-3px}
-    .curtain.right::after{left:-3px}
-
-    @keyframes glow-pulse{0%,100%{opacity:.55}50%{opacity:1}}
-
-    /* Shimmer flecks along edges */
-    .curtain::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.35;
-      background: radial-gradient(3px 3px at 10% 20%, var(--gold-bright) 0 40%, transparent 45%),
-                  radial-gradient(2px 2px at 30% 65%, var(--gold) 0 45%, transparent 55%),
-                  radial-gradient(2.5px 2.5px at 70% 35%, var(--gold) 0 45%, transparent 55%),
-                  radial-gradient(3px 3px at 90% 80%, var(--gold-bright) 0 40%, transparent 45%);
-      mix-blend-mode: screen;
-      animation: shimmer 3.2s linear infinite;
-    }
-    @keyframes shimmer{to{transform: translateX(15px)}}
-
-    /* Animate center content on load */
-.center-wrap {
-  animation: fade-in-up 1.2s ease forwards;
-  opacity: 0;
-  transform: translateY(20px) scale(0.96);
-}
-@keyframes fade-in-up {
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HUD Unveiling</title>
+<style>
+  .tech-clock {
+    position: fixed;
+    right: 40px;
+    top: 250px;
+    font-family: 'Orbitron', Arial, sans-serif;
+    font-size: 1.3rem;
+    color: #ff9933;
+    background: rgba(0,0,0,0.7);
+    border: 2px solid #ff9933;
+    border-radius: 12px;
+    padding: 6px 18px;
+    box-shadow: 0 0 10px #ff9933a0;
+    z-index: 50;
+    letter-spacing: 0.12em;
+    opacity: 0;
+    transition: opacity 0.5s;
   }
-}
+  .logo-circle-container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 60% 40%, #222 70%, #444 100%);
+    box-shadow: 0 0 40px #ff9933a0, 0 0 0 8px #222 inset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    transition: transform 0.7s cubic-bezier(.68,-0.55,.27,1.55), opacity 0.5s;
+  }
+  .logo-circle-container img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 20px #ff9933a0;
+    background: #fff;
+  }
+  .circle-split-container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 220px;
+    height: 220px;
+    z-index: 10;
+    pointer-events: none;
+  }
+  .circle-split-svg {
+    width: 220px;
+    height: 220px;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  .circle-img {
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    left: 0;
+    top: 0;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    transition: transform 1s cubic-bezier(.68,-0.55,.27,1.55);
+  }
+  .circle-img.left {
+    clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+    z-index: 2;
+  }
+  .circle-img.right {
+    clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+    z-index: 2;
+  }
+  .circle-img.split-left {
+    transform: translateX(-120px);
+  }
+  .circle-img.split-right {
+    transform: translateX(120px);
+  }
+  :root {
+    --bg:#000;
+    --orange:#ff9933;
+    --orange-strong:#ff7a1a;
+    --grid:rgba(255,153,51,.15);
+  }
+  html, body {
+    margin:0; padding:0;
+    height:100%;
+    background: var(--bg);
+    overflow:hidden;
+    font-family: Arial, sans-serif;
+  }
 
-/* panel background to make text readable over curtains/ribbon */
-.center-wrap { display:grid; place-items:center; z-index:140; pointer-events:auto; padding: 12px; }
+  /* ---------------- VIDEO OVERLAY ---------------- */
+  #video-overlay {
+    position:fixed; inset:0;
+    display:flex; justify-content:center; align-items:center;
+    flex-direction:column;
+    background:black;
+    z-index:9999;
+  }
+  #intro-video {
+    width:100%; height:100%;
+    object-fit:cover; display:none;
+  }
+  #launch-btn {
+    /* padding:10px 80px;
+    font-size:2rem;
+    cursor:pointer;
+    border:none;
+    background-color:#E8823A;
+    color:white;
+    border-radius:10px; */
+    z-index:10000;
+  }
 
-.center-panel{
-  width: min(820px, 92%);
-  max-width: 820px;
-  padding: clamp(18px, 2.2vw, 28px);
-  border-radius: 12px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.028), rgba(255,255,255,0.014));
-  border: 1px solid rgba(255,255,255,0.06);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
-  backdrop-filter: blur(6px) saturate(110%);
-  -webkit-backdrop-filter: blur(6px) saturate(110%);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:14px;
-  text-align:center;
-  transition: transform 220ms ease, box-shadow 220ms ease, opacity 220ms ease;
-  opacity: 1;
-}
+  /* ---------------- BOOST CONTAINER (LEFT) ---------------- */
+  .hud-left {
+    position:fixed;
+    left:30px; top:50%;
+    transform:translateY(-50%) scale(0);
+    opacity:0;
+    width:250px; color:var(--orange);
+    transition: transform 0.7s cubic-bezier(.68,-0.55,.27,1.55), opacity 0.5s;
+    transform-origin: center center;
+  }
+  .title {
+    display:flex; align-items:center;
+    font-weight:bold; font-size:18px;
+    margin-bottom:20px;
+  }
+  .circle {
+    width:30px; height:30px;
+    border:2px solid var(--orange);
+    border-radius:50%; margin-right:10px;
+    box-shadow:0 0 8px var(--orange);
+    animation:rotate 3s linear infinite;
+  }
+  @keyframes rotate {from{transform:rotate(0);} to{transform:rotate(360deg);}}
+  .scale {
+    position:absolute; top:60px; left:15px; bottom:20px;
+    width:2px; background:linear-gradient(to bottom, var(--orange), transparent);
+  }
+  .scale div {
+    width:10px; height:2px; background:var(--orange);
+    margin:8px 0; box-shadow:0 0 5px var(--orange);
+  }
+  .boxes {
+    margin-left:50px; display:flex; flex-direction:column;
+    height:500px; position:relative; overflow:hidden;
+  }
+  .box {
+    width:180px; height:30px;
+    border:2px solid var(--orange);
+    margin:5px 0; box-shadow:0 0 8px var(--orange);
+    background:transparent;
+    opacity:0; transform:translateY(-10px);
+    position:relative; overflow:hidden;
+  }
+  .box.revealed {
+    opacity:1; transform:translateY(0);
+    transition:opacity .2s ease, transform .2s ease;
+  }
+  .liquid {
+    position:absolute; bottom:0; left:0;
+    width:100%; height:0%;
+    background:linear-gradient(to top, var(--orange), #ff6600);
+    box-shadow:0 0 10px #ff6600 inset;
+    transition:height .3s ease-in-out;
+  }
+  .liquid::before {
+    content:""; position:absolute; top:0; left:-100%;
+    width:200%; height:100%;
+    background:linear-gradient(270deg, transparent, rgba(255,255,255,0.4), transparent);
+    animation:flow 1s linear infinite;
+  }
+  @keyframes flow {0%{left:-100%;}100%{left:0%;}}
 
-/* slight elevated header spacing */
-.center-panel .badge { margin-top:2px; }
+  /* ---------------- CLOCK HUD (BOTTOM RIGHT) ---------------- */
+  .dashboard {
+    position:fixed; right:26px; bottom:26px;
+    width:min(360px,92vw); pointer-events:none;
+    transform: scale(0);
+    opacity:0;
+    transition: transform 0.7s cubic-bezier(.68,-0.55,.27,1.55), opacity 0.5s;
+    transform-origin: center center;
+  }
+  .hud {
+    position:relative; width:100%;
+    border:2px solid var(--orange);
+    border-radius:16px;
+    box-shadow:0 0 20px rgba(255,122,26,.35), inset 0 0 25px rgba(255,122,26,.15);
+    background: radial-gradient(100% 120% at 50% 10%, rgba(255,153,51,.10), rgba(0,0,0,.0) 55%),
+                linear-gradient(180deg, rgba(255,153,51,.06), rgba(255,153,51,.02));
+    aspect-ratio:1/1; overflow:hidden;
+  }
+  .hud-title {
+    position:absolute; top:10px; left:14px;
+    background:rgba(0,0,0,.85); padding:6px 12px;
+    border:2px solid var(--orange); border-radius:12px;
+    box-shadow:0 0 12px rgba(255,122,26,.55);
+    font-weight:800; letter-spacing:.08em; font-size:.9rem;
+  }
+  .grid {
+    position:absolute; inset:0; opacity:.9;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size:22px 22px;
+  }
+  .logo-placeholder {
+    position:absolute; top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    display:flex; justify-content:center; align-items:center;
+  }
+  .logo-placeholder img {
+    max-width:300px; max-height:300px;
+    filter:drop-shadow(0 0 15px rgba(255,255,255,.9))
+           drop-shadow(0 0 25px rgba(255,255,255,.6));
+    animation:logo-pulse 3s infinite ease-in-out;
+  }
+  @keyframes logo-pulse {
+    0%,100% {filter:drop-shadow(0 0 15px rgba(255,255,255,.9)) drop-shadow(0 0 25px rgba(255,153,51,.6));}
+    50% {filter:drop-shadow(0 0 25px rgba(255,255,255,1)) drop-shadow(0 0 45px rgba(255,153,51,.85));}
+  }
+  .readout {
+    position:absolute; left:14px; bottom:10px;
+    font-weight:800; letter-spacing:.08em;
+    text-shadow:0 0 8px var(--orange-strong);
+  }
+  .controls {
+    position:absolute; right:12px; bottom:10px; display:flex; gap:6px;
+  }
+  .pill {
+    width:12px; height:18px; border-radius:3px;
+    border:2px solid var(--orange);
+    box-shadow:0 0 8px rgba(255,122,26,.6) inset;
+  }
 
-/* actions row */
-.center-actions {
-  display:flex;
-  gap:12px;
-  align-items:center;
-  justify-content:center;
-  margin-top:4px;
-}
+  /* ---------- SIGNATURE HUD (top-right) ---------- */
+  .signature {
+    position: fixed;
+    top: 40px;
+    right: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    z-index: 20;
+    transform: scale(0);
+    opacity:0;
+    transition: transform 0.7s cubic-bezier(.68,-0.55,.27,1.55), opacity 0.5s;
+    transform-origin: center center;
+  }
 
-/* smaller skip positioning inside panel for clarity */
-.center-panel .skip {
-  font-size:.9rem;
-  text-decoration:underline;
-  color:#ffd;
-  opacity:.9;
-  margin-left:6px;
-}
+  .signature-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
 
-/* panel foot (extra micro copy) */
-.panel-foot { display:flex; flex-direction:column; align-items:center; gap:8px; margin-top:8px; opacity:.95; }
-.panel-foot .gold-line{
-  width:48px; height:4px; border-radius:4px;
-  background: linear-gradient(90deg,#ffd36e,#ff8e2b);
-  box-shadow: 0 6px 18px rgba(255,140,40,0.08);
-}
+  .signature-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .signature-bars .bar {
+    width: 14px;
+    height: 14px;
+    background: var(--orange);
+    opacity: 0;
+    transform: scale(0.5);
+    animation: barLoad 1.5s ease-in-out infinite;
+  }
+  .signature-bars .bar:nth-child(2) { animation-delay: 0.2s; }
+  .signature-bars .bar:nth-child(3) { animation-delay: 0.4s; }
 
-/* meta text */
-.panel-foot .meta { font-size:.82rem; color:#d9c89b; opacity:.92; }
+  @keyframes barLoad {
+    0%, 100% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 1; transform: scale(1); }
+  }
 
-/* reduce warm tint (if you want absolutely neutral, override gradient) */
-/* .panel-foot .gold-line { background: linear-gradient(90deg,#e2e2e2,#bdbdbd); } */
+  .signature-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--orange);
+    letter-spacing: 0.08em;
+    min-width: 220px;
+    white-space: nowrap;
+    opacity: 0;
+    animation: textFadeIn 0.5s ease-out 0.6s forwards;
+  }
 
-/* accessible focus state */
-.center-panel:focus-within { box-shadow: 0 26px 56px rgba(0,0,0,0.7), 0 0 0 6px rgba(255,255,255,0.02); outline: none; }
+  @keyframes textFadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
 
-/* responsive tweaks */
-@media (max-width:560px){
-  .center-panel{ padding:14px; border-radius:10px; }
-  .panel-foot .meta{ font-size:.78rem; }
-  .center-panel .badge{ font-size:.78rem; padding:5px 8px; }
-}
+  /* Horizontal HUD lines */
+  .hud-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 28px;
+  }
+  .hud-line {
+    height: 8px;
+    background: var(--orange);
+    opacity: 0.8;
+    border-radius: 2px;
+    transform-origin: left;
+    animation: lineExpand 2s ease-in-out infinite;
+  }
+  .hud-line:nth-child(1) { width: 220px; animation-delay: 0.8s; }
+  .hud-line:nth-child(2) { width: 140px; animation-delay: 1.0s; }
+  .hud-line:nth-child(3) { width: 200px; animation-delay: 1.2s; }
 
-
-/* Curtain smoother + bounce slide */
-body.launched .curtain.left {
-  animation: curtain-left 2s cubic-bezier(.22,1.08,.38,1) forwards;
-}
-body.launched .curtain.right {
-  animation: curtain-right 2s cubic-bezier(.22,1.08,.38,1) forwards;
-}
-@keyframes curtain-left {
-  to { transform: translateX(-100%); }
-}
-@keyframes curtain-right {
-  to { transform: translateX(100%); }
-}
-
-
-    /* ======= Center Content ======= */
-    .center-wrap{position:relative;display:grid;gap:22px;place-items:center;text-align:center;padding:24px 20px}
-
-    .badge{
-      display:inline-block;padding:6px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.15);
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(0,0,0,.25));
-      color:#ffe3b0;letter-spacing:.08em;font-size:.8rem;text-transform:uppercase
-    }
-
-    .title{font-weight:800;line-height:1.1;margin:0;letter-spacing:.3px;
-      font-size: clamp(1.6rem, 3.4vw + 0.6rem, 3.2rem);
-      background: linear-gradient(92deg, #ff8e2b, #ffd36e 45%, #fff1b2 60%, #ff8e2b 100%);
-      -webkit-background-clip:text;background-clip:text;color:transparent;
-      text-shadow: 0 2px 18px rgba(255, 187, 80, .15);
-    }
-
-    .subtitle{color:#f9d79a;opacity:.9;max-width:72ch}
-
-    .launch-btn{cursor:pointer; user-select:none; border:none; outline:none; 
-      padding:18px 32px;border-radius:999px; font-weight:800; letter-spacing:.3px; font-size:1.05rem;
-      background: linear-gradient(180deg, #ff7a14, #ff6b00 35%, #e85d00 100%);
-      color:#fff; box-shadow: 0 8px 28px rgba(255,107,0,.35), inset 0 1px 0 rgba(255,255,255,.25);
-      position:relative;
-      transition: transform 220ms ease, box-shadow 220ms ease, filter 220ms ease;
-      border: 1px solid rgba(255,211,110,.6);
-    }
-    .launch-btn:hover{transform: translateY(-1px) scale(1.02); box-shadow: 0 10px 36px rgba(255,107,0,.45);}
-    .launch-btn:active{transform: translateY(0) scale(.99)}
-    .launch-btn:focus-visible{box-shadow: 0 0 0 4px rgba(255,211,110,.35), 0 8px 28px rgba(255,107,0,.35)}
-
-    /* shimmering border accent */
-    .launch-btn::after{content:"";position:absolute;inset:-2px;border-radius:inherit;pointer-events:none;
-      background: conic-gradient(from 0deg, #fff1b2, #ffd36e, #ff8e2b, transparent 65%);
-      filter: blur(10px); opacity:.0; transition: opacity .35s ease;
-    }
-    .launch-btn:hover::after{opacity:.35}
-
-    /* Skip link (hidden by default, unhide if needed for dev) */
-    .skip{position:absolute;right:14px;bottom:12px;color:#ffe7b8;opacity:.6;font-size:.85rem;text-decoration:underline;display:none}
-
-    /* ======= Reduced motion ======= */
-    @media (prefers-reduced-motion: reduce){
-      .curtain, #collector-launch-overlay{transition:none}
-      .curtain::before, .curtain::after{animation:none}
-    }
-
-    /* Confetti styling */
-.confetti {
-  position: fixed;
-  top:-10px;
-  width:10px;
-  height:14px;
-  opacity:0.9;
-  animation: fall 3s linear forwards;
-}
-@keyframes fall {
-  to { transform: translateY(110vh) rotate(720deg); }
-}
+  @keyframes lineExpand {
+    0%, 100% { transform: scaleX(0); opacity: 0.8; }
+    50% { transform: scaleX(1); opacity: 0.9; }
+  }
 
 
-    /* ======= Small screens ======= */
-    @media (max-width:560px){ .subtitle{font-size:.95rem} }
-  </style>
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    transform: scale(0);
+    opacity:0;
+    transition: transform 0.7s cubic-bezier(.68,-0.55,.27,1.55), opacity 0.5s;
+    transform-origin: center center;
+  }
+
+        .container-ring {
+            width: 80vmin;
+            height: 80vmin;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: scaleIn 1s ease-out;
+        }
+
+        .ringMain circle {
+            fill: none;
+            stroke-linecap: round;
+            transform-origin: 50% 50%;  
+        }
+
+        .c1 { stroke: #ff9933; stroke-width: 0.2; }
+        .c2 { stroke: #ff9933; stroke-width: 0.3; stroke-dasharray: 5, 10; animation: rotate-c2 8s infinite linear; }
+        .c3 { stroke: #ff7a1a; stroke-width: 1; transform: rotate(-90deg); stroke-dasharray: 50, 100; animation: progress 6s ease-out forwards; }
+        .c4 { stroke: #cc6600; stroke-width: 0.7; animation: rotate-c4 12s infinite linear; }
+        .c5 { stroke: #E8823A; stroke-width: 0.8; stroke-dasharray: 40; animation: rotate-c5 10s infinite linear; }
+        .c6 { stroke: #ff9933; stroke-width: 0.9; stroke-dasharray: 15; animation: rotate-c6 14s infinite linear; }
+        .c7 { stroke: #ff7a1a; stroke-width: 0.9; stroke-dasharray: 2; animation: rotate-c7 16s infinite linear; }
+        .c8 { stroke: #ff9933; stroke-width: 2; stroke-dasharray: 30,100; animation: rotate-c8 18s infinite linear; }
+        .c9 { stroke: #E8823A; stroke-width: 0.6; stroke-dasharray: 20; animation: rotate-c9 20s infinite linear; }
+        .c10 { stroke: #ff7a1a; stroke-width: 0.7; stroke-dasharray: 80, 100; animation: rotate-c10 22s infinite linear; }
+        .c11 { stroke: #ff9933; stroke-width: 1; stroke-dasharray: 80, 100; animation: rotate-c11 24s infinite linear; }
+
+        @keyframes scaleIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes progress {
+            0% { stroke-dasharray: 0 100; }
+            100% { stroke-dasharray: 50 100; }
+        }
+
+        @keyframes rotate-c2 { 100% { transform: rotate(360deg); } }
+        @keyframes rotate-c4 { 100% { transform: rotate(-360deg); } }
+        @keyframes rotate-c5 { 100% { transform: rotate(360deg); } }
+        @keyframes rotate-c6 { 100% { transform: rotate(-360deg); } }
+        @keyframes rotate-c7 { 100% { transform: rotate(360deg); } }
+        @keyframes rotate-c8 { 100% { transform: rotate(-360deg); } }
+        @keyframes rotate-c9 { 100% { transform: rotate(360deg); } }
+        @keyframes rotate-c10 { 100% { transform: rotate(-360deg); } }
+        @keyframes rotate-c11 { 100% { transform: rotate(360deg); } }
+</style>
+
 </head>
-<body class="overlay-active">
+<body>
 
-  <!-- ========= Collector Launch Overlay ========= -->
-  <div id="collector-launch-overlay" role="dialog" aria-labelledby="launch-title" aria-modal="true">
-    <div class="curtain-stage" aria-hidden="true">
-      <div class="curtain left"></div>
-      <div class="curtain right"></div>
-    </div>
 
-    <div class="center-wrap">
-  <div class="center-panel" role="region" aria-labelledby="launch-title" aria-describedby="launch-desc">
-    <span class="badge">Official Unveiling</span>
+  
+<div class="tech-clock" id="techClock"></div>
+<!-- VIDEO OVERLAY -->
+<div id="video-overlay">
+  <button id="launch-btn"></button>
+  <video id="intro-video">
+    <source src="loader.mp4" type="video/mp4">
+  </video>
+</div>
 
-    <h1 id="launch-title" class="title">Launch by the District Collector</h1>
-    <p id="launch-desc" class="subtitle">
-      Thank you for joining us for this special moment. Click the button below to unveil the platform.
-    </p>
-
-    <div class="center-actions">
-      <button id="launch-btn" class="launch-btn" aria-label="Launch Platform">Launch Platform</button>
-      <a href="#" id="skip-overlay" class="skip">Skip</a>
-    </div>
-
-    <div class="panel-foot">
-      <div class="gold-line" aria-hidden="true"></div>
-      <small class="meta">Designed and Developed by Ispin❤</small>
-    </div>
+<!-- LEFT LOADER -->
+<div class="hud-left" id="left-loader" style="display:none;">
+  <div class="title"><div class="circle"></div>Loading Container</div>
+  <div class="scale">
+    <div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div>
+  </div>
+  <div class="boxes" id="boxes">
+    <div class="box"><div class="liquid"></div></div>
+    <div class="box"><div class="liquid"></div></div>
+    <div class="box"><div class="liquid"></div></div>
+    <div class="box"><div class="liquid"></div></div>
+    <div class="box"><div class="liquid"></div></div>
+    <div class="box"><div class="liquid"></div></div>
+    <div class="box"><div class="liquid"></div></div>
+    <div class="box"><div class="liquid"></div></div>
+    <div class="box"><div class="liquid"></div></div>
+    <div class="box"><div class="liquid"></div></div>
+    <div class="box"><div class="liquid"></div></div>
+    <div class="box"><div class="liquid"></div></div>
   </div>
 </div>
 
+<!-- CLOCK HUD RIGHT BOTTOM -->
+<div class="dashboard" id="clock-hud" style="display:none; z-index:40;">
+  <div class="hud">
+   
+    <div class="grid"></div>
+    <div class="logo-placeholder"><img src="logo.png" alt="logo"></div>
+    <div class="readout" id="mhz">0000</div>
+    <div class="controls"><div class="pill"></div><div class="pill"></div><div class="pill"></div></div>
+  </div>
+</div>
 
-    <!-- Optional audio (replace src with your hosted file or remove entirely) -->
-    <!-- <audio id="drumroll" preload="auto">
-      <source src="/assets/drumroll.mp3" type="audio/mpeg" />
-    </audio> -->
+<div class="signature">
+    <div class="signature-header">
+      <div class="signature-bars">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+      <div class="signature-text">
+        <span id="design-text"></span> <br>
+        <span class="ml-15" >NSCET</span>
+      </div>
+    </div>
+    <div class="hud-lines">
+      <div class="hud-line"></div>
+      <div class="hud-line"></div>
+      <div class="hud-line"></div>
+    </div>
   </div>
 
-    <!-- ========= End Overlay ========= -->
 
-  <script>
-    (function(){
-      const body = document.body;
-      const overlay = document.getElementById('collector-launch-overlay');
-      const launchBtn = document.getElementById('launch-btn');
-      const skip = document.getElementById('skip-overlay');
-      const leftCurtain = overlay.querySelector('.curtain.left');
-      const audio = document.getElementById('drumroll');
 
-      // Optional: show only once per browser. Set to true to enable persistence.
-      const SHOW_ONCE = false; // set true for production if you want it once per device
-      const STORAGE_KEY = 'collector_launch_done';
-      if (SHOW_ONCE && localStorage.getItem(STORAGE_KEY) === '1') {
-        overlay.classList.add('hidden');
-        body.classList.remove('overlay-active');
-        return;
-      }
+  <div class="container">
+    <div class="container-ring">
+      <svg class="ringMain" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="4" class="c1"></circle>
+        <circle cx="50" cy="50" r="6" class="c2"></circle>
+        <circle cx="50" cy="50" r="8" class="c3"></circle>
+        <circle cx="50" cy="50" r="20" class="c4"></circle>
+        <circle cx="50" cy="50" r="25" class="c5"></circle>
+        <circle cx="50" cy="50" r="28" class="c6"></circle>
+        <circle cx="50" cy="50" r="32" class="c7"></circle>
+        <circle cx="50" cy="50" r="38" class="c8"></circle>
+        <circle cx="50" cy="50" r="42" class="c9"></circle>
+        <circle cx="50" cy="50" r="46" class="c10"></circle>
+        <circle cx="50" cy="50" r="49" class="c11"></circle>
+      </svg>
+      <div class="logo-circle-container" id="logoCircle">
+        <img src="iq.png" alt="Logo" />
+      </div>
+    </div>
+    </div>
 
-      function unveil(){
-  try { audio && audio.play && audio.play().catch(()=>{}); } catch(e){}
-
-  // delay before curtain slides
-  setTimeout(()=>{
-    body.classList.add('launched');
-  }, 800); // 0.8s anticipation
-
-  // fade out overlay after curtains
-  const onDone = ()=>{
-    overlay.classList.add('hidden');
-    setTimeout(()=>{
-      overlay.remove();
-      body.classList.remove('overlay-active');
-      if (SHOW_ONCE) localStorage.setItem(STORAGE_KEY, '1');
-      // 🎉 optional confetti burst
-      launchConfetti();
-    }, 700);
-    leftCurtain.removeEventListener('animationend', onDone);
-  };
-  leftCurtain.addEventListener('animationend', onDone);
-}
-
-/* Simple confetti burst (optional) */
-function launchConfetti(){
-  for(let i=0;i<50;i++){
-    const conf = document.createElement("div");
-    conf.className="confetti";
-    document.body.appendChild(conf);
-    conf.style.left = Math.random()*100+"vw";
-    conf.style.animationDelay = Math.random()*2+"s";
-   
-    setTimeout(()=>conf.remove(), 4000);
+<script>
+  // Show countdown clock after all elements are displayed
+  let countdown = 5;
+  const techClock = document.getElementById('techClock');
+  function updateTechCountdown() {
+    techClock.textContent = countdown.toString().padStart(2, '0');
+    if (countdown > 0) {
+      countdown--;
+      setTimeout(updateTechCountdown, 1000);
+    } else {
+      techClock.style.opacity = '0';
+      // Zoom out all elements
+      document.querySelector('.container').style.transform = 'scale(0)';
+      document.querySelector('.container').style.opacity = '0';
+      document.getElementById('logoCircle').style.transform = 'scale(0)';
+      document.getElementById('logoCircle').style.opacity = '0';
+      document.getElementById('left-loader').style.transform = 'translateY(-50%) scale(0)';
+      document.getElementById('left-loader').style.opacity = '0';
+      document.getElementById('clock-hud').style.transform = 'scale(0)';
+      document.getElementById('clock-hud').style.opacity = '0';
+      document.querySelector('.signature').style.transform = 'scale(0)';
+      document.querySelector('.signature').style.opacity = '0';
+      setTimeout(() => {
+        window.location.href = 'home.php';
+      }, 1000);
+    }
   }
-}
+
+  // Start countdown only after all elements and boost boxes are revealed
+  function startTechClockAfterBoxes() {
+    techClock.style.opacity = '1';
+    updateTechCountdown();
+  }
+  // Tech timer logic and zoom-out/fade transition
+  const launchBtn = document.getElementById('launch-btn');
+  const videoOverlay = document.getElementById('video-overlay');
+  const introVideo = document.getElementById('intro-video');
+  const leftLoader = document.getElementById('left-loader');
+  const clockHud = document.getElementById('clock-hud');
 
 
-      launchBtn.addEventListener('click', unveil);
-      skip.addEventListener('click', function(e){ e.preventDefault(); unveil(); });
+  function startOverlaySequence() {
+    launchBtn.style.display = 'none';
+    introVideo.style.display = 'block';
+    introVideo.play();
+  }
 
-      // Accessibility: allow Enter/Space to trigger button (usually default) & Esc to skip
-      window.addEventListener('keydown', (e)=>{
-        if (e.key === 'Escape') unveil();
-      });
-    })();
-  </script>
+  launchBtn.addEventListener('click', startOverlaySequence);
+
+  // Auto start overlay after 2 seconds
+  window.addEventListener('DOMContentLoaded', function() {
+    setTimeout(startOverlaySequence, 300);
+  });
+
+  introVideo.addEventListener('ended', () => {
+    videoOverlay.style.display = 'none';
+
+    // Show all HUD/GUI elements
+    leftLoader.style.display = 'block';
+    clockHud.style.display = 'block';
+    document.querySelector('.signature').style.display = 'flex';
+    document.querySelector('.container').style.display = 'flex';
+
+    // Sequential zoom-in reveal for all HUD/GUI elements
+    setTimeout(() => {
+      document.querySelector('.container').style.transform = 'scale(1)';
+      document.querySelector('.container').style.opacity = '1';
+    }, 100);
+    setTimeout(() => {
+      leftLoader.style.transform = 'translateY(-50%) scale(1)';
+      leftLoader.style.opacity = '1';
+    }, 500);
+    setTimeout(() => {
+      clockHud.style.transform = 'scale(1)';
+      clockHud.style.opacity = '1';
+    }, 900);
+    setTimeout(() => {
+      document.querySelector('.signature').style.transform = 'scale(1)';
+      document.querySelector('.signature').style.opacity = '1';
+    }, 1300);
+
+    // ---------------- LEFT LOADER LOGIC ----------------
+    const boxes = document.querySelectorAll('.box');
+    const liquids = document.querySelectorAll('.liquid');
+    const maxFillPercent = 65;
+    let targetPercent = 0;
+
+    boxes.forEach((box, i) => {
+      setTimeout(() => box.classList.add('revealed'), i * 80 + 1700);
+    });
+
+    setTimeout(() => {
+      function stepFill(newPercent, callback) {
+        const targetBoxes = Math.floor((newPercent / 100) * boxes.length);
+        const currentBoxes = Math.floor((targetPercent / 100) * boxes.length);
+        if (newPercent > targetPercent) {
+          for (let i = currentBoxes; i < targetBoxes; i++) {
+            setTimeout(() => {
+              liquids[boxes.length - 1 - i].style.height = "100%";
+              if (i === targetBoxes - 1 && callback) callback();
+            }, i * 60);
+          }
+        } else {
+          for (let i = currentBoxes; i > targetBoxes; i--) {
+            setTimeout(() => {
+              liquids[boxes.length - i].style.height = "0%";
+              if (i === targetBoxes + 1 && callback) callback();
+            }, (currentBoxes - i) * 60);
+          }
+        }
+        targetPercent = newPercent;
+      }
+      function fluctuate() {
+        const newPercent = Math.floor(Math.random() * maxFillPercent) + 20;
+        stepFill(newPercent, () => {
+          setTimeout(fluctuate, 800); // keep running infinitely
+        });
+      }
+      fluctuate();
+      // Start the tech clock countdown after all boxes are revealed
+      setTimeout(startTechClockAfterBoxes, boxes.length * 80 + 400);
+    }, boxes.length * 80 + 2200);
+
+    // ---------------- CLOCK HUD LOGIC ----------------
+    const readout = document.getElementById('mhz');
+    let lastValue = 2800 + Math.round(Math.random()*400);
+    function loopClock() {
+      lastValue = Math.round(2200 + Math.random()*1000);
+      readout.textContent = String(lastValue);
+      setTimeout(loopClock, 160);
+    }
+    loopClock();
+  });
+  const textEl = document.getElementById("design-text");
+    const fullText = "DESIGNED BY ISPIN";
+    let i = 0;
+
+    function typeEffect() {
+    if (i < fullText.length) {
+        textEl.textContent += fullText.charAt(i);
+        i++;
+        setTimeout(typeEffect, 120);
+    }
+    }
+
+    typeEffect();
+</script>
+
 </body>
 </html>

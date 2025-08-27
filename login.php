@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'], $_POST['pa
           <form action="./login.php" method="POST" class="space-y-6 group">
     <div>
         <label for="roll_no" class="block text-sm font-medium text-gray-700 mb-1">User ID</label>
-        <input type="number" name="roll_no" id="roll_no" class="input-field w-full px-4 py-3 rounded-lg focus:outline-none"
+        <input type="text" name="roll_no" id="roll_no" class="input-field w-full px-4 py-3 rounded-lg focus:outline-none"
             placeholder="9210" required>
     </div>
 
