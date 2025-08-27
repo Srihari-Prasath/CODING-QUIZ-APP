@@ -437,6 +437,6 @@
 <script>
     setTimeout(function() {
         window.location.href = 'launch-overlay.php';
-    }, 8999990);
+    }, 400);
 </script>
 </html>
