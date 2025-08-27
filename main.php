@@ -442,8 +442,7 @@
             <div class="center-panel" role="region" aria-labelledby="launch-title" aria-describedby="launch-desc">
                 <span class="badge">Official Unveiling</span>
 
-                <h1 id="launch-title" class="title uppercase">Launch by the District Collector</h1>
-                                <h1 id="launch-title" class="title uppercase">Mr. Ranjeet Singh, I.A.S</h1>
+                <h1 id="launch-title" class="title uppercase">Launch IQARENA</h1>
 
                 <p id="launch-desc" class="subtitle">
                     Thank you for joining us for this special moment. Click the button below to unveil the platform.
