@@ -321,28 +321,27 @@
     <!-- Header Section -->
     <div class="header-section">
         <p class="footer-text">Ideated, Designed and Developed by</p>
-        <div class="nscet-brand">NSCET ISPIN Members</div>
+        <div class="nscet-brand">NSCET iSPIN Members</div>
     </div>
 
     <!-- Gallery Container -->
     <div class="gallery-container">
         <div class="image-grid">
             <div class="image-card">
-                <img src="./assets/img/main/development_team/mark.png" alt="Keerthana">
+                <img src="./assets/img/main/development_team/sri.png" alt="Team Member">
                 <div class="card-overlay">
-                    <div class="card-title">B Naveen Bharathi </div>
+                    <div class="card-title">A SriHari Prasath</div>
                     <div class="card-role">Information Technology</div>
                 </div>
             </div>
-            <div class="image-card">
-                <img src="./assets/img/main/development_team/sachin.png" alt="Team Member">
+           <div class="image-card">
+                <img src="./assets/img/main/development_team/santhosh.png" alt="Team Member">
                 <div class="card-overlay">
-                    <div class="card-title">Sachithanandan S</div>
-                    <div class="card-role">Computer Science</div>
+                    <div class="card-title">G Sandhosh</div>
+                    <div class="card-role">Artificial Intelligence and Data Science</div>
                 </div>
             </div>
-            
-            <div class="image-card">
+                     <div class="image-card">
                 <img src="./assets/img/main/development_team/keerthana.png" alt="Team Member">
                 <div class="card-overlay">
                     <div class="card-title">T Keerthana</div>
@@ -356,25 +355,30 @@
                     <div class="card-role">Computer Science</div>
                 </div>
             </div>
-            <div class="image-card">
-                <img src="./assets/img/main/development_team/sri.png" alt="Team Member">
+             <div class="image-card">
+                <img src="./assets/img/main/development_team/sachin.png" alt="Team Member">
                 <div class="card-overlay">
-                    <div class="card-title">A Sri hari prasath</div>
+                    <div class="card-title">Sachithanandan S</div>
+                    <div class="card-role">Computer Science</div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="./assets/img/main/development_team/mark.png" alt="Keerthana">
+                <div class="card-overlay">
+                    <div class="card-title">B Naveen Bharathi </div>
                     <div class="card-role">Information Technology</div>
                 </div>
             </div>
+           
+            
+   
+            
+            
             <div class="image-card">
-                <img src="./assets/img/main/development_team/sachin.png" alt="Team Member">
+                <img src="./assets/img/main/development_team/aas.png" alt="Team Member">
                 <div class="card-overlay">
-                    <div class="card-title">Team Member</div>
-                    <div class="card-role">Electrical Engineering</div>
-                </div>
-            </div>
-            <div class="image-card">
-                <img src="./assets/img/main/development_team/sachin.png" alt="Team Member">
-                <div class="card-overlay">
-                    <div class="card-title">Team Member</div>
-                    <div class="card-role">Biotechnology</div>
+                    <div class="card-title">J S Aaswin</div>
+                    <div class="card-role">Information Technology</div>
                 </div>
             </div>
         </div>
@@ -433,6 +437,6 @@
 <script>
     setTimeout(function() {
         window.location.href = 'launch-overlay.php';
-    }, 6000);
+    }, 8999990);
 </script>
 </html>
