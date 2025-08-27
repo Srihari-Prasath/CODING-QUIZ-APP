@@ -22,7 +22,7 @@
             /* bright gold */
             --shadow: rgba(0, 0, 0, .55);
             --edge-glow: rgba(255, 140, 0, .55);
-            --overlay-bg: #0b0b0c;
+            --overlay-bg: #ffb84d;
             /* stage background */
             --transition: 1100ms cubic-bezier(.22, .8, .26, 1);
         }
@@ -107,7 +107,7 @@
             width: 6px;
             pointer-events: none;
             opacity: .85;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, .0) 0%, var(--gold) 25%, var(--gold-bright) 50%, var(--gold) 75%, rgba(255, 255, 255, .0) 100%);
+            background: white;
             filter: drop-shadow(0 0 6px var(--edge-glow));
             animation: glow-pulse 2.2s ease-in-out infinite;
         }
@@ -157,7 +157,10 @@
         .center-wrap {
             animation: fade-in-up 1.2s ease forwards;
             opacity: 0;
-            transform: translateY(20px) scale(0.96);
+            transform: translateY(20px) scale(1.25);
+            max-width: 1200px;
+            width: 90vw;
+            margin-top: 10%;
         }
 
         @keyframes fade-in-up {
@@ -173,7 +176,8 @@
             place-items: center;
             z-index: 140;
             pointer-events: auto;
-            padding: 12px;
+            padding: 35px;
+            transform: scale(3);
         }
 
         .center-panel {
@@ -181,7 +185,6 @@
             max-width: 820px;
             padding: clamp(18px, 2.2vw, 28px);
             border-radius: 12px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0.014));
             border: 1px solid rgba(255, 255, 255, 0.06);
             box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.02);
             backdrop-filter: blur(6px) saturate(110%);
@@ -299,7 +302,9 @@
             gap: 22px;
             place-items: center;
             text-align: center;
-            padding: 24px 20px
+            padding: 24px 20px;
+            width: 80%;
+ transform: scale(2);
         }
 
         .badge {
@@ -440,9 +445,9 @@
 
         <div class="center-wrap">
             <div class="center-panel" role="region" aria-labelledby="launch-title" aria-describedby="launch-desc">
-                <span class="badge">Official Unveiling</span>
+                <span class="badge ml-4">Official&nbsp;&nbsp;&nbsp;&nbsp;Unveiling</span>
 
-                <h1 id="launch-title" class="title uppercase">Launch IQARENA</h1>
+                <h1 id="launch-title" class="title uppercase">Launching <br>The Skill Engine  </h1>
 
                 <p id="launch-desc" class="subtitle">
                     Thank you for joining us for this special moment. Click the button below to unveil the platform.
@@ -455,21 +460,31 @@
 
                 <div class="panel-foot">
                     <div class="gold-line" aria-hidden="true"></div>
-                    <small class="meta">Designed and Developed by iSPIN ❤</small>
+                    <small class="meta">Designed and Developed by iSPIN </small>
                 </div>
             </div>
         </div>
 
+        <div class="nscet_logo">
+            <img src="./logo.png" alt="" width="680px">
+        </div>
+
 
         <!-- Optional audio (replace src with your hosted file or remove entirely) -->
-        <!-- <audio id="drumroll" preload="auto">
-      <source src="/assets/drumroll.mp3" type="audio/mpeg" />
-    </audio> -->
+        <audio id="drumroll" preload="auto">
+      <source src="audio.mp3" type="audio/mpeg" />
+    </audio>
     </div>
 
     <!-- ========= End Overlay ========= -->
 
     <script>
+        // Fade out black screen overlay after short delay
+        window.addEventListener('DOMContentLoaded', function() {
+            // Remove black screen logic (no black overlay)
+            // If you want a quick orange overlay, add here
+        });
+
         (function() {
             const body = document.body;
             const overlay = document.getElementById('collector-launch-overlay');
@@ -494,8 +509,22 @@
                 // delay before curtain slides
                 setTimeout(() => {
                     body.classList.add('launched');
-                }, 800); // 0.8s anticipation
-
+                    // Hide and remove center-wrap
+                    var centerWrap = document.querySelector('.center-wrap');
+                    if (centerWrap) {
+                        centerWrap.style.opacity = '0';
+                        centerWrap.style.pointerEvents = 'none';
+                        setTimeout(function() { centerWrap.remove(); }, 80); // reduce timing to 80ms
+                    }
+                    // Change overlay background to mild orange
+                    var overlayBg = document.getElementById('collector-launch-overlay');
+                    if (overlayBg) {
+                        overlayBg.style.background = 'linear-gradient(135deg, #ffb84d 0%, #ff6b00 100%)';
+                        setTimeout(function() {
+                            overlayBg.style.background = '';
+                        }, 80); // orange background for 80ms only
+                    }
+                }, 40); // anticipation reduced to 40ms
 
                 const onDone = () => {
                     overlay.classList.add('hidden');
@@ -506,9 +535,9 @@
                         // optional confetti burst
                         launchConfetti();
                         setTimeout(() => {
-                            window.location.href = './development_team.php';
-                        }, 2200); // redirect after confetti
-                    }, 700);
+                           
+                        }, 10);
+                    }, 70);
                     leftCurtain.removeEventListener('animationend', onDone);
                 };
                 leftCurtain.addEventListener('animationend', onDone);
@@ -523,7 +552,7 @@
                     conf.style.left = Math.random() * 100 + "vw";
                     conf.style.animationDelay = Math.random() * 2 + "s";
                     conf.style.background = `hsl(${Math.random() * 360}, 80%, 60%)`;
-                    setTimeout(() => conf.remove(), 4000);
+                    setTimeout(() => conf.remove(), 100);
                 }
             }
 

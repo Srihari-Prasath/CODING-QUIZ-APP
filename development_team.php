@@ -61,8 +61,16 @@
             background: var(--gradient-primary);
             position: relative;
             overflow: hidden;
+            display: flex;
+            justify-content:center;
+            align-items: center; 
         }
 
+        .main-img{
+            position: absolute;
+            left: 20px;
+            top: 30px;
+        }
         .header-section::before {
             content: '';
             position: absolute;
@@ -315,13 +323,20 @@
     </style>
 </head>
 <body>
+
+<?php include('./main.php') ?>
     <div class="tech-grid"></div>
     <div class="bg-particles"></div>
 
     <!-- Header Section -->
-    <div class="header-section">
-        <p class="footer-text">Ideated, Designed and Developed by</p>
+    <div class="header-section ">
+       <div class="main-img">
+         <img src="./ispin.png" alt="" width="100px">
+       </div>
+      <div>
+          <p class="footer-text">Ideated, Designed and Developed by</p>
         <div class="nscet-brand">NSCET iSPIN Members</div>
+      </div>
     </div>
 
     <!-- Gallery Container -->
@@ -385,6 +400,11 @@
             </div>
     </div>
 
+   
+
+     <audio id="main-audio" preload="auto">
+      <source src="main.mp3" type="audio/mpeg" />
+    </audio>
     <script>
         // Create floating particles
         function createParticles() {
@@ -404,6 +424,7 @@
 
         // Initialize particles on load
         window.addEventListener('load', createParticles);
+ 
 
         // Add intersection observer for scroll animations
         const observerOptions = {
@@ -436,8 +457,15 @@
     </script>
 </body>
 <script>
-    setTimeout(function() {
+    let main_audio=document.querySelector("#main-audio")
+let click_btn=document.querySelector("#launch-btn")
+click_btn.addEventListener('click',()=>{
+      setTimeout(function() {
+       main_audio.play()
+    }, 4000);
+        setTimeout(function() {
         window.location.href = 'launch-overlay.php';
-    }, 7000);
+    }, 12000);
+})
 </script>
 </html>

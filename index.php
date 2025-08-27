@@ -14,8 +14,7 @@
 </head>
 
 <body >
-    <?php include('./main.php') ?>
-
+    <?php include('./development_team.php') ?>
    
 
 

@@ -481,6 +481,10 @@
     </div>
     </div>
 
+
+     <audio id="drumroll" preload="auto">
+      <source src="audio_2.mp3" type="audio/mpeg" />
+    </audio>
 <script>
   // Show countdown clock after all elements are displayed
   let countdown = 5;
@@ -518,6 +522,7 @@
   const launchBtn = document.getElementById('launch-btn');
   const videoOverlay = document.getElementById('video-overlay');
   const introVideo = document.getElementById('intro-video');
+  const drumroll = document.getElementById('drumroll');
   const leftLoader = document.getElementById('left-loader');
   const clockHud = document.getElementById('clock-hud');
 
@@ -541,6 +546,7 @@
     // Show all HUD/GUI elements
     leftLoader.style.display = 'block';
     clockHud.style.display = 'block';
+    drumroll.play()
     document.querySelector('.signature').style.display = 'flex';
     document.querySelector('.container').style.display = 'flex';
 
@@ -624,8 +630,7 @@
         i++;
         setTimeout(typeEffect, 120);
     }
-    }
-
+    } 
     typeEffect();
 </script>
 

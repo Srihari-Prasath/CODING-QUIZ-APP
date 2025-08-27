@@ -22,6 +22,22 @@
             pointer-events: none;
             z-index: 50;
         }
+        .main-footer{
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+        }
+        .top-img{
+             position: absolute;
+             left: 45%;
+             top: 20%;
+        }
+       
+        .main-sub-text{
+            margin-top: -10%;
+            z-index: 99;
+        }
+        
     </style>
 
       <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
@@ -54,7 +70,11 @@
         <div class="shape"></div>
     </div>
     
-    <header class="words w-full text-center py-16 relative z-10 mt-20 ">
+    <div class="top-img">
+        <img src="./iq.png" alt="" width="190px" >
+    </div>
+
+    <header class="words w-full text-center main-text   py-16 relative z-10 mt-40 ">
         <div class="overlay"></div>
         <div class="text">
             <div class="wrapper"  data-aos="fade-down-right"  data-aos-delay="100"><div class="letter">I</div></div>
@@ -69,7 +89,7 @@
         <div class="section-divider max-w-md mx-auto"></div>
     </header>
     
-    <p class="text-center font-bold text-orange-500 -mt-35 text-5xl -py-100 text-2xl">
+    <p class="text-center font-bold text-orange-500 main-sub-text text-5xl -py-100 text-2xl">
         "The Skill Engine for the Next-Gen Engineers"
     </p>
 
@@ -83,19 +103,31 @@
         </div>
     </main> -->
 
-    <div class="mt-10">
+     <audio id="finalaudio" preload="auto">
+      <source src="final.mp3" type="audio/mpeg" />
+    </audio>
+
+
+    <div class="mt-10 main-footer">
         <?php include('./resource/footer.php') ?>
     </div>
 
     <script>
         // Smooth scrolling
         document.addEventListener('DOMContentLoaded', function() {
+            let audio_play=document.querySelector('#finalaudio')
+            setTimeout(function() {
+      audio_play.play()
+    }, 0);
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
+                      
                     const target = document.querySelector(this.getAttribute('href'));
                     if (target) {
+                      
                         target.scrollIntoView({behavior: 'smooth', block: 'start'});
+
                     }
                 });
             });
@@ -108,6 +140,7 @@
                         setTimeout(() => {
                             entry.target.style.opacity = '1';
                             entry.target.style.transform = 'translateY(0)';
+
                         }, index * 100);
                     }
                 });
@@ -134,6 +167,7 @@
 
     <!-- Confetti Script (no ribbons) -->
     <script>
+          
         var COLORS = [
             ["#df0049", "#660671"],
             ["#00e857", "#005291"],
