@@ -355,7 +355,12 @@
                     <div class="card-role">Computer Science</div>
                 </div>
             </div>
-             <div class="image-card">
+           
+        </div>
+    </div>
+
+    <div style="display: flex; justify-content: center; align-items: center; width: 100%; gap: 2rem;">
+          <div class="image-card">
                 <img src="./assets/img/main/development_team/sachin.png" alt="Team Member">
                 <div class="card-overlay">
                     <div class="card-title">Sachithanandan S</div>
@@ -368,10 +373,7 @@
                     <div class="card-title">B Naveen Bharathi </div>
                     <div class="card-role">Information Technology</div>
                 </div>
-            </div>
-           
-            
-   
+            </div> 
             
             
             <div class="image-card">
@@ -381,7 +383,6 @@
                     <div class="card-role">Information Technology</div>
                 </div>
             </div>
-        </div>
     </div>
 
     <script>
