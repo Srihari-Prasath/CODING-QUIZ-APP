@@ -29,13 +29,16 @@
         }
         .top-img{
              position: absolute;
-             left: 45%;
-             top: 20%;
+             left: 43%;
+             top: 18%;
         }
        
         .main-sub-text{
-            margin-top: -10%;
+            margin-top: -9%;
             z-index: 99;
+        }
+        .words{
+           margin-left: -5%;
         }
         
     </style>

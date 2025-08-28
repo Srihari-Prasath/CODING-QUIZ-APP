@@ -107,7 +107,7 @@
             width: 6px;
             pointer-events: none;
             opacity: .85;
-            background: white;
+            background: #ffb84d;
             filter: drop-shadow(0 0 6px var(--edge-glow));
             animation: glow-pulse 2.2s ease-in-out infinite;
         }
