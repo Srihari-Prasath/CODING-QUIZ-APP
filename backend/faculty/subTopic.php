@@ -1,12 +1,14 @@
 <?php
 
+
 include("../../resource/conn.php");
+include("../../resource/session.php");
+
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-     $user_id = intval($_POST['user_id']);
+    $user_id = isset($_SESSION['id']) ? intval($_SESSION['id']) : 0;
     $topic_id = intval($_POST['parentTopic']);
-   
     $title = trim($_POST['subTopicName']);
     $description = trim($_POST['subTopicDescription']);
     $by_admin = 0;
@@ -19,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("issii", $topic_id, $title, $description, $user_id, $by_admin);
 
         if ($stmt->execute()) {
-             header("Location: ../../faculty/topic.php");
+            header("Location: ../../faculty/topic.php");
         } else {
             echo "<p> Error: " . $stmt->error . "</p>";
         }

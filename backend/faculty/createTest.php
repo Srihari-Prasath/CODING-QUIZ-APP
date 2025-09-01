@@ -47,7 +47,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     );
 
     if ($stmt->execute()) {
-        header("Location: ./create-test.php"); // redirect to test list
+        // Get the inserted test_id
+        $test_id = $stmt->insert_id;
+        // Fetch random questions from the selected subtopic only
+        $questionSql = "SELECT question_id FROM questions WHERE sub_topic_id = ? ORDER BY RAND() LIMIT ?";
+        $qStmt = $conn->prepare($questionSql);
+        $qStmt->bind_param("ii", $sub_topic_id, $num_questions);
+        $qStmt->execute();
+        $qResult = $qStmt->get_result();
+        $insertQ = $conn->prepare("INSERT INTO test_questions (test_id, question_id) VALUES (?, ?)");
+        while ($row = $qResult->fetch_assoc()) {
+            $insertQ->bind_param("ii", $test_id, $row['question_id']);
+            $insertQ->execute();
+        }
+        $insertQ->close();
+        $qStmt->close();
+        // Redirect to test-questions.php to show allocated questions
+        header("Location: ../faculty/test-questions.php?test_id=$test_id");
         exit;
     } else {
         die("Database Error: " . $stmt->error);

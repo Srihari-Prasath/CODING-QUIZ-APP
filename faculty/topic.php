@@ -106,10 +106,16 @@ while ($row = $result->fetch_assoc()) {
                                 </label>
                                 <input type="file" name="questionsFile" id="questionsFile" accept=".xlsx,.xlsm,.csv" required
                                     class="p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none w-full transition duration-200 cursor-pointer">
-                                <a href="/templates/questions-template.xlsx" download
-                                    class="text-orange-500 hover:text-orange-600 mt-2 text-sm">
-                                    Download template file
-                                </a>
+                                <div class="mt-2 flex gap-4">
+                                    <a href="../templates/questions-template.xlsx" download
+                                        class="text-orange-500 hover:text-orange-600 text-sm">
+                                        Download Excel template
+                                    </a>
+                                    <a href="../templates/questions-template.csv" download
+                                        class="text-orange-500 hover:text-orange-600 text-sm">
+                                        Download CSV template
+                                    </a>
+                                </div>
                             </div>
 
                             <div class="flex justify-center mt-4">

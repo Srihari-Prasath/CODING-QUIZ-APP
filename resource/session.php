@@ -1,6 +1,6 @@
 <?php 
 
-include("../resource/conn.php");
+include(__DIR__ . "/conn.php");
 
 session_set_cookie_params([
     'lifetime' => 0,
