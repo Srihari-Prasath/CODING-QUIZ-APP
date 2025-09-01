@@ -162,102 +162,101 @@ while ($row = $result->fetch_assoc()) {
                 </form>
             </div>
         </div>
-</main>
+    </main>
 
 
 
 
 
-        <script>
-            const topics = <?= json_encode($topics) ?>;
-            const topicList = document.getElementById('topicList');
-            const subtopicList = document.getElementById('subtopicList');
-            const uploadForm = document.getElementById('upload-form-section');
-            const uploadTopicId = document.getElementById('uploadTopicId');
-            const uploadSubtopicId = document.getElementById('uploadSubtopicId');
-            const topicDescription = document.getElementById('topicDescription');
-            const subtopicDescription = document.getElementById('subtopicDescription');
+    <script>
+        const topics = <?= json_encode($topics) ?>;
+        const topicList = document.getElementById('topicList');
+        const subtopicList = document.getElementById('subtopicList');
+        const uploadForm = document.getElementById('upload-form-section');
+        const uploadTopicId = document.getElementById('uploadTopicId');
+        const uploadSubtopicId = document.getElementById('uploadSubtopicId');
+        const topicDescription = document.getElementById('topicDescription');
+        const subtopicDescription = document.getElementById('subtopicDescription');
 
-         function renderSubtopics(topicId, defaultSubId) {
-    subtopicList.innerHTML = '';
-    subtopicDescription.textContent = '';
+        function renderSubtopics(topicId, defaultSubId) {
+            subtopicList.innerHTML = '';
+            subtopicDescription.textContent = '';
 
-    if (!topics[topicId] || topics[topicId].subtopics.length === 0) {
-        subtopicList.innerHTML = '<li class="text-gray-400">No subtopics</li>';
-        uploadForm.classList.add('hidden');
-        return;
-    }
+            if (!topics[topicId] || topics[topicId].subtopics.length === 0) {
+                subtopicList.innerHTML = '<li class="text-gray-400">No subtopics</li>';
+                uploadForm.classList.add('hidden');
+                return;
+            }
 
-    topics[topicId].subtopics.forEach(sub => {
-        const li = document.createElement('li');
-        li.className = "flex items-center justify-between";
+            topics[topicId].subtopics.forEach(sub => {
+                const li = document.createElement('li');
+                li.className = "flex items-center justify-between";
 
-        // Subtopic button
-        const btn = document.createElement('button');
-        btn.textContent = sub.title;
-        btn.className = 'subtopic-btn flex-1 text-left px-3 py-2 rounded hover:bg-orange-100';
-        btn.dataset.subId = sub.id;
+                // Subtopic button
+                const btn = document.createElement('button');
+                btn.textContent = sub.title;
+                btn.className = 'subtopic-btn flex-1 text-left px-3 py-2 rounded hover:bg-orange-100';
+                btn.dataset.subId = sub.id;
 
-        // Questions icon (→ link to Questions.php)
-        const link = document.createElement('a');
-        link.href = `./Questions.php?subtopic_id=${sub.id}`;
-        link.className = "ml-2 text-orange-500 hover:text-orange-700";
-        link.title = "View Questions";
-        link.innerHTML = "📄"; // you can swap with <i class='fa fa-question'></i> if using FontAwesome
+                const link = document.createElement('a');
+                link.href = `./Questions.php?subtopic_id=${sub.id}`;
+                link.className = "ml-2 text-orange-500 hover:text-orange-700";
+                link.title = "View Questions";
+                link.innerHTML = "📄";
 
-        // Default select
-        if (sub.id === defaultSubId) {
-            btn.classList.add('bg-orange-200');
-            uploadForm.classList.remove('hidden');
-            uploadTopicId.value = topicId;
-            uploadSubtopicId.value = sub.id;
-            subtopicDescription.textContent = sub.description || '';
+                // Default select
+                if (sub.id === defaultSubId) {
+                    btn.classList.add('bg-orange-200');
+                    uploadForm.classList.remove('hidden');
+                    uploadTopicId.value = topicId;
+                    uploadSubtopicId.value = sub.id;
+                    subtopicDescription.textContent = sub.description || '';
+                }
+
+                btn.onclick = () => {
+                    document.querySelectorAll('.subtopic-btn').forEach(b => b.classList.remove('bg-orange-200'));
+                    btn.classList.add('bg-orange-200');
+                    uploadForm.classList.remove('hidden');
+                    uploadTopicId.value = topicId;
+                    uploadSubtopicId.value = sub.id;
+                    subtopicDescription.textContent = sub.description || '';
+                };
+
+                li.appendChild(btn);
+                li.appendChild(link);
+                subtopicList.appendChild(li);
+            });
         }
 
-        btn.onclick = () => {
-            document.querySelectorAll('.subtopic-btn').forEach(b => b.classList.remove('bg-orange-200'));
-            btn.classList.add('bg-orange-200');
-            uploadForm.classList.remove('hidden');
-            uploadTopicId.value = topicId;
-            uploadSubtopicId.value = sub.id;
-            subtopicDescription.textContent = sub.description || '';
-        };
-
-        li.appendChild(btn);
-        li.appendChild(link);
-        subtopicList.appendChild(li);
-    });
-}
 
 
-
-            document.querySelectorAll('.topic-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const topicId = btn.dataset.topicId;
-                    const firstSub = parseInt(btn.dataset.firstSub) || 0;
-                    document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('bg-orange-200'));
-                    btn.classList.add('bg-orange-200');
-                    topicDescription.textContent = btn.dataset.topicDesc || '';
-                    renderSubtopics(topicId, firstSub);
-                });
+        document.querySelectorAll('.topic-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const topicId = btn.dataset.topicId;
+                const firstSub = parseInt(btn.dataset.firstSub) || 0;
+                document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('bg-orange-200'));
+                btn.classList.add('bg-orange-200');
+                topicDescription.textContent = btn.dataset.topicDesc || '';
+                renderSubtopics(topicId, firstSub);
             });
+        });
 
-            const firstTopicBtn = document.querySelector('.topic-btn');
-            if (firstTopicBtn) firstTopicBtn.click();
+        const firstTopicBtn = document.querySelector('.topic-btn');
+        if (firstTopicBtn) firstTopicBtn.click();
 
 
-            ['topic', 'subtopic'].forEach(type => {
-                const openBtn = document.getElementById(`open-${type}-popup`);
-                const closeBtn = document.getElementById(`close-${type}-popup`);
-                const popup = document.getElementById(`${type}-popup`);
+        ['topic', 'subtopic'].forEach(type => {
+            const openBtn = document.getElementById(`open-${type}-popup`);
+            const closeBtn = document.getElementById(`close-${type}-popup`);
+            const popup = document.getElementById(`${type}-popup`);
 
-                openBtn.addEventListener('click', () => popup.classList.remove('hidden'));
-                closeBtn.addEventListener('click', () => popup.classList.add('hidden'));
-                window.addEventListener('click', (e) => {
-                    if (e.target === popup) popup.classList.add('hidden');
-                });
+            openBtn.addEventListener('click', () => popup.classList.remove('hidden'));
+            closeBtn.addEventListener('click', () => popup.classList.add('hidden'));
+            window.addEventListener('click', (e) => {
+                if (e.target === popup) popup.classList.add('hidden');
             });
-        </script>
+        });
+    </script>
 
 </body>
 
