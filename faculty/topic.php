@@ -99,6 +99,7 @@ while ($row = $result->fetch_assoc()) {
                         <form id="upload-questions-form" enctype="multipart/form-data" class="flex flex-col gap-6" action="../backend/faculty/uploadQuestions.php" method="post">
                             <input type="hidden" name="topic_id" id="uploadTopicId">
                             <input type="hidden" name="subtopic_id" id="uploadSubtopicId">
+                            <input type="hidden" name="user_id" value="<?php echo $_SESSION['id'] ?>">
 
                             <div class="flex flex-col">
                                 <label for="questionsFile" class="mb-2 font-semibold text-gray-700">
@@ -120,6 +121,7 @@ while ($row = $result->fetch_assoc()) {
                             </div>
                         </form>
                     </section>
+
                 </div>
             </div>
         </main>
@@ -160,6 +162,9 @@ while ($row = $result->fetch_assoc()) {
                 </form>
             </div>
         </div>
+</main>
+
+
 
 
 
@@ -173,45 +178,59 @@ while ($row = $result->fetch_assoc()) {
             const topicDescription = document.getElementById('topicDescription');
             const subtopicDescription = document.getElementById('subtopicDescription');
 
-            function renderSubtopics(topicId, defaultSubId) {
-                subtopicList.innerHTML = '';
-                subtopicDescription.textContent = '';
-                if (!topics[topicId] || topics[topicId].subtopics.length === 0) {
-                    subtopicList.innerHTML = '<li class="text-gray-400">No subtopics</li>';
-                    uploadForm.classList.add('hidden');
-                    return;
-                }
+         function renderSubtopics(topicId, defaultSubId) {
+    subtopicList.innerHTML = '';
+    subtopicDescription.textContent = '';
 
-                topics[topicId].subtopics.forEach(sub => {
-                    const li = document.createElement('li');
-                    const btn = document.createElement('button');
-                    btn.textContent = sub.title;
-                    btn.className = 'subtopic-btn w-full text-left px-3 py-2 rounded hover:bg-orange-100';
-                    btn.dataset.subId = sub.id;
+    if (!topics[topicId] || topics[topicId].subtopics.length === 0) {
+        subtopicList.innerHTML = '<li class="text-gray-400">No subtopics</li>';
+        uploadForm.classList.add('hidden');
+        return;
+    }
 
-                    if (sub.id === defaultSubId) {
-                        btn.classList.add('bg-orange-200');
-                        uploadForm.classList.remove('hidden');
-                        uploadTopicId.value = topicId;
-                        uploadSubtopicId.value = sub.id;
-                        subtopicDescription.textContent = sub.description || '';
-                    }
+    topics[topicId].subtopics.forEach(sub => {
+        const li = document.createElement('li');
+        li.className = "flex items-center justify-between";
 
-                    btn.onclick = () => {
-                        document.querySelectorAll('.subtopic-btn').forEach(b => b.classList.remove('bg-orange-200'));
-                        btn.classList.add('bg-orange-200');
-                        uploadForm.classList.remove('hidden');
-                        uploadTopicId.value = topicId;
-                        uploadSubtopicId.value = sub.id;
-                        subtopicDescription.textContent = sub.description || '';
-                    };
+        // Subtopic button
+        const btn = document.createElement('button');
+        btn.textContent = sub.title;
+        btn.className = 'subtopic-btn flex-1 text-left px-3 py-2 rounded hover:bg-orange-100';
+        btn.dataset.subId = sub.id;
 
-                    li.appendChild(btn);
-                    subtopicList.appendChild(li);
-                });
-            }
+        // Questions icon (→ link to Questions.php)
+        const link = document.createElement('a');
+        link.href = `./Questions.php?subtopic_id=${sub.id}`;
+        link.className = "ml-2 text-orange-500 hover:text-orange-700";
+        link.title = "View Questions";
+        link.innerHTML = "📄"; // you can swap with <i class='fa fa-question'></i> if using FontAwesome
 
-            // Topic click
+        // Default select
+        if (sub.id === defaultSubId) {
+            btn.classList.add('bg-orange-200');
+            uploadForm.classList.remove('hidden');
+            uploadTopicId.value = topicId;
+            uploadSubtopicId.value = sub.id;
+            subtopicDescription.textContent = sub.description || '';
+        }
+
+        btn.onclick = () => {
+            document.querySelectorAll('.subtopic-btn').forEach(b => b.classList.remove('bg-orange-200'));
+            btn.classList.add('bg-orange-200');
+            uploadForm.classList.remove('hidden');
+            uploadTopicId.value = topicId;
+            uploadSubtopicId.value = sub.id;
+            subtopicDescription.textContent = sub.description || '';
+        };
+
+        li.appendChild(btn);
+        li.appendChild(link);
+        subtopicList.appendChild(li);
+    });
+}
+
+
+
             document.querySelectorAll('.topic-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const topicId = btn.dataset.topicId;
@@ -226,7 +245,7 @@ while ($row = $result->fetch_assoc()) {
             const firstTopicBtn = document.querySelector('.topic-btn');
             if (firstTopicBtn) firstTopicBtn.click();
 
-            // Modal open/close
+
             ['topic', 'subtopic'].forEach(type => {
                 const openBtn = document.getElementById(`open-${type}-popup`);
                 const closeBtn = document.getElementById(`close-${type}-popup`);

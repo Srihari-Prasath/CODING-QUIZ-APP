@@ -1,7 +1,7 @@
 
   <header class="flex justify-between items-center bg-white shadow p-4 px-10">
     <div>
-      <img src="../assets/img/main/logo.png" alt="" style="width: 120px;height:70px;">
+      <img src="../assets/img/logo/logo.png" alt="" style="width: 120px;height:70px;">
     </div>
    <h2 class="text-2xl font-bold text-gray-800 tracking-tight">
           Welcome Back, <?php echo $_SESSION['name'] ?> <span class="name-text"></span>
