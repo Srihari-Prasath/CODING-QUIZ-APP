@@ -1,6 +1,7 @@
 <?php
 include '../resource/conn.php';
 include '../resource/session.php';
+include './header.php';
 
 // Get selected year from GET param
 $selected_year = isset($_GET['year']) ? intval($_GET['year']) : 0;
@@ -55,6 +56,8 @@ if ($result && mysqli_num_rows($result) > 0) {
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Advanced Analytics Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 	<style>
 		:root {
@@ -291,6 +294,7 @@ if ($result && mysqli_num_rows($result) > 0) {
 				margin-top: 0.5rem;
 			}
 		}
+        
 	</style>
 </head>
 <body>

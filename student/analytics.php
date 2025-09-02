@@ -2,6 +2,8 @@
 include '../resource/conn.php';
 include '../resource/session.php';
 
+include 'header.php';
+
 // Get logged-in student id and department
 $student_id = isset($_SESSION['id']) ? intval($_SESSION['id']) : 0;
 $department_id = isset($_SESSION['department_id']) ? intval($_SESSION['department_id']) : 0;
@@ -50,19 +52,22 @@ if ($result && mysqli_num_rows($result) > 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Analytics</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         :root {
-            --color-primary: #F97316;
-            --color-primary-hover: #EA580C;
-            --color-secondary: #10B981;
-            --color-accent: #FBBF24;
-            --color-background: #F3F4F6;
-            --color-text: #1F2937;
-            --color-border: #D1D5DB;
+            --color-primary: #F97316; /* Vibrant orange */
+            --color-primary-hover: #EA580C; /* Darker orange */
+            --color-secondary: #FBBF24; /* Light orange-yellow */
+            --color-accent: #FED7AA; /* Very light orange */
+            --color-background: #FFF7ED; /* Pale orange background */
+            --color-text: #431407; /* Dark brown for text */
+            --color-border: #FECACA; /* Light orange border */
         }
         body {
-            background: linear-gradient(135deg, var(--color-background) 0%, #E5E7EB 100%);
+            background: linear-gradient(135deg, var(--color-background) 0%, #FFE4E1 100%); /* Orange gradient */
             color: var(--color-text);
             font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
             padding: 3rem;
@@ -77,13 +82,13 @@ if ($result && mysqli_num_rows($result) > 0) {
             color: var(--color-primary);
             text-transform: uppercase;
             letter-spacing: 1px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            text-shadow: 1px 1px 2px rgba(249, 115, 22, 0.2); /* Orange shadow */
         }
         .table-container {
             background: #FFFFFF;
             border-radius: 16px;
             padding: 2rem;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 24px rgba(249, 115, 22, 0.1); /* Orange shadow */
             max-width: 900px;
             margin: 0 auto 3rem auto;
             border: 1px solid var(--color-border);
@@ -114,14 +119,14 @@ if ($result && mysqli_num_rows($result) > 0) {
             letter-spacing: 1.2px;
         }
         td {
-            background: #F9FAFB;
+            background: #FFFBF5; /* Very light orange background */
             color: var(--color-text);
         }
         tr {
             transition: background 0.3s ease;
         }
         tr:hover {
-            background: #EEF2FF;
+            background: #FFF1E6; /* Light orange hover */
         }
         #charts {
             display: grid;
@@ -134,13 +139,13 @@ if ($result && mysqli_num_rows($result) > 0) {
             background: #FFFFFF;
             border-radius: 16px;
             padding: 1.5rem;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 6px 20px rgba(249, 115, 22, 0.08); /* Orange shadow */
             border: 1px solid var(--color-border);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .chart-container:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 10px 30px rgba(249, 115, 22, 0.12); /* Orange shadow */
         }
         canvas {
             border-radius: 8px;
@@ -229,7 +234,7 @@ if ($result && mysqli_num_rows($result) > 0) {
             options: {
                 animation: { duration: 1200, easing: 'easeOutBounce' },
                 scales: {
-                    y: { beginAtZero: true, grid: { color: 'rgba(0, 0, 0, 0.05)' } },
+                    y: { beginAtZero: true, grid: { color: 'rgba(249, 115, 22, 0.1)' } }, /* Orange grid */
                     x: { grid: { display: false } }
                 },
                 plugins: { legend: { labels: { color: 'var(--color-text)' } } }
@@ -244,7 +249,7 @@ if ($result && mysqli_num_rows($result) > 0) {
                     label: 'Percentage',
                     data: [<?php echo $percentage; ?>],
                     borderColor: 'var(--color-secondary)',
-                    backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                    backgroundColor: 'rgba(251, 191, 36, 0.2)', /* Light orange fill */
                     fill: true,
                     tension: 0.4,
                     borderWidth: 3
@@ -253,7 +258,7 @@ if ($result && mysqli_num_rows($result) > 0) {
             options: {
                 animation: { duration: 1000, easing: 'easeInOutQuart' },
                 scales: {
-                    y: { beginAtZero: true, max: 100, grid: { color: 'rgba(0, 0, 0, 0.05)' } },
+                    y: { beginAtZero: true, max: 100, grid: { color: 'rgba(249, 115, 22, 0.1)' } }, /* Orange grid */
                     x: { grid: { display: false } }
                 },
                 plugins: { legend: { labels: { color: 'var(--color-text)' } } }
@@ -286,7 +291,7 @@ if ($result && mysqli_num_rows($result) > 0) {
                 datasets: [{
                     label: 'My Analytics',
                     data: [<?php echo $avg_score; ?>, <?php echo $total_correct; ?>, <?php echo $total_wrong; ?>, <?php echo $total_attempted; ?>, <?php echo $percentage; ?>],
-                    backgroundColor: 'rgba(249, 115, 22, 0.2)',
+                    backgroundColor: 'rgba(249, 115, 22, 0.2)', /* Light orange fill */
                     borderColor: 'var(--color-primary)',
                     pointBackgroundColor: 'var(--color-primary-hover)',
                     borderWidth: 2
@@ -296,8 +301,8 @@ if ($result && mysqli_num_rows($result) > 0) {
                 animation: { duration: 1200, easing: 'easeOutBounce' },
                 scales: {
                     r: {
-                        angleLines: { display: true, color: 'rgba(0, 0, 0, 0.1)' },
-                        grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                        angleLines: { display: true, color: 'rgba(249, 115, 22, 0.2)' }, /* Orange angle lines */
+                        grid: { color: 'rgba(249, 115, 22, 0.2)' }, /* Orange grid */
                         suggestedMin: 0,
                         suggestedMax: Math.max(<?php echo $avg_score; ?>, <?php echo $total_attempted; ?>, <?php echo $percentage; ?>, 100)
                     }

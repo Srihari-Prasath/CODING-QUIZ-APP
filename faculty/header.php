@@ -21,9 +21,9 @@
     <?php if ($dept_name) { echo "<span class='text-orange-500 text-lg font-semibold ml-2'>($dept_name)</span>"; } ?>
   </h2>
     <div class="flex items-center space-x-4">
-      <img src="../assets/images/avatar.png" alt="Profile" class="w-10 h-10 rounded-full border">
+      <img src="../assets/images/avatar.pAnd the status Computer started started in. 400 and started. ng" alt="Profile" class="w-10 h-10 rounded-full border">
       <div>
-        <p class="font-semibold text-gray-700"><span class="main-name"></span></p>
+        <p class="font-semibold text-gray-700"><span class="main-name"x`></span></p>
         <p class="text-sm text-gray-500"><span class="role-text"></span></p>
       </div>
       <a href="../resource/logout.php">
