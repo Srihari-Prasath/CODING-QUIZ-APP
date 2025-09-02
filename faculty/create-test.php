@@ -159,7 +159,10 @@ include("../backend/faculty/createTest.php");
 
         <!-- Total Questions -->
         <div class="flex flex-col md:col-span-1">
-          <label for="totalQuestion" class="font-semibold text-gray-700 mb-2">Total Questions</label>
+          <div class="flex items-center justify-between mb-2">
+            <label for="totalQuestion" class="font-semibold text-gray-700">Total Questions</label>
+            <span id="availableQuestionsBadge" class="ml-2 px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-sm font-semibold border border-orange-300" style="display:none;">Available: 0</span>
+          </div>
           <input type="number" name="num_questions" id="totalQuestion" placeholder="Enter total questions" required
             class="p-3 md:p-4 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-200 w-full" />
         </div>
@@ -236,13 +239,16 @@ include("../backend/faculty/createTest.php");
   document.addEventListener('DOMContentLoaded', function() {
     const topicSelect = document.getElementById('topic');
     const subTopicSelect = document.getElementById('subTopicSelect');
+    const availableQuestionsBadge = document.getElementById('availableQuestionsBadge');
+    let subtopicData = [];
 
     topicSelect.addEventListener('change', function() {
       const topicId = this.value;
       subTopicSelect.innerHTML = '<option value="">Loading...</option>';
-      fetch(`../backend/faculty/get_subtopics.php?topic_id=${topicId}`)
+      fetch(`../backend/faculty/get_subtopic_question_count.php?topic_id=${topicId}`)
         .then(response => response.json())
         .then(data => {
+          subtopicData = data;
           let options = '<option value="">--Select Sub Topic--</option>';
           if (data.length > 0) {
             data.forEach(sub => {
@@ -250,10 +256,23 @@ include("../backend/faculty/createTest.php");
             });
           }
           subTopicSelect.innerHTML = options;
+          availableQuestionsBadge.style.display = 'none';
         })
         .catch(() => {
           subTopicSelect.innerHTML = '<option value="">No sub topics found</option>';
+          availableQuestionsBadge.style.display = 'none';
         });
+    });
+
+    subTopicSelect.addEventListener('change', function() {
+      const subId = this.value;
+      const sub = subtopicData.find(s => s.sub_topic_id == subId);
+      if (sub) {
+        availableQuestionsBadge.textContent = `Available: ${sub.question_count}`;
+        availableQuestionsBadge.style.display = 'inline-block';
+      } else {
+        availableQuestionsBadge.style.display = 'none';
+      }
     });
   });
   </script>
