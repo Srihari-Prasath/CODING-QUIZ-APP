@@ -32,8 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (($handle = fopen($fileTmp, 'r')) !== false) {
             $header = fgetcsv($handle);
             while (($row = fgetcsv($handle)) !== false) {
-                $q = array_combine($header, $row);
-                $questions[] = $q;
+                if (count($header) === count($row)) {
+                    $q = array_combine($header, $row);
+                    $questions[] = $q;
+                }
+                // else: skip row or log error
             }
             fclose($handle);
         }
@@ -53,7 +56,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($rowIndex == 1) {
                 $header = $rowData;
             } else {
-                $questions[] = array_combine($header, $rowData);
+                if (count($header) === count($rowData)) {
+                    $questions[] = array_combine($header, $rowData);
+                }
+                // else: skip row or log error
             }
         }
     } else {
