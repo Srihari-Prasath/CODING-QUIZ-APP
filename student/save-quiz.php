@@ -1,71 +1,48 @@
 <?php
 include("../resource/conn.php");
-session_start();
-
-if (!isset($_SESSION['id'])) {
-    http_response_code(403);
-    echo json_encode(["error" => "Unauthorized"]);
-    exit;
-}
-
-$student_id = $_SESSION['id'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $data = json_decode(file_get_contents('php://input'), true);
-    $test_id = intval($data['test_id'] ?? 0);
-    $score = intval($data['score'] ?? 0);
-    $answers = $data['answers'] ?? [];
+    $data = json_decode(file_get_contents("php://input"), true);
 
-    // 1. Ensure student_tests row exists
-    $stmt = $conn->prepare("SELECT student_test_id FROM student_tests WHERE student_id = ? AND test_id = ?");
-    $stmt->bind_param("ii", $student_id, $test_id);
-    $stmt->execute();
-    $stmt->bind_result($student_test_id);
-    if (!$stmt->fetch()) {
-        $stmt->close();
-        // insert new row
-        $stmt = $conn->prepare("INSERT INTO student_tests (student_id, test_id, start_time, status) VALUES (?, ?, NOW(), 'started')");
-        $stmt->bind_param("ii", $student_id, $test_id);
-        $stmt->execute();
-        $student_test_id = $stmt->insert_id;
-        $stmt->close();
-    } else {
-        $stmt->close();
-    }
+    $student_id = intval($data['student_id']);
+    $test_id = intval($data['test_id']);
+    $answers = $data['answers'];
 
-    // 2. Save each answer
-    foreach ($answers as $qid => $ans) {
-        // Determine correctness
-        $stmt = $conn->prepare("SELECT correct_option FROM questions WHERE question_id = ?");
-        $stmt->bind_param("i", $qid);
-        $stmt->execute();
-        $stmt->bind_result($correct_option);
-        $stmt->fetch();
-        $stmt->close();
+    $score = 0;
+    $total = count($answers);
 
-        $is_correct = ($ans === $correct_option) ? 1 : 0;
+    foreach ($answers as $answer) {
+        $question_id = intval($answer['question_id']);
+        $selected_option = $answer['selected_option'];
 
-        $stmt = $conn->prepare("
-            INSERT INTO student_answers (student_test_id, question_id, answer, is_correct, marked_at)
-            VALUES (?, ?, ?, ?, NOW())
-            ON DUPLICATE KEY UPDATE answer = VALUES(answer), is_correct = VALUES(is_correct), marked_at = NOW()
-        ");
-        $stmt->bind_param("iisi", $student_test_id, $qid, $ans, $is_correct);
+        // Get correct answer
+        $sql = "SELECT correct_option FROM questions WHERE question_id = $question_id";
+        $res = $conn->query($sql);
+        if ($res && $row = $res->fetch_assoc()) {
+            if ($row['correct_option'] === $selected_option) {
+                $score++;
+            }
+        }
+
+        // Save answer to DB
+        $stmt = $conn->prepare("INSERT INTO student_answers (student_id, test_id, question_id, selected_option) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("iiis", $student_id, $test_id, $question_id, $selected_option);
         $stmt->execute();
         $stmt->close();
     }
 
-    // 3. Update total score, end time, and status
-    $stmt = $conn->prepare("
-        UPDATE student_tests
-        SET score = ?, end_time = NOW(), status = 'completed'
-        WHERE student_test_id = ?
-    ");
-    $stmt->bind_param("ii", $score, $student_test_id);
+    // Save test result
+    $stmt = $conn->prepare("INSERT INTO student_tests (student_id, test_id, score, total) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("iiii", $student_id, $test_id, $score, $total);
     $stmt->execute();
+    $student_test_id = $stmt->insert_id;
     $stmt->close();
 
-    echo json_encode(["success" => true, "student_test_id" => $student_test_id]);
-    exit;
+    echo json_encode([
+        "status" => "success",
+        "student_test_id" => $student_test_id,
+        "score" => $score,
+        "total" => $total
+    ]);
 }
 ?>
