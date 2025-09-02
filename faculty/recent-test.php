@@ -29,41 +29,33 @@ $stmt->close();
     <main class="container mx-auto px-4 py-8">
         <h2 class="text-2xl font-bold mb-6 text-center">Recent Tests</h2>
         <div class="bg-white rounded-2xl shadow p-6">
-            <table class="w-full text-sm">
-                <thead>
-                    <tr class="bg-orange-50">
-                        <th class="py-2 px-3 text-left">Test Name</th>
-                        <th class="py-2 px-3 text-left">Created At</th>
-                        <th class="py-2 px-3 text-center">Status</th>
-                        <th class="py-2 px-3 text-center">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($tests as $test): ?>
-                        <tr class="border-b">
-                            <td class="py-2 px-3"><?= htmlspecialchars($test['title']) ?></td>
-                            <td class="py-2 px-3"><?= htmlspecialchars($test['created_at']) ?></td>
-                            <td class="py-2 px-3 text-center">
-                                <span class="px-2 py-1 rounded-full text-xs font-semibold <?= $test['is_active'] ? 'bg-green-100 text-green-700' : 'bg-gray-200 text-gray-600' ?>">
-                                    <?= $test['is_active'] ? 'Active' : 'Inactive' ?>
-                                </span>
-                            </td>
-                            <td class="py-2 px-3 text-center">
-                                <form method="post" action="../backend/faculty/toggle_test_status.php" class="inline">
-                                    <input type="hidden" name="test_id" value="<?= $test['test_id'] ?>">
-                                    <input type="hidden" name="new_status" value="<?= $test['is_active'] ? 0 : 1 ?>">
-                                    <button type="submit" class="px-3 py-1 rounded bg-orange-500 text-white text-xs font-semibold hover:bg-orange-600 transition">
-                                        <?= $test['is_active'] ? 'Deactivate' : 'Activate' ?>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                    <?php if (empty($tests)): ?>
-                        <tr><td colspan="4" class="py-4 text-center text-gray-500">No tests found.</td></tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <?php foreach ($tests as $test): ?>
+                    <div class="border rounded-xl p-5 flex flex-col gap-3 shadow hover:shadow-lg transition">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-bold text-lg text-orange-700 truncate" title="<?= htmlspecialchars($test['title']) ?>">
+                                <?= htmlspecialchars($test['title']) ?>
+                            </h3>
+                            <span class="px-2 py-1 rounded-full text-xs font-semibold <?= $test['is_active'] ? 'bg-green-100 text-green-700' : 'bg-gray-200 text-gray-600' ?>">
+                                <?= $test['is_active'] ? 'Active' : 'Inactive' ?>
+                            </span>
+                        </div>
+                        <div class="text-xs text-gray-500">Created: <?= htmlspecialchars($test['created_at']) ?></div>
+                        <div class="flex justify-end">
+                            <form method="post" action="../backend/faculty/toggle_test_status.php" class="inline">
+                                <input type="hidden" name="test_id" value="<?= $test['test_id'] ?>">
+                                <input type="hidden" name="new_status" value="<?= $test['is_active'] ? 0 : 1 ?>">
+                                <button type="submit" class="px-3 py-1 rounded bg-orange-500 text-white text-xs font-semibold hover:bg-orange-600 transition">
+                                    <?= $test['is_active'] ? 'Deactivate' : 'Activate' ?>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+                <?php if (empty($tests)): ?>
+                    <div class="col-span-full py-8 text-center text-gray-500">No tests found.</div>
+                <?php endif; ?>
+            </div>
         </div>
     </main>
     <?php include('../resource/footer.php'); ?>

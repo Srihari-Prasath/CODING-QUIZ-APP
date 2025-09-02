@@ -20,6 +20,8 @@ $year = $_SESSION['year'];
 $department_id = $_SESSION['department_id'];
 
 // fetch tests along with topic & sub_topic names
+
+$today = date('Y-m-d');
 $stmt = $conn->prepare("
     SELECT 
         t.test_id, 
@@ -40,16 +42,31 @@ $stmt = $conn->prepare("
     FROM tests t
     LEFT JOIN topics tp ON t.topic_id = tp.topic_id
     LEFT JOIN sub_topics st ON t.sub_topic_id = st.sub_topic_id
-    WHERE t.year = ? AND t.department_id = ? AND t.is_active = 1
+    WHERE t.year = ? AND t.department_id = ? AND t.is_active = 1 AND t.date = ?
     ORDER BY t.created_at DESC
 ");
 
-$stmt->bind_param("ii", $year, $department_id);
+$stmt->bind_param("iis", $year, $department_id, $today);
 $stmt->execute();
 $result = $stmt->get_result();
 
+
+$student_id = $_SESSION['id'];
 $tests = [];
 while ($row = $result->fetch_assoc()) {
+    // Check if student has completed this test
+    $checkStmt = $conn->prepare("SELECT status FROM student_tests WHERE student_id = ? AND test_id = ? LIMIT 1");
+    $checkStmt->bind_param("ii", $student_id, $row['test_id']);
+    $checkStmt->execute();
+    $checkRes = $checkStmt->get_result();
+    $row['completed'] = false;
+    if ($checkRes && $checkRes->num_rows > 0) {
+        $stRow = $checkRes->fetch_assoc();
+        if ($stRow['status'] === 'completed') {
+            $row['completed'] = true;
+        }
+    }
+    $checkStmt->close();
     $tests[] = $row;
 }
 $stmt->close();
@@ -90,13 +107,16 @@ $conn->close();
         <?php foreach ($tests as $test): ?>
             <div class="quiz-card relative bg-white rounded-3xl shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 p-6 flex flex-col justify-between border-l-8 border-orange-400">
 
-                <!-- Status Badge -->
-                <?php if(isset($test['status'])): ?>
-                    <span class="absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-semibold 
-                        <?php echo $test['status'] == 1 ? 'bg-green-200 text-green-800' : 'bg-gray-200 text-gray-600'; ?>">
-                        <?php echo $test['status'] == 1 ? 'Active' : 'Inactive'; ?>
-                    </span>
-                <?php endif; ?>
+                <!-- Test Live Status Blinking Badge -->
+                <span class="absolute top-4 right-4 flex items-center gap-2">
+                    <?php if($test['is_active'] == 1): ?>
+                        <span class="blinking-dot bg-green-500 rounded-full w-3 h-3 mr-1 animate-pulse"></span>
+                        <span class="px-2 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700 border border-green-300">Test Live</span>
+                    <?php else: ?>
+                        <span class="blinking-dot bg-gray-400 rounded-full w-3 h-3 mr-1 animate-pulse"></span>
+                        <span class="px-2 py-1 rounded-full text-xs font-bold bg-gray-200 text-gray-600 border border-gray-300">Not Live</span>
+                    <?php endif; ?>
+                </span>
 
                 <!-- Card Header / Title -->
                 <div class="mb-4">
@@ -115,11 +135,16 @@ $conn->close();
                 </div>
 
                 <!-- Action Button -->
-                <?php if($test['is_active'] == 1): ?>
+                <?php if($test['is_active'] == 1 && !$test['completed']): ?>
                     <a href="./test.php?id=<?php echo $test['test_id']; ?>"
                        class="mt-auto inline-block text-center bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500 text-white font-semibold px-5 py-3 rounded-2xl shadow-lg transition-all duration-300">
                         Start Test
                     </a>
+                <?php elseif($test['completed']): ?>
+                    <button disabled
+                        class="mt-auto inline-block text-center bg-gray-300 text-gray-600 font-semibold px-5 py-3 rounded-2xl shadow-lg cursor-not-allowed">
+                        Already Attempted
+                    </button>
                 <?php else: ?>
                     <button disabled
                         class="mt-auto inline-block text-center bg-gray-300 text-gray-600 font-semibold px-5 py-3 rounded-2xl shadow-lg cursor-not-allowed">
