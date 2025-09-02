@@ -1,7 +1,7 @@
 <header>
   <div class="container header-content">
  <div>
-  <img src="../assets/img/main/logo.png" alt="" width="180px" height="120px">
+  <img src="http://localhost/CODING-QUIZ-APP/assets/img/logo/logo.png" alt="" width="180px" height="120px">
  </div>
     <div class="text-center flex flex-col justify-center items-center uppercase">
       <h1>
