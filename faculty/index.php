@@ -110,17 +110,10 @@ include("../resource/session.php")
       </div>
 
       <!-- Filters & Button -->
-      <div class="flex space-x-3">
-        <select id="filter-status"
-          class="p-2.5 rounded-xl border border-gray-200 bg-white shadow-sm text-gray-700 cursor-pointer hover:border-orange-400 focus:ring-2 focus:ring-orange-400 transition">
-          <option value="all">All</option>
-          <option value="active">Active</option>
-          <option value="completed">Completed</option>
-        </select>
-
-        <button class="flex items-center px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-xl shadow-sm transition">
+      <div class="flex">
+        <a href="analytics.php" class="flex items-center px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-xl shadow-sm transition">
           <i data-lucide="bar-chart-3" class="w-5 h-5 mr-2"></i> Analytics
-        </button>
+        </a>
       </div>
     </section>
 
