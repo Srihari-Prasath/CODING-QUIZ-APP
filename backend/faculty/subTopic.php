@@ -15,7 +15,7 @@ error_reporting(-1);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_id = isset($_SESSION['id']) ? intval($_SESSION['id']) : 0;
-    $topic_id = intval($_POST['parentTopic']);
+    $topic_id = $_POST['parentTopic'];
     $title = trim($_POST['subTopicName']);
     $description = trim($_POST['subTopicDescription']);
     $by_admin = 0;
