@@ -1,80 +1,61 @@
 <?php
+ob_start();
 session_start();
 include("../../resource/conn.php");
 
-require '../../vendor/autoload.php';
+if (isset($_POST['importExcelFile'])) {
+    if (isset($_FILES['csvFile']) && $_FILES['csvFile']['error'] === UPLOAD_ERR_OK) {
+        $csvFileTmpName = $_FILES['csvFile']['tmp_name'];
 
+        if (($handle = fopen($csvFileTmpName, 'r')) !== false) {
 
+            $header = fgetcsv($handle, 1000, ',');
+            $header = array_map(function($h) {
+                return strtolower(trim($h));
+            }, $header);
 
-use PhpOffice\PhpSpreadsheet\IOFactory;
+            while (($data = fgetcsv($handle, 1000, ',')) !== false) {
+                $row = array_combine($header, $data);
 
-header('Content-Type: application/json');
+                $stu_name   = $conn->real_escape_string($row['name']);
+                $inputRegNo = $conn->real_escape_string($row['reg_no']);
+                $dept       = $conn->real_escape_string($row['dept']);
+                $stu_batch  = $conn->real_escape_string($row['year']);
 
-$response = [
-    "status" => "error",
-    "message" => "Unknown error"
-];
+                $batch_year = [
+                    "2022" => "IV",
+                    "2023" => "III",
+                    "2024" => "II",
+                    "2025" => "I"
+                ];
+                $year = isset($batch_year[$stu_batch]) ? $batch_year[$stu_batch] : $stu_batch;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
-    $department_id = intval($_POST['department']);
-    $year = intval($_POST['year']);
+                $inputRegNo = !empty($inputRegNo) ? $inputRegNo : (isset($row['admission_no']) ? $row['admission_no'] : '');
 
-    if ($department_id == 0 || $year == 0) {
-        echo json_encode([
-            "status" => "error",
-            "message" => "Department and Year are required."
-        ]);
-        exit;
-    }
+                $house_name = $conn->real_escape_string($_POST['house_name']);
+                $gender     = $conn->real_escape_string($_POST['gender']);
 
-    $filePath = $_FILES['file']['tmp_name'];
+                $sql = "INSERT INTO studentdb (name, reg_no, house, dept, gender, year) 
+                        VALUES ('$stu_name', '$inputRegNo', '$house_name', '$dept', '$gender', '$year')
+                        ON DUPLICATE KEY UPDATE
+                            name='$stu_name',
+                            house='$house_name',
+                            dept='$dept',
+                            gender='$gender',
+                            year='$year'";
 
-    try {
-        $spreadsheet = IOFactory::load($filePath);
-        $sheet = $spreadsheet->getActiveSheet();
-        $rows = $sheet->toArray();
+                $result = $conn->query($sql);
 
-        array_shift($rows); 
-
-        $stmt = $conn->prepare("INSERT INTO users 
-            (roll_no, name, email, year, role_id, department_id, created_at, updated_at) 
-            VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())");
-        $stmt->bind_param("sssiii", $roll_no, $name, $email, $year, $role_id, $department_id);
-
-        $role_id = 1;
-        $inserted = 0;
-
-        foreach ($rows as $row) {
-            $roll_no = trim($row[0]);
-            $name    = trim($row[1]);
-            $email   = trim($row[2]);
-
-            if (empty($roll_no) || empty($name) || empty($email)) {
-                continue;
+                if (!$result) {
+                    die("Error: " . $conn->error);
+                }
             }
 
-            $stmt->execute();
-            $inserted++;
+            fclose($handle);
         }
-
-        $response = [
-            "status" => "success",
-            "message" => "Bulk upload successful!",
-            "inserted" => $inserted,
-            "department_id" => $department_id,
-            "year" => $year
-        ];
-    } catch (Exception $e) {
-        $response = [
-            "status" => "error",
-            "message" => "Error reading file: " . $e->getMessage()
-        ];
     }
-} else {
-    $response = [
-        "status" => "error",
-        "message" => "No file uploaded!"
-    ];
-}
 
-echo json_encode($response);
+    $conn->close();
+    header('Location: ../../pages/adminForm.php');
+}
+ob_end_flush();
