@@ -41,10 +41,11 @@ $page_name = "Students ";
             </div>
         </div>
         <div class="flex space-x-3">
-            <a href="students.html?action=add" class="flex items-center px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700">
-                <i data-feather="user-plus" class="mr-2"></i>
+             <button id="StudentModel"
+                class="flex items-center px-4 py-2 border border-primary-600 bg-orange-400 text-white rounded-lg hover:bg-primary-500">
+                <i data-feather="upload" class="mr-2"></i>
                 Add Student
-            </a>
+            </button>
             <button id="openModalBtn"
                 class="flex items-center px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50">
                 <i data-feather="upload" class="mr-2"></i>
@@ -87,7 +88,7 @@ $page_name = "Students ";
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                   
+
                 </tbody>
             </table>
         </div>
@@ -144,122 +145,296 @@ $page_name = "Students ";
     </div>
 
     <!-- Add Student Modal (Hidden by default) -->
-    <div id="addStudentModal" class="fixed inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="sm:flex sm:items-start">
-                        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-primary-100 sm:mx-0 sm:h-10 sm:w-10">
-                            <i data-feather="user-plus" class="text-primary-600"></i>
-                        </div>
-                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                                Add New Student
-                            </h3>
-                            <div class="mt-2">
-                                <form class="space-y-4">
-                                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                                        <div>
-                                            <label for="firstName" class="block text-sm font-medium text-gray-700">First Name</label>
-                                            <input type="text" name="firstName" id="firstName" class="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                        </div>
-                                        <div>
-                                            <label for="lastName" class="block text-sm font-medium text-gray-700">Last Name</label>
-                                            <input type="text" name="lastName" id="lastName" class="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label for="rollNumber" class="block text-sm font-medium text-gray-700">Roll Number</label>
-                                        <input type="text" name="rollNumber" id="rollNumber" class="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                    </div>
-                                    <div>
-                                        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                                        <input type="email" name="email" id="email" class="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                    </div>
-                                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                                        <div>
-                                            <label for="department" class="block text-sm font-medium text-gray-700">Department</label>
-                                            <select id="department" name="department" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
-                                                <option>Computer Science</option>
-                                                <option>Electrical Engineering</option>
-                                                <option>Mechanical Engineering</option>
-                                                <option>Civil Engineering</option>
-                                                <option>Electronics</option>
-                                                <option>Information Technology</option>
-                                                <option>Chemical Engineering</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label for="year" class="block text-sm font-medium text-gray-700">Year</label>
-                                            <select id="year" name="year" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
-                                                <option>1st Year</option>
-                                                <option>2nd Year</option>
-                                                <option>3rd Year</option>
-                                                <option>4th Year</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+   <!-- Add Student Modal -->
+<div id="addStudentModal" class="fixed inset-0 flex items-center justify-center hidden z-50">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold text-gray-900 flex items-center">
+                <i data-feather="user-plus" class="w-5 h-5 text-primary-600 mr-2"></i>
+                Add New Student
+            </h3>
+            <button type="button" id="closeModalBtn" class="text-gray-400 hover:text-gray-600">
+                ✕
+            </button>
+        </div>
+
+        <!-- Form -->
+        <form id="studentForm" class="space-y-4">
+            <!-- Roll Number -->
+            <div>
+                <label for="roll_no" class="block text-sm font-medium text-gray-700">Roll Number</label>
+                <input type="text" name="roll_no" id="roll_no"
+                    class="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-primary-500 focus:ring-primary-500"
+                    required>
+            </div>
+
+            <!-- Full Name -->
+            <div>
+                <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                <input type="text" name="name" id="name"
+                    class="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-primary-500 focus:ring-primary-500"
+                    required>
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                <input type="email" name="email" id="email"
+                    class="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-primary-500 focus:ring-primary-500"
+                    required>
+            </div>
+
+            <!-- Department and Year -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="department_id" class="block text-sm font-medium text-gray-700">Department</label>
+                    <select id="department_id" name="department_id"
+                        class="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-primary-500 focus:ring-primary-500"
+                        required>
+                        <option value="">Select Department</option>
+                        <?php
+                        include("../resource/conn.php");
+                        $sql = "SELECT id, short_name, full_name FROM departments";
+                        $result = $conn->query($sql);
+                        if ($result && $result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option value="' . htmlspecialchars($row['id']) . '">' .
+                                    htmlspecialchars($row['full_name']) . ' (' . htmlspecialchars($row['short_name']) . ')</option>';
+                            }
+                        } else {
+                            echo '<option value="">No Departments Found</option>';
+                        }
+                        ?>
+                    </select>
                 </div>
-                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary-600 text-base font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 sm:ml-3 sm:w-auto sm:text-sm">
-                        Add Student
-                    </button>
-                    <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                        Cancel
-                    </button>
+                <div>
+                    <label for="year" class="block text-sm font-medium text-gray-700">Year</label>
+                    <select id="year" name="year"
+                        class="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-primary-500 focus:ring-primary-500"
+                        required>
+                        <option value="">Select Year</option>
+                        <option value="1">1st Year</option>
+                        <option value="2">2nd Year</option>
+                        <option value="3">3rd Year</option>
+                        <option value="4">4th Year</option>
+                    </select>
                 </div>
             </div>
+
+            <!-- Buttons -->
+            <div class="flex justify-end space-x-3 pt-4">
+                <button type="button" id="cancelModalBtn"
+                    class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100">
+                    Cancel
+                </button>
+                <button type="submit"
+                    class="px-4 py-2 rounded-lg bg-primary-600 text-white hover:bg-primary-700">
+                    Save Student
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+    <div id="bulkUploadModal"
+        class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold text-gray-800">Bulk Upload</h2>
+                <button id="closeModalBtn" class="text-gray-500 hover:text-gray-700">&times;</button>
+            </div>
+
+            <form id="uploadForm" action="./backend/uploadquestions.php" method="POST" enctype="multipart/form-data" class="space-y-4">
+                <!-- Department -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Department</label>
+                    <select name="department" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-600">
+                        <option value="">Select Department</option>
+                        <?php
+                        include("../resource/conn.php");
+                        $sql = "SELECT id, short_name, full_name FROM departments";
+                        $result = $conn->query($sql);
+
+                        if ($result && $result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option value="' . htmlspecialchars($row['id']) . '">'
+                                    . htmlspecialchars($row['full_name']) . ' (' . htmlspecialchars($row['short_name']) . ')</option>';
+                            }
+                        } else {
+                            echo '<option value="">No Departments Found</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+
+                <!-- Year -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Year</label>
+                    <select name="year" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-600">
+                        <option value="">Select Year</option>
+                        <option value="1">1st Year</option>
+                        <option value="2">2nd Year</option>
+                        <option value="3">3rd Year</option>
+                        <option value="4">4th Year</option>
+                    </select>
+                </div>
+
+                <!-- File Upload -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Upload File</label>
+                    <input type="file" name="file" required
+                        class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-600">
+                </div>
+
+
+                <!-- Submit -->
+                <div class="flex justify-between  items-center">
+       <a href="./resource/stu_template.csv">
+            <button 
+                        class="px-4 py-2 text-orange-800">
+                        Template 
+                    </button>
+       </a>
+                    <button type="submit"
+                        class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700">
+                        Upload
+                    </button>
+                </div>
+            </form>
+
+            <div id="result" class="mt-4 text-sm"></div>
         </div>
     </div>
 
-    
+
+
 </main>
 
 
 <script>
-    // Initialize AOS
-    AOS.init();
+    const modal = document.getElementById("bulkUploadModal");
+    const openBtn = document.getElementById("openModalBtn");
+    const closeBtn = document.getElementById("closeModalBtn");
 
-    // Initialize Feather Icons
-    feather.replace();
-
-    // Sidebar toggle functionality
-    document.getElementById('sidebarToggle').addEventListener('click', function() {
-        document.querySelector('.sidebar').classList.toggle('collapsed');
-    });
-
-    // Check URL for action parameter to show modal
-    const urlParams = new URLSearchParams(window.location.search);
-    const action = urlParams.get('action');
-
-    if (action === 'add') {
-        document.getElementById('addStudentModal').classList.remove('hidden');
-    }
-
-    // Close modal when clicking cancel or outside
-    const modal = document.getElementById('addStudentModal');
-    const closeButtons = modal.querySelectorAll('button[type="button"]');
-
-    closeButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            if (this.textContent.trim() === 'Cancel') {
-                modal.classList.add('hidden');
-            }
-        });
-    });
-
-    modal.addEventListener('click', function(e) {
+    openBtn.onclick = () => {
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+    };
+    closeBtn.onclick = () => {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+    };
+    window.onclick = (e) => {
         if (e.target === modal) {
-            modal.classList.add('hidden');
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+        }
+    };
+</script>
+
+
+<script>
+    document.getElementById('uploadForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const form = e.target;
+        const formData = new FormData(form);
+
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = "Uploading...";
+
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+            console.log(data)
+
+            if (data.status === "success") {
+                resultDiv.innerHTML = `<span class="text-green-600">${data.message} Inserted: ${data.inserted}</span>`;
+            } else {
+                resultDiv.innerHTML = `<span class="text-red-600">${data.message}</span>`;
+            }
+        } catch (err) {
+            resultDiv.innerHTML = `<span class="text-red-600">Error: ${err.message}</span>`;
         }
     });
 </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById("addStudentModal");
+    const openBtn = document.querySelector("#StudentModel");
+    const cancelBtn = modal.querySelector("button:nth-child(2)"); 
+    const overlay = modal.querySelector(".bg-gray-500"); 
+
+   
+    openBtn.addEventListener("click", (e) => {
+        e.preventDefault(); 
+        modal.classList.remove("hidden");
+    });
+
+    
+    cancelBtn.addEventListener("click", () => {
+        modal.classList.add("hidden");
+    });
+
+
+    overlay.addEventListener("click", () => {
+        modal.classList.add("hidden");
+    });
+
+ 
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+            modal.classList.add("hidden");
+        }
+    });
+});
+</script>
+<script>
+document.getElementById("studentForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+
+ 
+
+
+   fetch("./backend/addStudents.php", {
+    method: "POST",
+    body: formData
+})
+.then(response => response.text()) 
+.then(text => {
+    console.log("Raw response:", text);
+    try {
+        const data = JSON.parse(text);
+        console.log("Parsed JSON:", data);
+
+        alert(data.message);
+        if (data.status === "success") {
+            document.getElementById("studentForm").reset();
+            document.getElementById("addStudentModal").classList.add("hidden");
+        }
+    } catch (err) {
+        console.error("JSON parse error:", err, "Response was:", text);
+        alert("Server returned invalid JSON. Check console for details.");
+    }
+})
+.catch(err => {
+    console.error("Fetch error:", err);
+    alert("Error: " + err);
+});
+
+});
+</script>
+
+
 </body>
 
 </html>
