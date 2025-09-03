@@ -158,7 +158,7 @@ while ($row = $result->fetch_assoc()) {
                 <button id="close-subtopic-popup" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
                 <h2 class="text-3xl font-bold text-gray-800 mb-2 text-center">Create Sub Topic</h2>
                 <p class="text-gray-500 mb-6 text-center">Select a topic and add a sub topic with description.</p>
-                <form id="create-subtopic-form" class="flex flex-col gap-6" action="../backend/faculty/subTopic.php" method="post">
+                <form id="create-subtopic-form" class="flex flex-col gap-6" action="../backend/faculty/subTopic.php" method="POST">
                     <select name="parentTopic" required class="p-4 border rounded-2xl w-full">
                         <option value="">Select Topic</option>
                         <?php foreach ($topics as $tid => $topic): ?>
