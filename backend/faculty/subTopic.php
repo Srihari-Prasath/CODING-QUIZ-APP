@@ -6,6 +6,13 @@ include("../../resource/session.php");
 
 
 
+ini_set('display_startup_errors', 1);
+ini_set('display_errors', 1);
+error_reporting(-1);
+
+
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_id = isset($_SESSION['id']) ? intval($_SESSION['id']) : 0;
     $topic_id = intval($_POST['parentTopic']);
