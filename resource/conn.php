@@ -1,9 +1,16 @@
 <?php
 
+// $host = "localhost";
+// $user = "root";
+// $pass = "";
+// $db   = "iqarena";
+
+
 $host = "localhost";
-$user = "root";
-$pass = "";
-$db   = "iqarena";
+$user = "nscet_iqarena";
+$pass = "nscet_iqarena";
+$db   = "nscet_iqarena";
+
 
 $conn = mysqli_connect($host, $user, $pass, $db);
 
