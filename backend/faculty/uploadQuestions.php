@@ -1,5 +1,4 @@
 <?php
-// uploadQuestions.php - Backend for uploading questions to the 'questions' table
 include("../../resource/conn.php");
 include("../../resource/session.php");
 

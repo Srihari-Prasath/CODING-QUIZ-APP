@@ -2,9 +2,6 @@
 
 
 
-if (!isset($_SESSION['id'])) {
-    die("Unauthorized access");
-}
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $title = trim($_POST['title'] ?? '');
@@ -21,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $added_by = $_SESSION['id']; // session user id
 
     if ($title === '' || $subject === '' || $topic_id === 0) {
-        die("⚠ Title, Subject and Topic are required.");
+        die("Title, Subject and Topic are required.");
     }
 
     // Insert query
