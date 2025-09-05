@@ -204,6 +204,7 @@ if ($result === false) {
 </head>
 <body>
     <h2>My Report</h2>
+    <button id="downloadPdfBtn" class="btn-details" style="margin-bottom:1rem;">Download PDF</button>
     <form method="post">
         <label for="time_filter">Time:</label>
         <select name="time_filter" id="time_filter">
@@ -214,7 +215,7 @@ if ($result === false) {
         </select>
         <button type="submit">Filter</button>
     </form>
-    <div class="table-container">
+    <div id="report-content" class="table-container">
         <table>
             <thead>
                 <tr>
@@ -244,5 +245,143 @@ if ($result === false) {
             </tbody>
         </table>
     </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+document.getElementById('downloadPdfBtn').addEventListener('click', async function() {
+    // Check if content exists
+    const content = document.getElementById('report-content');
+    if (!content || !content.querySelector('table')) {
+        alert('No data available to generate PDF.');
+        return;
+    }
+
+    // Clone table and remove Action column if present
+    const table = content.querySelector('table');
+    const tableClone = table.cloneNode(true);
+    const isDetailsPage = window.location.href.includes('test_details.php');
+    
+    if (!isDetailsPage) {
+        // Remove Action column for main report
+        const headerRow = tableClone.querySelector('tr');
+        if (headerRow && headerRow.lastElementChild) {
+            headerRow.removeChild(headerRow.lastElementChild);
+        }
+        const dataRows = tableClone.querySelectorAll('tbody tr');
+        dataRows.forEach(row => {
+            if (row.lastElementChild) {
+                row.removeChild(row.lastElementChild);
+            }
+        });
+    }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: 'landscape' });
+
+    // Report metadata
+    const departmentName = 'Computer Science';
+    const selectedYear = '<?= $year ? $year : "All" ?>';
+    const reportDate = new Date().toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+
+    // Load images with fallback
+    const collegeLogoUrl = 'assets/img/logo/logo.png';
+    const iqarenaLogoUrl = 'assets/img/logo/iqarena.png';
+
+    async function loadImage(url) {
+        try {
+            const img = new Image();
+            img.crossOrigin = 'Anonymous';
+            return new Promise((resolve) => {
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+                    resolve(canvas.toDataURL('image/png'));
+                };
+                img.onerror = () => resolve(null);
+                img.src = url;
+            });
+        } catch (error) {
+            console.warn(`Failed to load image: ${url}`, error);
+            return null;
+        }
+    }
+
+    try {
+        // Load logos
+        const [collegeLogo, iqarenaLogo] = await Promise.all([
+            loadImage(collegeLogoUrl),
+            loadImage(iqarenaLogoUrl)
+        ]);
+
+        // Header
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(20);
+        doc.setTextColor(249, 115, 22); // Primary color
+        const pageWidth = doc.internal.pageSize.getWidth();
+        doc.text('NSCET IQArena Report', pageWidth / 2, 20, { align: 'center' });
+
+        // Subheader
+        doc.setFontSize(12);
+        doc.setTextColor(51, 51, 51);
+        doc.setFont('helvetica', 'normal');
+        const subHeader = `Department: ${departmentName} | Year: ${selectedYear} | Generated: ${reportDate}`;
+        doc.text(subHeader, pageWidth / 2, 30, { align: 'center' });
+
+        // Logos
+        if (collegeLogo) {
+            doc.addImage(collegeLogo, 'PNG', 14, 8, 30, 18);
+        }
+        if (iqarenaLogo) {
+            doc.addImage(iqarenaLogo, 'PNG', pageWidth - 44, 8, 30, 18);
+        }
+
+        // Horizontal line
+        doc.setDrawColor(200, 200, 200);
+        doc.setLineWidth(0.5);
+        doc.line(14, 35, pageWidth - 14, 35);
+
+        // Capture table or content
+        const canvas = await html2canvas(content, { 
+            scale: 2,
+            useCORS: true,
+            logging: false
+        });
+        const imgData = canvas.toDataURL('image/png');
+        const imgProps = doc.getImageProperties(imgData);
+        const pdfWidth = pageWidth - 28; // Margin
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+        // Check if content fits on one page
+        const pageHeight = doc.internal.pageSize.getHeight();
+        let yPosition = 40;
+        if (pdfHeight > pageHeight - 50) {
+            // Multi-page handling
+            const scaleFactor = (pageHeight - 50) / pdfHeight;
+            doc.addImage(imgData, 'PNG', 14, yPosition, pdfWidth * scaleFactor, pdfHeight * scaleFactor);
+        } else {
+            doc.addImage(imgData, 'PNG', 14, yPosition, pdfWidth, pdfHeight);
+        }
+
+        // Footer
+        doc.setFontSize(10);
+        doc.setTextColor(100, 100, 100);
+        doc.text('Generated by NSCET IQArena System', 14, pageHeight - 10);
+
+        // Save PDF
+        doc.save(`NSCET_IQArena_Report_${reportDate.replace(/, /g, '_')}.pdf`);
+    } catch (error) {
+        console.error('Error generating PDF:', error);
+        alert('Failed to generate PDF. Please try again.');
+    }
+});
+</script>
 </body>
 </html>

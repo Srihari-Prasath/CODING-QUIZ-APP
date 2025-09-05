@@ -42,6 +42,16 @@ while ($row = mysqli_fetch_assoc($tests_result)) {
 </head>
 <body>
     <a href="report.php" class="back">&larr; Back to Report</a>
+    <button id="downloadPdfBtn" class="btn-details" style="margin-bottom:1rem;">Download PDF</button>
+    <div id="pdfMeta" style="display:none;">
+        <span id="pdfName">Name: <?= htmlspecialchars($student['name'] ?? '') ?></span>
+        <span id="pdfDept">Department: <?= htmlspecialchars($student['department'] ?? '') ?></span>
+        <span id="pdfYear">Year: <?= htmlspecialchars($student['year'] ?? '') ?></span>
+        <span id="pdfId">ID: <?= htmlspecialchars($student['id'] ?? '') ?></span>
+    </div>
+    <!-- Logo images for PDF -->
+    <img id="collegeLogo" src="https://i.imgur.com/0QZQwQw.png" alt="College Logo" style="display:none;" />
+    <img id="iqarenaLogo" src="https://i.imgur.com/2QZQwQw.png" alt="IQARENA Logo" style="display:none;" />
     <h2>Student Details</h2>
     <div class="info">
         <strong>Name:</strong> <?= htmlspecialchars($student['name'] ?? '') ?><br>
@@ -50,7 +60,7 @@ while ($row = mysqli_fetch_assoc($tests_result)) {
         <strong>ID:</strong> <?= htmlspecialchars($student['id'] ?? '') ?>
     </div>
     <h2>Tests Attended</h2>
-    <table>
+    <table id="studentTestTable">
         <tr>
             <th>Test Title</th>
             <th>Subject</th>
@@ -68,5 +78,50 @@ while ($row = mysqli_fetch_assoc($tests_result)) {
         </tr>
         <?php endforeach; ?>
     </table>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+    document.getElementById('downloadPdfBtn').addEventListener('click', function() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({ orientation: 'landscape' });
+        const pageWidth = doc.internal.pageSize.getWidth();
+        // Load logos
+        const collegeLogo = document.getElementById('collegeLogo');
+        const iqarenaLogo = document.getElementById('iqarenaLogo');
+        Promise.all([
+            html2canvas(collegeLogo),
+            html2canvas(iqarenaLogo),
+            html2canvas(document.getElementById('studentTestTable'))
+        ]).then(([collegeCanvas, iqarenaCanvas, tableCanvas]) => {
+            // Draw logos centered at top
+            const cImg = collegeCanvas.toDataURL('image/png');
+            const iImg = iqarenaCanvas.toDataURL('image/png');
+            doc.addImage(cImg, 'PNG', pageWidth/2-60, 10, 40, 40);
+            doc.addImage(iImg, 'PNG', pageWidth/2+20, 10, 40, 40);
+            // Header centered
+            doc.setFontSize(22);
+            doc.setTextColor('#F97316');
+            doc.text('IQARENA STUDENT REPORT', pageWidth/2, 60, {align:'center'});
+            doc.setFontSize(14);
+            doc.setTextColor('#333');
+            // Student Info centered
+            const name = document.getElementById('pdfName').textContent;
+            const dept = document.getElementById('pdfDept').textContent;
+            const year = document.getElementById('pdfYear').textContent;
+            const id = document.getElementById('pdfId').textContent;
+            doc.text(name, pageWidth/2, 70, {align:'center'});
+            doc.text(dept, pageWidth/2, 78, {align:'center'});
+            doc.text(year, pageWidth/2, 86, {align:'center'});
+            doc.text(id, pageWidth/2, 94, {align:'center'});
+            // Table below
+            const imgData = tableCanvas.toDataURL('image/png');
+            const pdfWidth = pageWidth - 40;
+            const imgProps = doc.getImageProperties(imgData);
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            doc.addImage(imgData, 'PNG', 20, 102, pdfWidth, pdfHeight);
+            doc.save('student_details_report.pdf');
+        });
+    });
+    </script>
 </body>
 </html>
