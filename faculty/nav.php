@@ -57,7 +57,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
          Leaderboard
       </a>
 
-      <a href="reports.php" <?php if ($current_page == "reports.php") echo 'aria-current="page"'; ?>
+      <a href="report.php" <?php if ($current_page == "reports.php") echo 'aria-current="page"'; ?>
          class="relative px-3 py-2 rounded-xl transition-all duration-300 
                 hover:text-orange-600 hover:bg-orange-50
                 aria-[current=page]:bg-orange-400 aria-[current=page]:text-white 

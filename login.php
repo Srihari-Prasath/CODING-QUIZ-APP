@@ -44,7 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'], $_POST['pa
     if ($user && password_verify($password, $user['password'])) {
         session_regenerate_id(true);
 
-        $_SESSION['id'] = $user['id'];
+    $_SESSION['id'] = $user['id'];
+    $_SESSION['user_id'] = $user['id']; // For student report page
         $_SESSION['roll_no'] = $user['roll_no'];
         $_SESSION['name'] = $user['name'];
         $_SESSION['email'] = $user['email'];

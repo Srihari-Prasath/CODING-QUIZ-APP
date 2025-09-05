@@ -45,7 +45,7 @@ if (!isset($_SESSION['role_id'])) {
             <a href="test-list.php">Daily Quiz</a>
             <a href="leaderboard.php">Leaderboard</a>
             <a href="Result.php">Result</a>
-            <a href="reports.php">Reports</a>
+            <a href="report.php">Reports</a>
         </nav>  
 
         <div class="welcome">
