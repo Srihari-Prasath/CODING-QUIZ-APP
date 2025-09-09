@@ -73,10 +73,10 @@ $questions_json = json_encode($questions, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HE
 </head>
 <body class="bg-gray-100 font-sans">
 <!-- Fullscreen enforcement overlay -->
-<div id="fullscreenOverlay" style="display:flex;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);z-index:9999;align-items:center;justify-content:center;flex-direction:column;">
+<!-- <div id="fullscreenOverlay" style="display:flex;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);z-index:9999;align-items:center;justify-content:center;flex-direction:column;">
   <div class="text-white text-2xl font-bold mb-4">Quiz must be taken in fullscreen mode</div>
   <button id="fullscreenBtn" class="bg-orange-500 text-white px-6 py-3 rounded text-lg">Enter Fullscreen</button>
-</div>
+</div> -->
 
 <div id="quizContent" class="h-screen overflow-hidden">
   <div class="flex h-full">

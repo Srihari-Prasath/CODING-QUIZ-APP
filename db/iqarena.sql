@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 01, 2025 at 01:13 PM
+-- Generation Time: Sep 04, 2025 at 12:24 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,25 @@ SET time_zone = "+00:00";
 --
 -- Database: `iqarena`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `analytics`
+--
+
+CREATE TABLE `analytics` (
+  `analytics_id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `test_id` int(11) NOT NULL,
+  `total_questions` int(11) NOT NULL,
+  `attempted` int(11) NOT NULL,
+  `correct_answers` int(11) NOT NULL,
+  `wrong_answers` int(11) NOT NULL,
+  `score` decimal(5,2) NOT NULL,
+  `percentage` decimal(5,2) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -62,6 +81,23 @@ CREATE TABLE `feedback` (
   `comments` text DEFAULT NULL,
   `given_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `leaderboard`
+--
+
+CREATE TABLE `leaderboard` (
+  `leaderboard_id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `total_tests` int(11) DEFAULT 0,
+  `total_score` decimal(10,2) DEFAULT 0.00,
+  `average_score` decimal(5,2) DEFAULT 0.00,
+  `highest_score` decimal(5,2) DEFAULT 0.00,
+  `rank_position` int(11) DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -278,7 +314,11 @@ INSERT INTO `questions` (`question_id`, `sub_topic_id`, `created_by`, `by_admin`
 (239, 10, 2, 0, 'What will be the output of the following Python code?     print(\"Hello {0[0]} and {0[1]}\".format((\'foo\', \'bin\')))', 'Hello (‘foo’, ‘bin’) and (‘foo’, ‘bin’)', 'Error', 'Hello foo and bin', 'None of the mentioned', 'C', '2025-09-01 09:41:26', 1),
 (240, 10, 2, 0, 'What is output of print(math.pow(3, 2))?', '9 . 0', 'None', '9', 'None of the mentioned', 'A', '2025-09-01 09:41:26', 1),
 (241, 10, 2, 0, 'Which of the following is the use of id() function in python?', 'Every object in Python doesn’t have a unique id', 'In Python Id function returns the identity of the object', 'None of the mentioned', 'All of the mentioned', 'B', '2025-09-01 09:41:26', 1),
-(242, 10, 2, 0, 'What will be the output of the following Python code?     x = [[0], [1]]\r\nprint((\' \'.join(list(map(str, x))),))', '0 1', '[0] [1]', '(’01’)', '(‘[0] [1]’,)', 'D', '2025-09-01 09:41:26', 1);
+(242, 10, 2, 0, 'What will be the output of the following Python code?     x = [[0], [1]]\r\nprint((\' \'.join(list(map(str, x))),))', '0 1', '[0] [1]', '(’01’)', '(‘[0] [1]’,)', 'D', '2025-09-01 09:41:26', 1),
+(243, 9, 2, 0, 'What is the capital of India?', 'Mumbai', 'Chennai', 'New Delhi', 'Kolkata', 'C', '2025-09-02 10:40:43', 1),
+(244, 9, 2, 0, 'Which data type is used to store decimal values in MySQL?', 'INT', 'VARCHAR', 'FLOAT', 'BOOLEAN', 'C', '2025-09-02 10:40:43', 1),
+(245, 9, 2, 0, 'HTML stands for?', 'Hyperlinks and Text Markup Language', 'Hyper Text Markup Language', 'Home Tool Markup Language', 'High Transfer Markup Language', 'B', '2025-09-02 10:40:43', 1),
+(246, 9, 2, 0, 'Which SQL command is used to extract data from a database?', 'GET', 'EXTRACT', 'SELECT', 'SHOW', 'C', '2025-09-02 10:40:43', 1);
 
 -- --------------------------------------------------------
 
@@ -322,19 +362,106 @@ CREATE TABLE `student_answers` (
 --
 
 INSERT INTO `student_answers` (`student_answers_id`, `student_test_id`, `question_id`, `answer`, `is_correct`, `marked_at`) VALUES
-(76, 37, 188, 'C', 1, '2025-09-01 16:22:22'),
-(77, 37, 196, 'D', 1, '2025-09-01 16:22:22'),
-(78, 37, 199, 'A', 1, '2025-09-01 16:22:22'),
-(79, 37, 202, 'A', 1, '2025-09-01 16:22:22'),
-(80, 37, 221, 'B', 1, '2025-09-01 16:22:22'),
-(81, 37, 222, 'A', 1, '2025-09-01 16:22:22'),
-(82, 37, 225, 'C', 1, '2025-09-01 16:22:22'),
-(83, 37, 228, 'C', 1, '2025-09-01 16:22:22'),
-(84, 37, 237, 'C', 1, '2025-09-01 16:22:22'),
-(85, 37, 241, 'B', 1, '2025-09-01 16:22:22'),
-(86, 37, 199, 'B', 0, '2025-09-01 16:42:38'),
-(87, 37, 241, 'A', 0, '2025-09-01 16:42:38'),
-(88, 37, 196, 'B', 0, '2025-09-01 16:43:38');
+(99, 37, 188, 'C', 1, '2025-09-01 21:54:54'),
+(100, 37, 196, 'C', 0, '2025-09-01 21:54:54'),
+(101, 37, 199, 'C', 0, '2025-09-01 21:54:54'),
+(102, 37, 202, 'B', 0, '2025-09-01 21:54:54'),
+(103, 37, 221, 'D', 0, '2025-09-01 21:54:54'),
+(104, 37, 222, 'B', 0, '2025-09-01 21:54:54'),
+(105, 37, 225, 'D', 0, '2025-09-01 21:54:54'),
+(106, 37, 228, 'C', 1, '2025-09-01 21:54:54'),
+(107, 37, 237, 'C', 1, '2025-09-01 21:54:54'),
+(108, 37, 241, 'C', 0, '2025-09-01 21:54:54'),
+(109, 51, 188, 'C', 1, '2025-09-02 00:14:55'),
+(110, 51, 196, 'D', 1, '2025-09-02 00:14:55'),
+(111, 51, 199, 'C', 0, '2025-09-02 00:14:55'),
+(112, 51, 202, 'D', 0, '2025-09-02 00:14:55'),
+(113, 51, 221, 'D', 0, '2025-09-02 00:14:55'),
+(114, 51, 222, 'B', 0, '2025-09-02 00:14:55'),
+(115, 51, 225, 'A', 0, '2025-09-02 00:14:55'),
+(116, 51, 228, 'A', 0, '2025-09-02 00:14:55'),
+(117, 51, 237, 'B', 0, '2025-09-02 00:14:55'),
+(118, 51, 241, 'C', 0, '2025-09-02 00:14:55'),
+(119, 52, 188, 'A', 0, '2025-09-02 00:16:04'),
+(120, 52, 196, 'C', 0, '2025-09-02 00:16:04'),
+(121, 52, 199, 'D', 0, '2025-09-02 00:16:04'),
+(122, 52, 202, 'C', 0, '2025-09-02 00:16:04'),
+(123, 52, 221, 'B', 1, '2025-09-02 00:16:04'),
+(124, 52, 222, 'B', 0, '2025-09-02 00:16:04'),
+(125, 52, 225, 'A', 0, '2025-09-02 00:16:04'),
+(126, 52, 228, 'A', 0, '2025-09-02 00:16:04'),
+(127, 52, 237, 'A', 0, '2025-09-02 00:16:04'),
+(128, 52, 241, 'D', 0, '2025-09-02 00:16:04'),
+(129, 53, 188, 'C', 1, '2025-09-02 00:19:34'),
+(130, 53, 196, 'B', 0, '2025-09-02 00:19:34'),
+(131, 53, 199, 'B', 0, '2025-09-02 00:19:34'),
+(132, 53, 202, 'D', 0, '2025-09-02 00:19:34'),
+(133, 53, 221, 'A', 0, '2025-09-02 00:19:34'),
+(134, 53, 222, 'D', 0, '2025-09-02 00:19:34'),
+(135, 53, 225, 'A', 0, '2025-09-02 00:19:34'),
+(136, 53, 228, 'C', 1, '2025-09-02 00:19:34'),
+(137, 53, 237, 'C', 1, '2025-09-02 00:19:34'),
+(138, 53, 241, 'B', 1, '2025-09-02 00:19:34'),
+(139, 54, 188, 'C', 1, '2025-09-02 00:20:56'),
+(140, 54, 196, 'A', 0, '2025-09-02 00:20:56'),
+(141, 54, 199, 'D', 0, '2025-09-02 00:20:56'),
+(142, 54, 202, 'D', 0, '2025-09-02 00:20:56'),
+(143, 54, 221, 'A', 0, '2025-09-02 00:20:56'),
+(144, 54, 222, 'D', 0, '2025-09-02 00:20:56'),
+(145, 54, 225, 'B', 0, '2025-09-02 00:20:56'),
+(146, 54, 228, 'B', 0, '2025-09-02 00:20:56'),
+(147, 54, 237, 'B', 0, '2025-09-02 00:20:56'),
+(148, 54, 241, 'C', 0, '2025-09-02 00:20:56'),
+(149, 55, 188, 'D', 0, '2025-09-02 00:21:59'),
+(150, 55, 196, 'B', 0, '2025-09-02 00:21:59'),
+(151, 55, 199, 'D', 0, '2025-09-02 00:21:59'),
+(152, 55, 202, 'B', 0, '2025-09-02 00:21:59'),
+(153, 55, 221, 'B', 1, '2025-09-02 00:21:59'),
+(154, 55, 222, 'C', 0, '2025-09-02 00:21:59'),
+(155, 55, 225, 'B', 0, '2025-09-02 00:21:59'),
+(156, 55, 228, 'D', 0, '2025-09-02 00:21:59'),
+(157, 55, 237, 'C', 1, '2025-09-02 00:21:59'),
+(158, 55, 241, 'C', 0, '2025-09-02 00:21:59'),
+(159, 56, 82, 'B', 0, '2025-09-02 12:00:27'),
+(160, 56, 87, 'C', 0, '2025-09-02 12:00:27'),
+(161, 56, 105, 'C', 0, '2025-09-02 12:00:27'),
+(162, 56, 116, 'A', 0, '2025-09-02 12:00:27'),
+(163, 56, 145, 'B', 1, '2025-09-02 12:00:27'),
+(164, 56, 150, 'B', 0, '2025-09-02 12:00:27'),
+(165, 56, 151, 'C', 0, '2025-09-02 12:00:27'),
+(166, 56, 152, 'B', 1, '2025-09-02 12:00:27'),
+(167, 56, 164, 'D', 0, '2025-09-02 12:00:27'),
+(168, 56, 180, 'C', 0, '2025-09-02 12:00:27'),
+(169, 57, 84, 'D', 0, '2025-09-02 12:28:36'),
+(170, 57, 103, 'A', 0, '2025-09-02 12:28:36'),
+(171, 57, 119, 'D', 1, '2025-09-02 12:28:36'),
+(172, 57, 126, 'B', 0, '2025-09-02 12:28:36'),
+(173, 57, 129, 'D', 0, '2025-09-02 12:28:36'),
+(174, 57, 135, 'D', 0, '2025-09-02 12:28:36'),
+(175, 57, 152, 'C', 0, '2025-09-02 12:28:36'),
+(176, 57, 164, 'C', 0, '2025-09-02 12:28:36'),
+(177, 57, 167, 'A', 0, '2025-09-02 12:28:36'),
+(178, 57, 184, 'D', 1, '2025-09-02 12:28:36'),
+(179, 58, 84, 'B', 0, '2025-09-02 12:50:26'),
+(180, 58, 103, 'D', 0, '2025-09-02 12:50:26'),
+(181, 58, 119, 'C', 0, '2025-09-02 12:50:26'),
+(182, 58, 126, 'C', 0, '2025-09-02 12:50:26'),
+(183, 58, 129, 'B', 1, '2025-09-02 12:50:26'),
+(184, 58, 135, 'B', 1, '2025-09-02 12:50:26'),
+(185, 58, 152, 'B', 1, '2025-09-02 12:50:26'),
+(186, 58, 164, 'D', 0, '2025-09-02 12:50:26'),
+(187, 58, 167, 'A', 0, '2025-09-02 12:50:26'),
+(188, 58, 184, 'C', 0, '2025-09-02 12:50:26'),
+(189, 59, 84, 'B', 0, '2025-09-02 15:34:50'),
+(190, 59, 103, 'B', 1, '2025-09-02 15:34:50'),
+(191, 59, 119, 'B', 0, '2025-09-02 15:34:50'),
+(192, 59, 126, 'A', 0, '2025-09-02 15:34:50'),
+(193, 59, 129, 'B', 1, '2025-09-02 15:34:50'),
+(194, 59, 135, 'B', 1, '2025-09-02 15:34:50'),
+(195, 59, 152, 'A', 0, '2025-09-02 15:34:50'),
+(196, 59, 164, 'D', 0, '2025-09-02 15:34:50'),
+(197, 59, 167, 'A', 0, '2025-09-02 15:34:50'),
+(198, 59, 184, 'B', 0, '2025-09-02 15:34:50');
 
 -- --------------------------------------------------------
 
@@ -393,7 +520,7 @@ INSERT INTO `student_tests` (`student_test_id`, `student_id`, `test_id`, `start_
 (34, 1, 1, '2025-08-25 06:37:29', NULL, 0.00, 'started'),
 (35, 1, 1, '2025-08-25 09:42:02', NULL, 0.00, 'started'),
 (36, 1, 1, '2025-08-25 09:49:56', NULL, 0.00, 'started'),
-(37, 1, 8, '2025-09-01 15:50:59', '2025-09-01 16:43:38', 0.00, 'completed'),
+(37, 1, 8, '2025-09-01 15:50:59', '2025-09-01 21:54:54', 3.00, 'completed'),
 (38, 1, 8, '2025-09-01 15:54:16', NULL, 0.00, 'started'),
 (39, 1, 8, '2025-09-01 15:58:33', NULL, 0.00, 'started'),
 (40, 1, 8, '2025-09-01 16:18:13', NULL, 0.00, 'started'),
@@ -403,7 +530,21 @@ INSERT INTO `student_tests` (`student_test_id`, `student_id`, `test_id`, `start_
 (44, 1, 8, '2025-09-01 16:35:55', NULL, 0.00, 'started'),
 (45, 1, 8, '2025-09-01 16:37:01', NULL, 0.00, 'started'),
 (46, 1, 8, '2025-09-01 16:37:51', NULL, 0.00, 'started'),
-(47, 1, 8, '2025-09-01 16:42:20', NULL, 0.00, 'started');
+(47, 1, 8, '2025-09-01 16:42:20', NULL, 0.00, 'started'),
+(48, 1, 8, '2025-09-01 19:58:15', NULL, 0.00, 'started'),
+(49, 1, 7, '2025-09-01 21:11:29', NULL, 0.00, 'started'),
+(50, 1, 8, '2025-09-01 21:54:33', NULL, 0.00, 'started'),
+(51, 4, 8, '2025-09-02 00:14:39', '2025-09-02 00:14:55', 2.00, 'completed'),
+(52, 5, 8, '2025-09-02 00:15:45', '2025-09-02 00:16:04', 1.00, 'completed'),
+(53, 6, 8, '2025-09-02 00:19:10', '2025-09-02 00:19:34', 4.00, 'completed'),
+(54, 7, 8, '2025-09-02 00:20:30', '2025-09-02 00:20:56', 1.00, 'completed'),
+(55, 8, 8, '2025-09-02 00:21:40', '2025-09-02 00:21:59', 2.00, 'completed'),
+(56, 127, 6, '2025-09-02 12:00:13', '2025-09-02 12:00:27', 2.00, 'completed'),
+(57, 189, 9, '2025-09-02 12:28:02', '2025-09-02 12:28:36', 2.00, 'completed'),
+(58, 197, 9, '2025-09-02 12:49:04', '2025-09-02 12:50:26', 3.00, 'completed'),
+(59, 1, 9, '2025-09-02 14:58:23', '2025-09-02 15:34:50', 3.00, 'completed'),
+(60, 1, 9, '2025-09-02 15:09:01', NULL, 0.00, 'started'),
+(61, 1, 9, '2025-09-02 15:33:44', NULL, 0.00, 'started');
 
 -- --------------------------------------------------------
 
@@ -436,7 +577,8 @@ INSERT INTO `sub_topics` (`sub_topic_id`, `topic_id`, `title`, `description`, `a
 (7, 3, 'new', 'new', 2, 0, '2025-08-24 12:04:28', '2025-08-24 12:04:28'),
 (8, 11, 'new another', '', 2, 0, '2025-08-24 12:04:52', '2025-08-24 12:17:13'),
 (9, 12, 'Variables', 'variable based problems', 2, 0, '2025-09-01 07:17:01', '2025-09-01 09:35:35'),
-(10, 12, 'testing', 'just a test', 2, 0, '2025-09-01 09:40:52', '2025-09-01 09:40:52');
+(10, 12, 'testing', 'just a test', 2, 0, '2025-09-01 09:40:52', '2025-09-01 09:40:52'),
+(11, 13, 'testing', 'testing topic', 2, 0, '2025-09-03 09:15:35', '2025-09-03 09:15:35');
 
 -- --------------------------------------------------------
 
@@ -469,9 +611,10 @@ CREATE TABLE `tests` (
 INSERT INTO `tests` (`test_id`, `title`, `description`, `subject`, `added_by`, `topic_id`, `sub_topic_id`, `num_questions`, `department_id`, `year`, `date`, `time_slot`, `duration_minutes`, `created_at`, `is_active`) VALUES
 (1, 'test', 'its new one', 'new', 2, 11, 1, 90, 1, 1, '2025-08-24', 'morning', 90, '2025-08-24 13:07:49', 1),
 (2, 'Testing nscet', 'Simple Test', 'C Program', 2, 12, 10, 10, 7, 2, '2025-09-01', '0', 20, '2025-09-01 09:46:54', 1),
-(6, 'Testing', 'Testing test', 'C Program', 2, 12, 9, 10, 1, 1, '2025-09-01', '0', 10, '2025-09-01 10:16:13', 1),
-(7, 'Variable testing', 'Alpha Testing', 'C Program', 2, 12, 10, 10, 1, 1, '2025-09-01', '0', 10, '2025-09-01 10:18:58', 1),
-(8, 'asdfas', 'aszaaaaaaaaaaaaaaa', 'asdfdsdasd', 2, 12, 10, 10, 1, 1, '2025-09-01', '0', 10, '2025-09-01 10:19:59', 1);
+(6, 'Testing', 'Testing test', 'C Program', 2, 12, 9, 10, 6, 1, '2025-09-01', '0', 10, '2025-09-01 10:16:13', 1),
+(7, 'Variable testing', 'Alpha Testing', 'C Program', 2, 12, 10, 10, 1, 6, '2025-09-01', '0', 10, '2025-09-01 10:18:58', 1),
+(8, 'asdfas', 'aszaaaaaaaaaaaaaaa', 'asdfdsdasd', 2, 12, 10, 10, 1, 1, '2025-09-01', '0', 10, '2025-09-01 10:19:59', 1),
+(9, 'Pointers', 'Test for summa', 'C language', 2, 12, 9, 10, 1, 1, '2025-09-04', '0', 30, '2025-09-02 06:57:21', 1);
 
 -- --------------------------------------------------------
 
@@ -520,7 +663,17 @@ INSERT INTO `test_questions` (`test_question_id`, `test_id`, `question_id`, `cre
 (57, 8, 241, '2025-09-01 10:19:59'),
 (58, 8, 199, '2025-09-01 10:19:59'),
 (59, 8, 221, '2025-09-01 10:19:59'),
-(60, 8, 202, '2025-09-01 10:19:59');
+(60, 8, 202, '2025-09-01 10:19:59'),
+(61, 9, 103, '2025-09-02 06:57:21'),
+(62, 9, 84, '2025-09-02 06:57:21'),
+(63, 9, 119, '2025-09-02 06:57:21'),
+(64, 9, 129, '2025-09-02 06:57:21'),
+(65, 9, 164, '2025-09-02 06:57:21'),
+(66, 9, 135, '2025-09-02 06:57:21'),
+(67, 9, 126, '2025-09-02 06:57:21'),
+(68, 9, 152, '2025-09-02 06:57:21'),
+(69, 9, 184, '2025-09-02 06:57:21'),
+(70, 9, 167, '2025-09-02 06:57:21');
 
 -- --------------------------------------------------------
 
@@ -554,7 +707,8 @@ INSERT INTO `topics` (`topic_id`, `title`, `description`, `added_by`, `by_admin`
 (9, 'mark', 'mark', 1, 0, '2025-08-20 16:09:56', '2025-08-20 16:09:56'),
 (10, 'new', 'new', NULL, 0, '2025-08-24 11:46:40', '2025-08-24 11:46:40'),
 (11, 'new topic', 'new topic', 2, 0, '2025-08-24 11:47:08', '2025-08-24 11:47:08'),
-(12, 'C programming', 'This is the c Programming', 2, 0, '2025-09-01 07:16:40', '2025-09-01 07:16:40');
+(12, 'C programming', 'This is the c Programming', 2, 0, '2025-09-01 07:16:40', '2025-09-01 07:16:40'),
+(13, 'Python', 'test for python', 2, 0, '2025-09-03 09:15:20', '2025-09-03 09:15:20');
 
 -- --------------------------------------------------------
 
@@ -566,7 +720,7 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `roll_no` text NOT NULL,
   `name` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `year` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
@@ -580,12 +734,133 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `roll_no`, `name`, `email`, `password`, `year`, `role_id`, `department_id`, `created_at`, `updated_at`) VALUES
-(1, '9210', 'NAVEEN', 'naveen@gmail.com', '$2y$10$uG1DU4p/TebrPy4SjhBex.7HCU7nvcPpqQo0X5TpZFe79XagwHhEO', 1, 1, 1, '2025-08-18 06:16:30', '2025-09-01 07:14:34'),
-(2, '123', 'NAVEEN', 'naveenb@gmail.com', '$2y$10$uG1DU4p/TebrPy4SjhBex.7HCU7nvcPpqQo0X5TpZFe79XagwHhEO', 0, 2, 1, '2025-08-18 06:16:30', '2025-09-01 07:15:42');
+(1, '9210', 'Santhodh', 'santhosh@gmail.com', '$2y$10$LfSoN7gNH6rM1BGbHTJYIecWsyM9xdrSUee36798vpVasPiVWhPGq', 1, 1, 1, '2025-08-18 06:16:30', '2025-09-01 15:42:28'),
+(2, '123', 'Vinoth kumar', 'vinoth@gmail.com', '$2y$10$uG1DU4p/TebrPy4SjhBex.7HCU7nvcPpqQo0X5TpZFe79XagwHhEO', 0, 2, 1, '2025-08-18 06:16:30', '2025-09-02 05:14:01'),
+(4, '92101', 'Sachin', 'sachin@gmail.com', '$2y$10$MoQhb/od10hWGhAgIEOvEefNXfUxONDDStEhUxXVVQN6w.G1txrsS', 1, 1, 6, '2025-09-01 18:43:16', '2025-09-02 05:20:00'),
+(5, '92102', 'Sri Hari', 'srihari@gmail.com', '$2y$10$s2DyUDA9aAq7BXlCEgtxaOb5SIh/nVSL4sYd3imsj1KUqbOzSuc9m', 1, 1, 6, '2025-09-01 18:43:16', '2025-09-02 05:20:05'),
+(6, '92103', 'Aaswin', 'aaswin@gmail.com', '$2y$10$6htwx/PnIeSERFScDip9Vuy61vQk55SMFrl.NQ4ECDqa.zcqRrv6O', 1, 1, 1, '2025-09-01 18:43:16', '2025-09-01 18:48:54'),
+(7, '92104', 'Keerthana', 'keerthana@gmail.com', '$2y$10$kra/d5Cp8zYwRjS1pKakKOLD5/E5Wu6/ASljxAMZBB3Nm./41pXG.', 1, 1, 1, '2025-09-01 18:43:16', '2025-09-01 18:50:17'),
+(8, '92105', 'archana', 'archana@gmail.com', '$2y$10$2B16AIhHiblKffYgt9M24ecbA/pPEr3xp3jKKkgpgBWIu5y2cZaUq', 1, 2, 6, '2025-09-01 18:43:16', '2025-09-02 05:25:29'),
+(112, '921022243001', 'AJAY M', NULL, '', 1, 1, 6, '2025-09-02 06:26:57', '2025-09-02 06:26:57'),
+(113, '921022243002', 'AJAY S', NULL, '', 1, 1, 6, '2025-09-02 06:26:57', '2025-09-02 06:26:57'),
+(114, '921022243003', 'AKSHAYA K', NULL, '', 1, 1, 6, '2025-09-02 06:26:57', '2025-09-02 06:26:57'),
+(115, '921022243004', 'BALA MAHALAKSHMI S', NULL, '', 1, 1, 6, '2025-09-02 06:26:57', '2025-09-02 06:26:57'),
+(116, '921022243005', 'DHEIVASHRI M', NULL, '', 1, 1, 6, '2025-09-02 06:26:57', '2025-09-02 06:26:57'),
+(117, '921022243008', 'ISHANI P', NULL, '', 1, 1, 6, '2025-09-02 06:26:57', '2025-09-02 06:26:57'),
+(118, '921022243009', 'JAYA GOKUL M', NULL, '', 1, 1, 6, '2025-09-02 06:26:57', '2025-09-02 06:26:57'),
+(119, '921022243010', 'KARAN S', NULL, '', 1, 1, 6, '2025-09-02 06:26:57', '2025-09-02 06:26:57'),
+(120, '921022243011', 'KEERTHANA T', NULL, '', 1, 1, 6, '2025-09-02 06:26:57', '2025-09-02 06:26:57'),
+(121, '921022243012', 'NAVEEN KUMAR S', NULL, '', 1, 1, 6, '2025-09-02 06:26:57', '2025-09-02 06:26:57'),
+(122, '921022243013', 'NITHEESH PATRICK P', NULL, '', 1, 1, 6, '2025-09-02 06:26:57', '2025-09-02 06:26:57'),
+(123, '921022243014', 'PARI VIGNESH D S', NULL, '', 1, 1, 6, '2025-09-02 06:26:57', '2025-09-02 06:26:57'),
+(124, '921022243015', 'PRANAV S', NULL, '', 1, 1, 6, '2025-09-02 06:26:57', '2025-09-02 06:26:57'),
+(125, '921022243016', 'RAJAVARSHINI C', NULL, '', 1, 1, 6, '2025-09-02 06:26:57', '2025-09-02 06:26:57'),
+(126, '921022243018', 'SHAFANA IRFATH N', NULL, '', 1, 1, 6, '2025-09-02 06:26:57', '2025-09-02 06:26:57'),
+(127, '921022243019', 'SHAFEEK MURATH S', NULL, '$2y$10$f/mouCZzSSkV557vorvMHOqgpKZ8czNCM7c3gt7Faftaj2gscyLEy', 1, 1, 6, '2025-09-02 06:26:57', '2025-09-02 06:28:02'),
+(128, '921022243020', 'SHOBIKA SHREE N', NULL, '', 1, 1, 6, '2025-09-02 06:26:57', '2025-09-02 06:26:57'),
+(129, '921022243021', 'SHRI HARINI S', NULL, '', 1, 1, 6, '2025-09-02 06:26:57', '2025-09-02 06:26:57'),
+(130, '921022243022', 'SRIDEVI B', NULL, '', 1, 1, 6, '2025-09-02 06:26:57', '2025-09-02 06:26:57'),
+(131, '921022243023', 'VISHWAROOBINI N', NULL, '', 1, 1, 6, '2025-09-02 06:26:57', '2025-09-02 06:26:57'),
+(132, '921022205001', 'AASWIN J S', NULL, '', 1, 1, 7, '2025-09-02 06:36:40', '2025-09-02 06:52:23'),
+(133, '921022205002', 'ABI GAYATHRI P', NULL, '', 1, 1, 7, '2025-09-02 06:36:40', '2025-09-02 06:52:23'),
+(134, '921022205003', 'ABINAYA P', NULL, '', 1, 1, 7, '2025-09-02 06:36:40', '2025-09-02 06:52:23'),
+(135, '921022205005', 'GOWSIK P', NULL, '', 1, 1, 7, '2025-09-02 06:36:40', '2025-09-02 06:52:23'),
+(136, '921022205006', 'MOHAMED IRFAN SHEIK K', NULL, '', 1, 1, 7, '2025-09-02 06:36:40', '2025-09-02 06:52:23'),
+(137, '921022205007', 'NAAFIYA SHIRIN A', NULL, '', 1, 1, 7, '2025-09-02 06:36:40', '2025-09-02 06:52:23'),
+(138, '921022205008', 'NAGAJOTHI M', NULL, '', 1, 1, 7, '2025-09-02 06:36:40', '2025-09-02 06:52:23'),
+(139, '921022205009', 'NANDHINI S', NULL, '', 1, 1, 7, '2025-09-02 06:36:40', '2025-09-02 06:52:23'),
+(140, '921022205010', 'NATHIYA P', NULL, '', 1, 1, 7, '2025-09-02 06:36:40', '2025-09-02 06:52:23'),
+(141, '921022205011', 'NAVEEN BHARATHI B', NULL, '', 1, 1, 7, '2025-09-02 06:36:40', '2025-09-02 06:52:23'),
+(142, '921022205012', 'NIHILAA K', NULL, '', 1, 1, 7, '2025-09-02 06:36:40', '2025-09-02 06:52:23'),
+(143, '921022205013', 'PARAMESHWAR N S', NULL, '', 1, 1, 7, '2025-09-02 06:36:40', '2025-09-02 06:52:23'),
+(144, '921022205014', 'PRAVIN K', NULL, '', 1, 1, 7, '2025-09-02 06:36:40', '2025-09-02 06:52:23'),
+(145, '921022205015', 'PREETHI V', NULL, '', 1, 1, 7, '2025-09-02 06:36:40', '2025-09-02 06:52:23'),
+(146, '921022205016', 'RAMYA PRIYA J', NULL, '', 1, 1, 7, '2025-09-02 06:36:40', '2025-09-02 06:52:23'),
+(147, '921022205017', 'RANA SUSMITHA R', NULL, '', 1, 1, 7, '2025-09-02 06:36:40', '2025-09-02 06:52:23'),
+(148, '921022205018', 'SARVAJI M', NULL, '', 1, 1, 7, '2025-09-02 06:36:40', '2025-09-02 06:52:23'),
+(149, '921022205019', 'SATHYA SEELAN M', NULL, '', 1, 1, 7, '2025-09-02 06:36:40', '2025-09-02 06:52:23'),
+(150, '921022205020', 'SIVASRI V', NULL, '', 1, 1, 7, '2025-09-02 06:36:40', '2025-09-02 06:52:23'),
+(151, '921022205021', 'SRIHARI PRASATH A', NULL, '$2y$10$eLfLP/IvvTOxmrR0RHlKSO4jtTkbz5VQ79XD.GlJ94hSyhrHYa1fi', 1, 1, 7, '2025-09-02 06:36:40', '2025-09-02 06:52:23'),
+(152, '921022205022', 'SURYAPRAKASH A', NULL, '', 1, 1, 7, '2025-09-02 06:36:40', '2025-09-02 06:52:23'),
+(153, '921022205023', 'SWATHI P', NULL, '', 1, 1, 7, '2025-09-02 06:36:40', '2025-09-02 06:52:23'),
+(154, '921022205024', 'VIGNESWAR S', NULL, '', 1, 1, 7, '2025-09-02 06:36:40', '2025-09-02 06:52:23'),
+(155, '921022205025', 'YAMINI S', NULL, '', 1, 1, 7, '2025-09-02 06:36:40', '2025-09-02 06:52:23'),
+(156, '921022205026', 'YOHITHKUMAR R', NULL, '', 1, 1, 7, '2025-09-02 06:36:40', '2025-09-02 06:52:23'),
+(157, '921022104001', 'AARTHI S', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(158, '921022104002', 'ABARNA A', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(159, '921022104003', 'AKILAN A', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(160, '921022104004', 'AKSHAYA N S', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(161, '921022104005', 'ANANDHITHA GAYATHIRI A', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(162, '921022104006', 'ANKAYARKANNI M', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(163, '921022104007', 'ARCHANA A', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(164, '921022104008', 'BHARATH SURYA M', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(165, '921022104009', 'CHANDISH S', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(166, '921022104010', 'DHANUSH D', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(167, '921022104011', 'FARHANA BANU K', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(168, '921022104012', 'FEMILA M', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(169, '921022104013', 'GOKULNATH B', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(170, '921022104014', 'GOWRI M', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(171, '921022104015', 'HARINI G', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(172, '921022104016', 'HARINI J', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(173, '921022104017', 'JEYASRI C', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(174, '921022104018', 'KALA DEVI S', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(175, '921022104019', 'KALAI SELVI M', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(176, '921022104020', 'KARUNYA JOTHIKA S', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(177, '921022104021', 'KAVIYASHREE B', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(178, '921022104022', 'KIRUTHIKA G (07.09.2004)', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(179, '921022104023', 'KIRUTHIKA M (18.11.2004)', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(180, '921022104024', 'KUZHALI E', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(181, '921022104025', 'LALITHAMBIHAI R G', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(182, '921022104026', 'MADHUBALA S', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(183, '921022104027', 'MAHMOOD SHAFI K', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(184, '921022104028', 'MATHAN M', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(185, '921022104029', 'MIRUTHYUNJAY J A', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(186, '921022104030', 'MONISHA C', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(187, '921022104031', 'NANTHIDHA S', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(188, '921022104032', 'NITHISH V', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(189, '921022104033', ' JOSHIKA', NULL, '$2y$10$4hSAB8y7HlXR2bXrjH2xNOrhfa9UxtN0U.u4YoGxxbE6dDbxLGfJy', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 07:00:32'),
+(190, '921022104034', 'POOJA T', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(191, '921022104035', 'PRIYANKA M', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(192, '921022104036', 'PUNITHA B', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(193, '921022104037', 'RAMSANJEEV R', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(194, '921022104038', 'RAVINTHAR A', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(195, '921022104039', 'RESHMA SHREE L V', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(196, '921022104040', 'RITHISH V', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(197, '921022104041', 'SACHITHANANDAN S', NULL, '$2y$10$5pGYAjB2QWsosaFbd6iAw.CeTikSXB8dkZWbPDBKKN1SYtGlBYgvq', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 07:18:44'),
+(198, '921022104042', 'SHIVANIHA J', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(199, '921022104043', 'SIMRITHA SRI V', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(200, '921022104044', 'SIVA PANDI V', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(201, '921022104045', 'SONIYA N', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(202, '921022104046', 'SRI NATHI S', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(203, '921022104047', 'SRISAKTHI S', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(204, '921022104048', 'SUBIKSHA M', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(205, '921022104049', 'SUBIKSHAA S', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(206, '921022104050', 'SUJITHRA V', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(207, '921022104051', 'SURUTHI PRATHAP S', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(208, '921022104052', 'SUSMITHA S', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(209, '921022104053', 'SWATHI K', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(210, '921022104054', 'THAVASAKTHI G', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(211, '921022104055', 'VARSHINI K', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(212, '921022104056', 'VIJAY AKASH M', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(213, '921022104057', 'VIJITHRA V', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(214, '921022104058', 'VINYAA SREE P G', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(215, '921022104059', 'YOGESHWARAN M', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(216, '921022104060', 'YUGESH KUMAR A', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(217, '921022104701', 'MOHAMED JAMEES K', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(218, '921022104702', 'SAKTHI PANDEESWARI S', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23'),
+(219, '921022104703', 'UMA MAHESWARI B', NULL, '', 1, 1, 1, '2025-09-02 06:46:45', '2025-09-02 06:52:23');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `analytics`
+--
+ALTER TABLE `analytics`
+  ADD PRIMARY KEY (`analytics_id`),
+  ADD KEY `fk_analytics_student` (`student_id`),
+  ADD KEY `fk_analytics_test` (`test_id`);
 
 --
 -- Indexes for table `departments`
@@ -601,6 +876,13 @@ ALTER TABLE `feedback`
   ADD PRIMARY KEY (`feedback_id`),
   ADD KEY `student_test_id` (`student_test_id`),
   ADD KEY `faculty_id` (`faculty_id`);
+
+--
+-- Indexes for table `leaderboard`
+--
+ALTER TABLE `leaderboard`
+  ADD PRIMARY KEY (`leaderboard_id`),
+  ADD KEY `fk_leaderboard_student` (`student_id`);
 
 --
 -- Indexes for table `questions`
@@ -680,6 +962,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `analytics`
+--
+ALTER TABLE `analytics`
+  MODIFY `analytics_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
@@ -692,10 +980,16 @@ ALTER TABLE `feedback`
   MODIFY `feedback_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `leaderboard`
+--
+ALTER TABLE `leaderboard`
+  MODIFY `leaderboard_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=243;
+  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=247;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -707,47 +1001,60 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `student_answers`
 --
 ALTER TABLE `student_answers`
-  MODIFY `student_answers_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
+  MODIFY `student_answers_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=199;
 
 --
 -- AUTO_INCREMENT for table `student_tests`
 --
 ALTER TABLE `student_tests`
-  MODIFY `student_test_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `student_test_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `sub_topics`
 --
 ALTER TABLE `sub_topics`
-  MODIFY `sub_topic_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `sub_topic_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tests`
 --
 ALTER TABLE `tests`
-  MODIFY `test_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `test_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `test_questions`
 --
 ALTER TABLE `test_questions`
-  MODIFY `test_question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `test_question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `topics`
 --
 ALTER TABLE `topics`
-  MODIFY `topic_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `topic_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=220;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `analytics`
+--
+ALTER TABLE `analytics`
+  ADD CONSTRAINT `fk_analytics_student` FOREIGN KEY (`student_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `fk_analytics_test` FOREIGN KEY (`test_id`) REFERENCES `tests` (`test_id`);
+
+--
+-- Constraints for table `leaderboard`
+--
+ALTER TABLE `leaderboard`
+  ADD CONSTRAINT `fk_leaderboard_student` FOREIGN KEY (`student_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `questions`
@@ -755,6 +1062,13 @@ ALTER TABLE `users`
 ALTER TABLE `questions`
   ADD CONSTRAINT `fk_questions_faculty` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_questions_subtopic` FOREIGN KEY (`sub_topic_id`) REFERENCES `sub_topics` (`sub_topic_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `fk_department` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`),
+  ADD CONSTRAINT `fk_role` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
