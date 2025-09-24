@@ -16,7 +16,7 @@ if (!isset($_SESSION['role_id'])) {
     exit;
 }
 
- 
+$year = $_SESSION['year'];  
 $department_id = $_SESSION['department_id'];
 
 // fetch tests along with topic & sub_topic names
@@ -42,7 +42,7 @@ $stmt = $conn->prepare("
     FROM tests t
     LEFT JOIN topics tp ON t.topic_id = tp.topic_id
     LEFT JOIN sub_topics st ON t.sub_topic_id = st.sub_topic_id
-    WHERE t.year = 4 AND t.department_id = 7 AND t.is_active = 1
+    WHERE t.year = ? AND t.department_id = ? AND t.is_active = 1 AND t.date = ?
     ORDER BY t.created_at DESC
 ");
 
