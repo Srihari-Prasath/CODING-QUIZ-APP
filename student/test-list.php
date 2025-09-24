@@ -16,7 +16,7 @@ if (!isset($_SESSION['role_id'])) {
     exit;
 }
 
-$year = $_SESSION['year'];  
+ 
 $department_id = $_SESSION['department_id'];
 
 // fetch tests along with topic & sub_topic names
