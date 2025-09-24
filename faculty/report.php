@@ -370,7 +370,7 @@ if ($stmt) {
 <script>
 document.getElementById('downloadPdfBtn').addEventListener('click', async function() {
     const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ orientation: 'landscape' });
+    const doc = new jsPDF({ orientation: 'landscape' });    
 
     // Report metadata
     const departmentName = 'Computer Science';
@@ -433,7 +433,8 @@ document.getElementById('downloadPdfBtn').addEventListener('click', async functi
     const headers = [];
     table.querySelectorAll('tr').forEach((tr, i) => {
         const cells = Array.from(tr.querySelectorAll(i === 0 ? 'th' : 'td'))
-            .map(cell => cell.innerText.trim());
+            .map(cell => cell.innerText.trim())
+            .slice(0, -1); 
         if (i === 0) {
             headers.push(cells);
         } else {
