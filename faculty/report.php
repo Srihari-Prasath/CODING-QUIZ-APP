@@ -1,60 +1,120 @@
 <?php
-// Ensure database connection
+session_start();
+// Include necessary files
 require_once '../resource/conn.php';
+require_once '../resource/session.php';
 
 // Check if connection is successful
 if (!$conn) {
     die('<div class="error">Database Connection Failed: ' . htmlspecialchars(mysqli_connect_error()) . '</div>');
 }
 
-// Sanitize and initialize POST variables
-$department = isset($_POST['department']) ? mysqli_real_escape_string($conn, $_POST['department']) : '';
-$time_filter = isset($_POST['time_filter']) ? mysqli_real_escape_string($conn, $_POST['time_filter']) : '';
-$year = isset($_POST['year']) ? mysqli_real_escape_string($conn, $_POST['year']) : '';
+// Get filter values
+$department = isset($_POST['department']) ? trim($_POST['department']) : '';
+$time_filter = isset($_POST['time_filter']) ? trim($_POST['time_filter']) : '';
+$year = isset($_POST['year']) ? trim($_POST['year']) : '';
 
-// Build WHERE clause
-$where = [];
-$where[] = "d.full_name LIKE '%Computer Science%'";
-if ($year !== '') {
-    $where[] = "u.year = '$year'";
+// Fetch all departments for dropdown
+$dept_query = "SELECT id, full_name FROM departments ORDER BY full_name ASC";
+$dept_result = mysqli_query($conn, $dept_query);
+$departments = [];
+if ($dept_result) {
+    while ($dept_row = mysqli_fetch_assoc($dept_result)) {
+        $departments[] = $dept_row;
+    }
+    mysqli_free_result($dept_result);
 }
-if ($time_filter !== '') {
+
+// Build prepared statement for filtering
+$params = [];
+$types = '';
+$where_conditions = [];
+
+// Base query
+$base_query = "SELECT u.id AS student_id, u.name AS student_name, d.full_name AS department, u.year, 
+               st.end_time AS test_date, st.score,
+               t.title AS test_title, st.status AS test_status
+               FROM student_tests st 
+               JOIN users u ON st.student_id = u.id 
+               LEFT JOIN departments d ON u.department_id = d.id 
+               LEFT JOIN tests t ON st.test_id = t.test_id
+               WHERE 1=1";
+
+// Add department filter
+if (!empty($department)) {
+    $where_conditions[] = "d.id = ?";
+    $params[] = $department;
+    $types .= 'i';
+}
+
+// Add year filter
+if (!empty($year)) {
+    $where_conditions[] = "u.year = ?";
+    $params[] = $year;
+    $types .= 's';
+}
+
+// Add time filter
+if (!empty($time_filter)) {
     $today = date('Y-m-d');
-    if ($time_filter === 'day') {
-        $where[] = "DATE(st.end_time) = '$today'";
-    } elseif ($time_filter === 'week') {
-        $week_start = date('Y-m-d', strtotime('monday this week'));
-        $week_end = date('Y-m-d', strtotime('sunday this week'));
-        $where[] = "st.end_time BETWEEN '$week_start' AND '$week_end'";
-    } elseif ($time_filter === 'month') {
-        $month = date('m');
-        $year_now = date('Y');
-        $where[] = "MONTH(st.end_time) = '$month' AND YEAR(st.end_time) = '$year_now'";
+    switch ($time_filter) {
+        case 'day':
+            $where_conditions[] = "DATE(st.end_time) = ?";
+            $params[] = $today;
+            $types .= 's';
+            break;
+        case 'week':
+            $week_start = date('Y-m-d', strtotime('monday this week'));
+            $week_end = date('Y-m-d', strtotime('sunday this week'));
+            $where_conditions[] = "DATE(st.end_time) BETWEEN ? AND ?";
+            $params[] = $week_start;
+            $params[] = $week_end;
+            $types .= 'ss';
+            break;
+        case 'month':
+            $month_start = date('Y-m-01');
+            $month_end = date('Y-m-t');
+            $where_conditions[] = "DATE(st.end_time) BETWEEN ? AND ?";
+            $params[] = $month_start;
+            $params[] = $month_end;
+            $types .= 'ss';
+            break;
     }
 }
-$where_sql = !empty($where) ? 'WHERE ' . implode(' AND ', $where) : '';
 
-// Fetch report data
-$sql = "SELECT u.id AS student_id, u.name AS student_name, d.full_name AS department, u.year, st.end_time AS test_date, st.score 
-        FROM student_tests st 
-        JOIN users u ON st.student_id = u.id 
-        LEFT JOIN departments d ON u.department_id = d.id 
-        $where_sql 
-        ORDER BY st.end_time DESC";
+// Construct final query
+if (!empty($where_conditions)) {
+    $base_query .= ' AND ' . implode(' AND ', $where_conditions);
+}
+$base_query .= ' ORDER BY st.end_time DESC';
 
-$result = mysqli_query($conn, $sql);
+// Execute prepared statement
 $rows = [];
-if ($result === false) {
-    echo '<div class="error">SQL Error: ' . htmlspecialchars(mysqli_error($conn)) . '</div>';
-} else {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $rows[] = $row;
+$stmt = mysqli_prepare($conn, $base_query);
+if ($stmt) {
+    if (!empty($params)) {
+        mysqli_stmt_bind_param($stmt, $types, ...$params);
     }
-    mysqli_free_result($result);
+    
+    if (mysqli_stmt_execute($stmt)) {
+        $result = mysqli_stmt_get_result($stmt);
+        while ($row = mysqli_fetch_assoc($result)) {
+            // Calculate percentage if total questions exist
+            if ($row['total_questions'] > 0) {
+                $row['percentage'] = round(($row['correct_answers'] / $row['total_questions']) * 100, 1);
+            } else {
+                $row['percentage'] = 0;
+            }
+            $rows[] = $row;
+        }
+        mysqli_free_result($result);
+    } else {
+        echo '<div class="error">Error executing query: ' . htmlspecialchars(mysqli_error($conn)) . '</div>';
+    }
+    mysqli_stmt_close($stmt);
+} else {
+    echo '<div class="error">Error preparing statement: ' . htmlspecialchars(mysqli_error($conn)) . '</div>';
 }
-
-// Close connection
-mysqli_close($conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -245,22 +305,35 @@ mysqli_close($conn);
     <h2>Student Reports</h2>
     <button id="downloadPdfBtn" class="btn-details">Download PDF</button>
     <form method="post" class="filter-nav">
+        <label for="department">Department:</label>
+        <select name="department" id="department">
+            <option value="">All Departments</option>
+            <?php foreach ($departments as $dept): ?>
+                <option value="<?= $dept['id'] ?>" <?= $department == $dept['id'] ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($dept['full_name']) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+        
         <label for="year">Year:</label>
         <select name="year" id="year">
-            <option value="">All</option>
+            <option value="">All Years</option>
             <option value="1" <?= $year === '1' ? 'selected' : '' ?>>1st Year</option>
             <option value="2" <?= $year === '2' ? 'selected' : '' ?>>2nd Year</option>
             <option value="3" <?= $year === '3' ? 'selected' : '' ?>>3rd Year</option>
             <option value="4" <?= $year === '4' ? 'selected' : '' ?>>4th Year</option>
         </select>
-        <label for="time_filter">Time:</label>
+        
+        <label for="time_filter">Time Period:</label>
         <select name="time_filter" id="time_filter">
-            <option value="">All</option>
-            <option value="day" <?= $time_filter === 'day' ? 'selected' : '' ?>>Day</option>
-            <option value="week" <?= $time_filter === 'week' ? 'selected' : '' ?>>Week</option>
-            <option value="month" <?= $time_filter === 'month' ? 'selected' : '' ?>>Month</option>
+            <option value="">All Time</option>
+            <option value="day" <?= $time_filter === 'day' ? 'selected' : '' ?>>Today</option>
+            <option value="week" <?= $time_filter === 'week' ? 'selected' : '' ?>>This Week</option>
+            <option value="month" <?= $time_filter === 'month' ? 'selected' : '' ?>>This Month</option>
         </select>
-        <button type="submit">Filter</button>
+        
+        <button type="submit">Apply Filters</button>
+        <button type="button" onclick="window.location.href='report.php'" style="background-color: #6b7280;">Reset</button>
     </form>
     <div id="report-content">
         <?php if (empty($rows)): ?>
