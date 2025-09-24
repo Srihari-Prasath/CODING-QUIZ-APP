@@ -42,7 +42,7 @@ $stmt = $conn->prepare("
     FROM tests t
     LEFT JOIN topics tp ON t.topic_id = tp.topic_id
     LEFT JOIN sub_topics st ON t.sub_topic_id = st.sub_topic_id
-    WHERE t.year = ? AND t.department_id = ? AND t.is_active = 1 AND t.date = ?
+    WHERE t.year = 4 AND t.department_id = 7 AND t.is_active = 1
     ORDER BY t.created_at DESC
 ");
 
