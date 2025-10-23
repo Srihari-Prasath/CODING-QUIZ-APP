@@ -16,9 +16,10 @@ if (!isset($_SESSION['role_id'])) {
     exit;
 }
 
-$year = $_SESSION['year'];  
-$department_id = $_SESSION['department_id'];
-
+// $year = $_SESSION['year'];  
+// $department_id = $_SESSION['department_id'];
+$year = 4;  
+$department_id = 7;
 // fetch tests along with topic & sub_topic names
 
 $today = date('Y-m-d');
